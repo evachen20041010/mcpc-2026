@@ -1,11 +1,69 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import { db } from '../firebase/client';
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 定義最新消息的資料結構
+interface NewsItem {
+  id: string;
+  title: string;
+  date: string;
+  category: string;
+}
+
+const news: NewsItem[] = [];
+
+// 嘗試從 Firestore 讀取資料
+try {
+  // 假設您的集合名稱為 "news"
+  const q = query(collection(db, "news"), orderBy("date", "desc"), limit(3));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    news.push({ id: doc.id, ...doc.data() } as NewsItem);
+  });
+} catch (e) {
+  console.log("尚無資料庫連線或無資料，顯示預設內容");
+}
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="2026 行動通訊實務競賽 | 首頁">
+  <Navbar />
+  
+  <main>
+    <Hero />
+
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <span class="text-sky-600 font-semibold tracking-wide uppercase text-sm">Latest News</span>
+          <h2 class="text-3xl font-bold text-slate-900 mt-2">最新消息</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          {news.length > 0 ? (
+            news.map((item) => (
+              <div class="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="bg-sky-100 text-sky-700 text-xs font-bold px-2 py-1 rounded-full">{item.category}</span>
+                  <span class="text-slate-400 text-sm">{item.date}</span>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-2 hover:text-sky-600 cursor-pointer">{item.title}</h3>
+                <a href={`/news/${item.id}`} class="text-sm text-sky-600 hover:underline mt-4 inline-block">閱讀更多 &rarr;</a>
+              </div>
+            ))
+          ) : (
+            /* 若資料庫為空，顯示佔位內容 (Placeholder) */
+            <>
+               <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center text-slate-500">
+                  <p>目前尚無最新消息</p>
+                  <p class="text-xs mt-2">(請至 Firebase Console 新增 news 集合)</p>
+               </div>
+            </>
+          )}
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
