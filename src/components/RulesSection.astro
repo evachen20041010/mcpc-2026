@@ -1,0 +1,139 @@
+---
+// 定義評分標準資料
+const criteria = [
+  { percent: "40%", title: "技術實作", desc: "系統架構完整度與技術難度", color: "text-blue-600 border-blue-200" },
+  { percent: "30%", title: "創新創意", desc: "原創性與解決方案之獨特性", color: "text-sky-600 border-sky-200" },
+  { percent: "20%", title: "應用價值", desc: "市場潛力與實際應用可行性", color: "text-indigo-600 border-indigo-200" },
+  { percent: "10%", title: "簡報表現", desc: "口語表達能力與問答邏輯", color: "text-slate-600 border-slate-200" },
+];
+
+// 定義重要日程資料
+const dates = [
+  { title: "報名截止", date: "2026.03.01", desc: "完成線上報名並上傳企劃書" },
+  { title: "初賽審查", date: "2026.03.15", desc: "評審進行書面審查，公告入圍名單" },
+  { title: "決賽暨頒獎", date: "2026.04.20", desc: "入圍隊伍現場簡報與實作展示" },
+];
+---
+
+<section id="rules" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
+        競賽辦法
+        <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></span>
+      </h2>
+    </div>
+
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+        <span class="w-1.5 h-8 bg-primary rounded-full mr-3"></span>
+        參賽資格
+      </h3>
+      <div class="bg-blue-50 border-l-4 border-primary rounded-r-xl p-6 sm:p-8">
+        <ul class="grid md:grid-cols-2 gap-4 text-slate-700 font-medium">
+          <li class="flex items-start">
+            <span class="text-primary mr-3 text-lg">✓</span>
+            <span>全國大專院校在學學生 (含碩士生)</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-primary mr-3 text-lg">✓</span>
+            <span>每隊 2-5 人，需設指導教授 1 名</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-primary mr-3 text-lg">✓</span>
+            <span>鼓勵跨校、跨系組隊參加</span>
+          </li>
+          <li class="flex items-start">
+            <span class="text-primary mr-3 text-lg">✓</span>
+            <span>每人僅限報名一支隊伍</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+        <span class="w-1.5 h-8 bg-sky-500 rounded-full mr-3"></span>
+        評選標準
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {criteria.map((item) => (
+          <div class={`bg-white border-2 rounded-2xl p-6 text-center hover:-translate-y-1 transition-transform duration-300 ${item.color}`}>
+            <div class={`text-4xl font-black mb-2 ${item.color.split(' ')[0]}`}>{item.percent}</div>
+            <div class="text-slate-800 font-bold text-lg mb-2">{item.title}</div>
+            <div class="text-slate-500 text-sm leading-relaxed">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+        <span class="w-1.5 h-8 bg-indigo-500 rounded-full mr-3"></span>
+        競賽獎勵
+      </h3>
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 border border-blue-100">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-white rounded-2xl p-6 shadow-sm text-center border border-yellow-100 relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div class="absolute top-0 left-0 w-full h-1 bg-yellow-400"></div>
+            <div class="text-5xl mb-4 transform group-hover:scale-110 transition-transform">🏆</div>
+            <div class="text-xl font-bold text-yellow-600 mb-1">金牌獎 (1隊)</div>
+            <div class="text-3xl font-black text-slate-800 mb-1">NT$ 100,000</div>
+            <div class="text-xs text-slate-400 font-medium">及每人獎狀乙紙</div>
+          </div>
+          
+          <div class="bg-white rounded-2xl p-6 shadow-sm text-center border border-slate-200 relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div class="absolute top-0 left-0 w-full h-1 bg-slate-400"></div>
+            <div class="text-5xl mb-4 transform group-hover:scale-110 transition-transform">🥈</div>
+            <div class="text-xl font-bold text-slate-500 mb-1">銀牌獎 (1隊)</div>
+            <div class="text-3xl font-black text-slate-800 mb-1">NT$ 60,000</div>
+            <div class="text-xs text-slate-400 font-medium">及每人獎狀乙紙</div>
+          </div>
+
+          <div class="bg-white rounded-2xl p-6 shadow-sm text-center border border-orange-100 relative overflow-hidden group hover:shadow-md transition-shadow">
+            <div class="absolute top-0 left-0 w-full h-1 bg-orange-400"></div>
+            <div class="text-5xl mb-4 transform group-hover:scale-110 transition-transform">🥉</div>
+            <div class="text-xl font-bold text-orange-600 mb-1">銅牌獎 (1隊)</div>
+            <div class="text-3xl font-black text-slate-800 mb-1">NT$ 30,000</div>
+            <div class="text-xs text-slate-400 font-medium">及每人獎狀乙紙</div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <div class="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm text-slate-600 border border-slate-100">
+            <span class="text-xl">🏅</span>
+            <span class="font-bold">佳作 (若干隊)：</span>
+            <span>頒發獎金 NT$ 5,000 及每人獎狀乙紙</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+        <span class="w-1.5 h-8 bg-slate-600 rounded-full mr-3"></span>
+        重要日程
+      </h3>
+      <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+        <div class="space-y-8 relative before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+          {dates.map((item, index) => (
+            <div class="relative pl-8">
+              <div class="absolute left-0 top-1.5 w-5 h-5 bg-white border-4 border-primary rounded-full z-10"></div>
+              
+              <div class="md:flex md:items-center md:justify-between">
+                <div>
+                  <div class="font-bold text-lg text-slate-800">{item.title}</div>
+                  <div class="text-slate-500 text-sm mt-1">{item.desc}</div>
+                </div>
+                <div class="mt-2 md:mt-0 font-mono text-xl font-bold text-primary bg-blue-50 px-4 py-1 rounded-lg">
+                  {item.date}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
