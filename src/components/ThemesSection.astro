@@ -1,65 +1,82 @@
+---
+// 定義主題資料與配色樣式
+const themes = [
+  {
+    title: "智慧節能與物聯網應用組",
+    desc: "結合節能技術與物聯網，開發創新智慧應用解決方案",
+    // 綠色主題
+    borderColor: "border-emerald-400",
+    iconBg: "bg-emerald-50",
+    decorationBg: "bg-emerald-50",
+    iconSrc: "/images/internet.png" 
+  },
+  {
+    title: "智慧指向性傳輸組",
+    desc: "探索先進無線傳輸技術，提升通訊效能與品質",
+    // 紫色主題
+    borderColor: "border-purple-400", 
+    iconBg: "bg-purple-50",
+    decorationBg: "bg-purple-50",
+    iconSrc: "/images/hotspot.png"
+  },
+  {
+    title: "智慧數位應用組",
+    desc: "運用行動通訊技術，打造創新數位服務與應用",
+    // 藍色主題
+    borderColor: "border-sky-400", 
+    iconBg: "bg-sky-50",
+    decorationBg: "bg-sky-50",
+    iconSrc: "/images/virtual-reality.png"
+  }
+];
+---
+
 <section id="themes" class="py-20 bg-slate-50 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-sky-100/40 rounded-full blur-3xl -translate-y-1/2"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl translate-y-1/2"></div>
+  
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-sky-100/40 rounded-full blur-3xl -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl translate-y-1/2"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
+        競賽主題
+        <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></span>
+      </h2>
+      <p class="text-slate-500 mt-4 max-w-2xl mx-auto">聚焦三大通訊核心領域，激發跨域創新思維</p>
     </div>
-  
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
-          競賽主題
-          <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></span>
-        </h2>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">聚焦三大通訊核心領域，激發跨域創新思維</p>
-      </div>
-  
-      <div class="grid md:grid-cols-3 gap-8">
-        
-        <div class="group relative bg-white border border-slate-100 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:shadow-sky-100 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-          <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-300 to-cyan-300 group-hover:h-2 transition-all duration-300"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {themes.map((theme) => (
+        // 卡片容器：保留 relative + overflow-hidden (修正圓圈超出問題)
+        <div class={`relative bg-white rounded-[2rem] p-8 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-xl transition-all duration-300 group overflow-hidden`}>
           
+          <div class={`absolute -bottom-12 -right-12 w-48 h-48 rounded-full ${theme.decorationBg} opacity-50 pointer-events-none`}></div>
+
+          <div class={`absolute top-0 left-0 w-full h-full border-2 ${theme.borderColor} rounded-[2rem] pointer-events-none`}></div>
+
           <div class="relative z-10">
-            <div class="w-16 h-16 bg-sky-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-sky-100 transition-colors duration-300">
-              <span class="bg-gradient-to-br from-sky-500 to-cyan-500 bg-clip-text text-transparent drop-shadow-sm">🌐</span>
+            <div class={`w-16 h-16 ${theme.iconBg} rounded-2xl flex items-center justify-center mb-8`}>
+              <img 
+                src={theme.iconSrc} 
+                alt={theme.title} 
+                class="w-8 h-8 object-contain"
+              />
             </div>
-            
-            <h3 class="text-2xl font-bold text-slate-800 mb-4 group-hover:text-sky-600 transition-colors">智慧節能與物聯網</h3>
+
+            <h3 class="text-xl font-bold text-slate-800 mb-4 tracking-tight">
+              {theme.title}
+            </h3>
+
             <p class="text-slate-500 leading-relaxed text-sm">
-              運用 IoT 技術開發節能解決方案，透過感測器網路與智慧控制系統，實現綠色永續的創新應用。
+              {theme.desc}
             </p>
           </div>
         </div>
-  
-        <div class="group relative bg-white border border-slate-100 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:shadow-blue-100 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-          <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-sky-400 to-blue-400 group-hover:h-2 transition-all duration-300"></div>
-          
-          <div class="relative z-10">
-            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-100 transition-colors duration-300">
-              <span class="bg-gradient-to-br from-blue-500 to-indigo-500 bg-clip-text text-transparent drop-shadow-sm">📡</span>
-            </div>
-            
-            <h3 class="text-2xl font-bold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors">智慧指向性傳輸</h3>
-            <p class="text-slate-500 leading-relaxed text-sm">
-              探索 5G/6G 智慧天線與波束成形技術，開發高效能無線通訊系統，提升傳輸品質與覆蓋範圍。
-            </p>
-          </div>
-        </div>
-  
-        <div class="group relative bg-white border border-slate-100 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 hover:-translate-y-2 overflow-hidden">
-          <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-400 to-indigo-400 group-hover:h-2 transition-all duration-300"></div>
-          
-          <div class="relative z-10">
-            <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-indigo-100 transition-colors duration-300">
-              <span class="bg-gradient-to-br from-blue-600 to-violet-600 bg-clip-text text-transparent drop-shadow-sm">🤖</span>
-            </div>
-            
-            <h3 class="text-2xl font-bold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors">智慧數位應用</h3>
-            <p class="text-slate-500 leading-relaxed text-sm">
-              結合 AI、大數據與行動應用技術，創造智慧生活創新服務，解決實際問題並提升使用者體驗。
-            </p>
-          </div>
-        </div>
-  
-      </div>
+      ))}
     </div>
-  </section>
+
+  </div>
+</section>
