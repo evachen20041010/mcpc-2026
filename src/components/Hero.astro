@@ -1,100 +1,549 @@
 ---
-// Hero.astro - 2026 MCPC 官方風格 (Tailwind 版)
+// Hero.astro - 2026 MCPC
 ---
 
-<section id="home" class="relative pt-[150px] pb-[90px] lg:pt-[180px] lg:pb-[100px] overflow-hidden bg-gradient-to-br from-bg-light to-white">
-    
-    <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute inset-0 opacity-[0.06]" 
-             style="background-image: linear-gradient(#2E86AB 1px, transparent 1px), linear-gradient(90deg, #2E86AB 1px, transparent 1px); background-size: 52px 52px; mix-blend-mode: multiply;">
-        </div>
-        <div class="absolute top-[8%] left-[6%] w-[360px] h-[360px] bg-[#2E86AB]/25 rounded-full blur-[60px] animate-float opacity-35"></div>
-        <div class="absolute bottom-[10%] right-[8%] w-[420px] h-[420px] bg-blue-400/25 rounded-full blur-[60px] animate-float opacity-35" style="animation-delay: 1.2s;"></div>
-        <div class="absolute top-[40%] left-[45%] w-[520px] h-[520px] bg-bg-light/90 rounded-full blur-[60px] animate-float opacity-55" style="animation-delay: 2.4s;"></div>
-    </div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-[70px] items-center">
-            
-            <div class="text-left">
-                <div class="inline-flex items-center gap-2 px-4 py-2 bg-bg-light/95 text-primary-dark border border-primary/15 rounded-full font-bold text-sm mb-6 animate-fade-up opacity-0" style="animation-delay: 0ms;">
-                    <span class="text-primary">✨</span> 2026 年度競賽
+<section
+    id="home"
+    class="relative pt-32 pb-24 lg:pt-32 lg:pb-24 min-h-[85vh] lg:min-h-[80vh] flex items-center overflow-hidden bg-slate-50 border-b border-slate-200"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div
+            class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center"
+        >
+            <div
+                class="flex flex-col justify-center text-center lg:text-left pt-8 lg:pt-0"
+            >
+                <div
+                    class="animate-fade-up w-max px-[18px] py-[8px] bg-primary/10 text-primary rounded font-bold text-base mb-[25px] mx-auto lg:mx-0 tracking-[1px]"
+                    style="animation-delay: 100ms;"
+                >
+                    2026 年度競賽
                 </div>
 
-                <h1 class="text-5xl lg:text-[3.5rem] font-bold text-slate-800 mb-4 leading-tight tracking-wide animate-fade-up opacity-0" style="animation-delay: 100ms;">
-                    行動通訊
-                    <span class="block bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent mt-2">實務競賽</span>
+                <h1
+                    class="animate-fade-up text-5xl sm:text-6xl lg:text-[4.5rem] font-black text-slate-800 mb-6 leading-tight tracking-wide"
+                    style="animation-delay: 200ms;"
+                >
+                    行動通訊<br />
+                    <span
+                        class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent block mt-2"
+                        >實務競賽</span
+                    >
                 </h1>
 
-                <p class="text-lg lg:text-xl text-slate-600 mb-8 max-w-xl leading-relaxed animate-fade-up opacity-0" style="animation-delay: 200ms;">
+                <p
+                    class="animate-fade-up text-lg lg:text-xl text-slate-600 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium"
+                    style="animation-delay: 300ms;"
+                >
                     連結智慧，驅動未來。邀請全國大專院校學生參與，展現專業實力，角逐豐厚獎金與榮譽。
                 </p>
 
-                <div class="flex flex-wrap gap-4 mb-10 animate-fade-up opacity-0" style="animation-delay: 300ms;">
-                    <a href="/registration" class="px-8 py-3 bg-primary text-white rounded-full font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark hover:-translate-y-1 transition-all duration-300">
+                <div
+                    class="animate-fade-up flex flex-wrap gap-4 justify-center lg:justify-start"
+                    style="animation-delay: 400ms;"
+                >
+                    <a
+                        href="#registration"
+                        class="px-[38px] py-[16px] bg-primary text-white rounded font-bold tracking-[1px] transition-all duration-300 shadow-[0_10px_20px_rgba(26,79,110,0.2)] hover:shadow-[0_15px_25px_rgba(26,79,110,0.3)] hover:-translate-y-[3px]"
+                    >
                         立即報名 →
                     </a>
-                    <a href="/downloads" class="px-8 py-3 bg-white text-primary border-2 border-primary rounded-full font-bold hover:bg-primary hover:text-white hover:-translate-y-1 transition-all duration-300">
+                    <a
+                        href="#downloads"
+                        class="px-[38px] py-[16px] bg-transparent text-primary border-2 border-primary rounded font-bold tracking-[1px] transition-all duration-300 hover:bg-primary/5"
+                    >
                         下載簡章
                     </a>
                 </div>
-
-                <div class="flex flex-wrap gap-4 animate-fade-up opacity-0" style="animation-delay: 400ms;">
-                    
-                    <div class="flex items-center gap-3 bg-white/85 backdrop-blur-sm border border-primary/10 rounded-2xl p-3 pr-5 shadow-sm min-w-[180px] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 cursor-default">
-                        <div class="w-10 h-10 grid place-items-center rounded-xl bg-bg-light/95 text-xl">📅</div>
-                        <div>
-                            <div class="text-xs text-slate-500 font-medium">報名截止</div>
-                            <div class="text-lg font-bold text-slate-800">2026.03.01</div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-white/85 backdrop-blur-sm border border-primary/10 rounded-2xl p-3 pr-5 shadow-sm min-w-[180px] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 cursor-default">
-                        <div class="w-10 h-10 grid place-items-center rounded-xl bg-bg-light/95 text-xl">🧾</div>
-                        <div>
-                            <div class="text-xs text-slate-500 font-medium">初賽結果</div>
-                            <div class="text-lg font-bold text-slate-800">2026.04.01</div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-white/85 backdrop-blur-sm border border-primary/10 rounded-2xl p-3 pr-5 shadow-sm min-w-[180px] transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-primary/30 cursor-default">
-                        <div class="w-10 h-10 grid place-items-center rounded-xl bg-bg-light/95 text-xl">🏁</div>
-                        <div>
-                            <div class="text-xs text-slate-500 font-medium">決賽日期</div>
-                            <div class="text-lg font-bold text-slate-800">2026.04.20</div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
-            <div class="hidden lg:flex justify-center relative animate-fade-up opacity-0" style="animation-delay: 200ms;">
-                <div class="relative w-[420px] aspect-square">
-                    <div class="absolute inset-0 rounded-full border-2 border-primary/25 animate-spin-slow"></div>
-                    <div class="absolute inset-7 border-2 border-dashed border-primary/30 rounded-full animate-spin-slow" style="animation-direction: reverse; animation-duration: 16s;"></div>
-                    <div class="absolute inset-[70px] rounded-full bg-gradient-to-br from-primary to-primary-dark shadow-2xl shadow-primary/35 grid place-items-center text-white text-center z-10">
-                        <div>
-                            <div class="text-[5rem] font-black leading-none">M</div>
-                            <div class="text-sm font-bold opacity-90 tracking-widest mt-1">CPC 2026</div>
+            <div
+                class="animate-fade-up relative w-full rounded-[2.5rem] bg-gradient-to-br from-[#0f2b3d] to-[#1a4f6e] p-6 sm:p-10 lg:p-12 overflow-hidden border border-slate-300"
+                id="darkBlockCanvasContainer"
+                style="animation-delay: 500ms;"
+            >
+                <canvas
+                    id="innerCanvas"
+                    class="absolute inset-0 w-full h-full z-0 opacity-70"
+                ></canvas>
+
+                <div class="relative z-10 pointer-events-none">
+                    <div
+                        class="flex items-center justify-center lg:justify-start gap-3 text-white/90 mb-8 text-base lg:text-lg tracking-widest font-bold"
+                    >
+                        <div
+                            class="w-3 h-3 bg-sky-400 rounded-full shadow-[0_0_12px_#38bdf8] animate-pulse"
+                        >
+                        </div>
+                        <span
+                            >距離<strong
+                                id="current-target-name"
+                                class="text-white mx-2 font-black"
+                                >讀取中</strong
+                            >還有</span
+                        >
+                    </div>
+
+                    <div
+                        class="flex justify-between items-end border-b border-white/15 pb-8 mb-10"
+                    >
+                        <div class="flex-1 text-center lg:text-left">
+                            <span
+                                id="cd-days"
+                                class="tech-font block text-4xl sm:text-5xl lg:text-6xl text-white leading-none mb-2 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]"
+                                >00</span
+                            >
+                            <span
+                                class="block text-sky-400 text-xs sm:text-sm tracking-widest uppercase font-bold"
+                                >Days</span
+                            >
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <span
+                                id="cd-hours"
+                                class="tech-font block text-4xl sm:text-5xl lg:text-6xl text-white leading-none mb-2 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]"
+                                >00</span
+                            >
+                            <span
+                                class="block text-sky-400 text-xs sm:text-sm tracking-widest uppercase font-bold"
+                                >Hours</span
+                            >
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <span
+                                id="cd-mins"
+                                class="tech-font block text-4xl sm:text-5xl lg:text-6xl text-white leading-none mb-2 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]"
+                                >00</span
+                            >
+                            <span
+                                class="block text-sky-400 text-xs sm:text-sm tracking-widest uppercase font-bold"
+                                >Mins</span
+                            >
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <span
+                                id="cd-secs"
+                                class="tech-font block text-4xl sm:text-5xl lg:text-6xl text-white leading-none mb-2 drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]"
+                                >00</span
+                            >
+                            <span
+                                class="block text-sky-400 text-xs sm:text-sm tracking-widest uppercase font-bold"
+                                >Secs</span
+                            >
                         </div>
                     </div>
-                    <div class="absolute top-[6%] -right-[2%] bg-white/95 backdrop-blur border border-slate-100 rounded-2xl p-3 shadow-xl flex items-center gap-3 animate-float rotate-6 z-20 min-w-[160px]">
-                        <div class="w-9 h-9 grid place-items-center rounded-xl bg-bg-light text-xl">🏆</div>
-                        <div>
-                            <div class="text-xs text-slate-500">總獎金</div>
-                            <div class="text-lg font-black text-slate-800">NT$ 50萬</div>
+
+                    <div
+                        class="relative flex flex-col gap-8 pl-6 sm:pl-8 pointer-events-auto"
+                    >
+                        <div
+                            class="absolute top-2 bottom-2 left-0 w-0.5 bg-white/15"
+                        >
                         </div>
-                    </div>
-                    <div class="absolute bottom-[12%] -left-[2%] bg-white/95 backdrop-blur border border-slate-100 rounded-2xl p-3 shadow-xl flex items-center gap-3 animate-float -rotate-6 z-20 min-w-[160px]" style="animation-delay: 1.2s;">
-                        <div class="w-9 h-9 grid place-items-center rounded-xl bg-bg-light text-xl">👥</div>
-                        <div>
-                            <div class="text-xs text-slate-500">參賽隊伍</div>
-                            <div class="text-lg font-black text-slate-800">100+ 組</div>
+
+                        <div
+                            id="ms-0"
+                            class="v-time-card relative flex items-center gap-4 sm:gap-6 group"
+                        >
+                            <div
+                                class="v-time-dot absolute -left-[29px] sm:-left-[37px] w-3.5 h-3.5 bg-[#0f2b3d] border-2 border-white/30 rounded-full transition-all duration-300"
+                            >
+                            </div>
+                            <div
+                                class="v-time-info flex justify-between items-center w-full transition-transform duration-300"
+                            >
+                                <span
+                                    class="text-white/80 text-base sm:text-lg font-bold transition-colors"
+                                    >報名截止</span
+                                >
+                                <strong
+                                    class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors"
+                                    >2026.03.01</strong
+                                >
+                            </div>
+                        </div>
+
+                        <div
+                            id="ms-1"
+                            class="v-time-card relative flex items-center gap-4 sm:gap-6 group"
+                        >
+                            <div
+                                class="v-time-dot absolute -left-[29px] sm:-left-[37px] w-3.5 h-3.5 bg-[#0f2b3d] border-2 border-white/30 rounded-full transition-all duration-300"
+                            >
+                            </div>
+                            <div
+                                class="v-time-info flex justify-between items-center w-full transition-transform duration-300"
+                            >
+                                <span
+                                    class="text-white/80 text-base sm:text-lg font-bold transition-colors"
+                                    >初審結果</span
+                                >
+                                <strong
+                                    class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors"
+                                    >2026.04.01</strong
+                                >
+                            </div>
+                        </div>
+
+                        <div
+                            id="ms-2"
+                            class="v-time-card relative flex items-center gap-4 sm:gap-6 group"
+                        >
+                            <div
+                                class="v-time-dot absolute -left-[29px] sm:-left-[37px] w-3.5 h-3.5 bg-[#0f2b3d] border-2 border-white/30 rounded-full transition-all duration-300"
+                            >
+                            </div>
+                            <div
+                                class="v-time-info flex justify-between items-center w-full transition-transform duration-300"
+                            >
+                                <span
+                                    class="text-white/80 text-base sm:text-lg font-bold transition-colors"
+                                    >決賽日期</span
+                                >
+                                <strong
+                                    class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors"
+                                    >2026.04.20</strong
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
+
+    .tech-font {
+        font-family: "Share Tech Mono", monospace;
+    }
+
+    /* ========== 新增：進場動畫定義 ========== */
+    @keyframes fadeUpEnter {
+        0% {
+            opacity: 0;
+            transform: translateY(30px); /* 初始位置往下 30px */
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0); /* 回到原本位置 */
+        }
+    }
+
+    .animate-fade-up {
+        opacity: 0; /* 預設隱藏，等待動畫觸發 */
+        /* 使用 cubic-bezier 讓動畫有「一開始快、後面慢慢停住」的高級煞車感 */
+        animation: fadeUpEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    /* ======================================== */
+
+    /* 進行中的狀態 (Active) */
+    .v-time-card.active-state .v-time-dot {
+        background: #38bdf8;
+        border-color: white;
+        box-shadow: 0 0 12px #38bdf8;
+    }
+
+    /* 進行中的狀態 (Active) */
+    .v-time-card.active-state .v-time-dot {
+        background: #38bdf8;
+        border-color: white;
+        box-shadow: 0 0 12px #38bdf8;
+    }
+    .v-time-card.active-state .v-time-info {
+        transform: translateX(8px);
+    }
+    .v-time-card.active-state .v-time-info span {
+        color: white;
+    }
+    .v-time-card.active-state .v-time-info strong {
+        color: #38bdf8;
+    }
+
+    /* 已過去的狀態 (Past) */
+    .v-time-card.past-state {
+        opacity: 0.3;
+    }
+    .v-time-card.past-state .v-time-dot {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+    .v-time-card.past-state .v-time-info span,
+    .v-time-card.past-state .v-time-info strong {
+        text-decoration: line-through;
+    }
+</style>
+
+<script>
+    // 等待 DOM 載入完成再執行
+    document.addEventListener("DOMContentLoaded", () => {
+        // ================= 1. 智慧倒數邏輯 =================
+        const milestones = [
+            {
+                id: "ms-0",
+                name: "報名截止",
+                timestamp: new Date("2026-03-01T23:59:59").getTime(),
+            },
+            {
+                id: "ms-1",
+                name: "初審結果",
+                timestamp: new Date("2026-04-01T23:59:59").getTime(),
+            },
+            {
+                id: "ms-2",
+                name: "決賽日期",
+                timestamp: new Date("2026-04-20T23:59:59").getTime(),
+            },
+        ];
+
+        const updateCountdown = setInterval(function () {
+            const now = new Date().getTime();
+            let activeIndex = -1;
+
+            for (let i = 0; i < milestones.length; i++) {
+                if (milestones[i].timestamp > now) {
+                    activeIndex = i;
+                    break;
+                }
+            }
+
+            milestones.forEach((ms, index) => {
+                const card = document.getElementById(ms.id);
+                if (!card) return;
+                card.classList.remove("active-state", "past-state");
+
+                if (index === activeIndex) {
+                    card.classList.add("active-state");
+                } else if (
+                    (activeIndex !== -1 && index < activeIndex) ||
+                    activeIndex === -1
+                ) {
+                    card.classList.add("past-state");
+                }
+            });
+
+            // 取得時間節點 (加入防呆檢查)
+            const cdDays = document.getElementById("cd-days");
+            const cdHours = document.getElementById("cd-hours");
+            const cdMins = document.getElementById("cd-mins");
+            const cdSecs = document.getElementById("cd-secs");
+
+            if (activeIndex === -1) {
+                clearInterval(updateCountdown);
+                if (cdDays) cdDays.innerText = "00";
+                if (cdHours) cdHours.innerText = "00";
+                if (cdMins) cdMins.innerText = "00";
+                if (cdSecs) cdSecs.innerText = "00";
+
+                const targetNameEl = document.getElementById(
+                    "current-target-name",
+                );
+                if (targetNameEl && targetNameEl.parentElement) {
+                    targetNameEl.parentElement.innerHTML =
+                        "本年度競賽 <strong class='text-white mx-2 font-bold'>已圓滿落幕</strong>";
+                }
+
+                const dot = document.querySelector(
+                    ".w-3.h-3.bg-sky-400",
+                ) as HTMLElement | null;
+                if (dot) {
+                    dot.style.backgroundColor = "#4CAF50";
+                    dot.style.boxShadow = "0 0 12px #4CAF50";
+                }
+                return;
+            }
+
+            const targetMs = milestones[activeIndex];
+            const distance = targetMs.timestamp - now;
+            const targetNameEl = document.getElementById("current-target-name");
+            if (targetNameEl) targetNameEl.innerText = targetMs.name;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+            );
+            const minutes = Math.floor(
+                (distance % (1000 * 60 * 60)) / (1000 * 60),
+            );
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (cdDays)
+                cdDays.innerText = days < 10 ? "0" + days : days.toString();
+            if (cdHours)
+                cdHours.innerText = hours < 10 ? "0" + hours : hours.toString();
+            if (cdMins)
+                cdMins.innerText =
+                    minutes < 10 ? "0" + minutes : minutes.toString();
+            if (cdSecs)
+                cdSecs.innerText =
+                    seconds < 10 ? "0" + seconds : seconds.toString();
+        }, 1000);
+
+        // ================= 2. Canvas 互動粒子 =================
+        const canvas = document.getElementById(
+            "innerCanvas",
+        ) as HTMLCanvasElement | null;
+        if (!canvas) return; // 確保 canvas 存在
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return; // 確保 ctx 存在
+
+        const container = document.getElementById("darkBlockCanvasContainer");
+        if (!container) return; // 確保 container 存在
+
+        function resizeCanvas() {
+            if (!canvas || !container) return;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        let mouse = {
+            targetX: canvas.width / 2,
+            targetY: canvas.height / 2,
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            isActive: false,
+        };
+
+        container.addEventListener("mousemove", function (event: MouseEvent) {
+            let rect = container.getBoundingClientRect();
+            mouse.targetX = event.clientX - rect.left;
+            mouse.targetY = event.clientY - rect.top;
+            mouse.isActive = true;
+        });
+        container.addEventListener("mouseleave", function () {
+            mouse.isActive = false;
+        });
+
+        container.addEventListener(
+            "touchmove",
+            function (event: TouchEvent) {
+                let rect = container.getBoundingClientRect();
+                mouse.targetX = event.touches[0].clientX - rect.left;
+                mouse.targetY = event.touches[0].clientY - rect.top;
+                mouse.isActive = true;
+            },
+            { passive: true },
+        );
+        container.addEventListener("touchend", function () {
+            mouse.isActive = false;
+        });
+
+        // 定義 Particle 類別
+        class Particle {
+            x: number;
+            y: number;
+            speedX: number;
+            speedY: number;
+            baseSize: number;
+            constructor() {
+                this.x = Math.random() * canvas!.width;
+                this.y = Math.random() * canvas!.height;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.baseSize = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas!.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas!.height) this.speedY *= -1;
+            }
+            draw() {
+                let dx = this.x - mouse.x;
+                let dy = this.y - mouse.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let signalStrength =
+                    mouse.isActive && distance < signalRadius
+                        ? 1 - distance / signalRadius
+                        : 0;
+
+                let currentOpacity = 0.2 + signalStrength * 0.8;
+                let currentSize = this.baseSize + signalStrength * 2;
+
+                ctx!.beginPath();
+                ctx!.arc(this.x, this.y, currentSize, 0, Math.PI * 2);
+
+                if (signalStrength > 0.1) {
+                    ctx!.fillStyle = `rgba(56, 189, 248, ${currentOpacity})`;
+                    ctx!.shadowBlur = 10 * signalStrength;
+                    ctx!.shadowColor = "#38bdf8";
+                } else {
+                    ctx!.fillStyle = `rgba(255, 255, 255, 0.2)`;
+                    ctx!.shadowBlur = 0;
+                }
+                ctx!.fill();
+                ctx!.shadowBlur = 0;
+            }
+        }
+
+        // 明確宣告陣列型別為 Particle[]
+        const particlesArray: Particle[] = [];
+        const numberOfParticles = window.innerWidth < 768 ? 30 : 60;
+        const connectionDistance = 140;
+        const signalRadius = 200;
+
+        function init() {
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let pa = particlesArray[a];
+                    let pb = particlesArray[b];
+                    let distanceNodes = Math.hypot(pa.x - pb.x, pa.y - pb.y);
+                    if (distanceNodes < connectionDistance) {
+                        let avgDistToMouse =
+                            (Math.hypot(pa.x - mouse.x, pa.y - mouse.y) +
+                                Math.hypot(pb.x - mouse.x, pb.y - mouse.y)) /
+                            2;
+                        let baseOpacity =
+                            1 - distanceNodes / connectionDistance;
+                        let isLit =
+                            mouse.isActive && avgDistToMouse < signalRadius;
+
+                        if (isLit) {
+                            let signalOpacity = Math.max(
+                                0.1,
+                                1 - avgDistToMouse / signalRadius,
+                            );
+                            ctx!.strokeStyle = `rgba(56, 189, 248, ${baseOpacity * signalOpacity * 1.5})`;
+                            ctx!.lineWidth = 0.8;
+                        } else {
+                            ctx!.strokeStyle = `rgba(255, 255, 255, ${baseOpacity * 0.1})`;
+                            ctx!.lineWidth = 0.4;
+                        }
+                        ctx!.beginPath();
+                        ctx!.moveTo(pa.x, pa.y);
+                        ctx!.lineTo(pb.x, pb.y);
+                        ctx!.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+            mouse.x += (mouse.targetX - mouse.x) * 0.1;
+            mouse.y += (mouse.targetY - mouse.y) * 0.1;
+            particlesArray.forEach((p) => {
+                p.update();
+            });
+            connect();
+            particlesArray.forEach((p) => {
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    });
+</script>
