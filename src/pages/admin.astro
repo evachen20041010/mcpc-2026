@@ -1,0 +1,351 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="管理後台 - 2026 MCPC">
+    <div class="min-h-screen bg-slate-50 pt-24 pb-12 px-4 sm:px-6">
+        <div
+            id="login-section"
+            class="max-w-md mx-auto bg-white border-2 border-slate-200 rounded-2xl p-8 shadow-sm"
+        >
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-bold text-slate-800">後台管理系統</h1>
+                <p class="text-slate-500 mt-2">請輸入管理員帳號密碼登入</p>
+            </div>
+
+            <form id="login-form" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1"
+                        >Email 帳號</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        required
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                        placeholder="admin@mcpc.com"
+                    />
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1"
+                        >密碼</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        required
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                        placeholder="••••••••"
+                    />
+                </div>
+                <p id="login-error" class="text-red-500 text-sm hidden">
+                    登入失敗，請檢查帳號密碼。
+                </p>
+                <button
+                    type="submit"
+                    class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                    登入
+                </button>
+            </form>
+        </div>
+
+        <div id="admin-section" class="max-w-5xl mx-auto hidden">
+            <div
+                class="flex justify-between items-center bg-white border border-slate-200 rounded-xl p-6 mb-8 shadow-sm"
+            >
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">
+                        後台管理系統
+                    </h2>
+                    <p class="text-sm text-slate-500">
+                        目前可管理：最新消息公告
+                    </p>
+                </div>
+                <button
+                    id="logout-btn"
+                    class="px-5 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg hover:bg-slate-200 transition-colors"
+                >
+                    登出系統
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div
+                    class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm h-fit"
+                >
+                    <h3
+                        class="text-lg font-bold text-slate-800 mb-4 border-b pb-2"
+                    >
+                        發布新公告
+                    </h3>
+                    <form id="add-news-form" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label
+                                    class="block text-sm font-bold text-slate-700 mb-1"
+                                    >發布日期</label
+                                >
+                                <input
+                                    type="date"
+                                    id="news-date"
+                                    required
+                                    class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary"
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-bold text-slate-700 mb-1"
+                                    >分類標籤</label
+                                >
+                                <select
+                                    id="news-category"
+                                    class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary"
+                                >
+                                    <option value="重要">重要</option>
+                                    <option value="公告">公告</option>
+                                    <option value="活動">活動</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-slate-700 mb-1"
+                                >公告標題</label
+                            >
+                            <input
+                                type="text"
+                                id="news-title"
+                                required
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary"
+                                placeholder="例如：報名日期延長"
+                            />
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-slate-700 mb-1"
+                            >
+                                公告內容 <span
+                                    class="text-slate-400 font-normal ml-2"
+                                    >(支援 Markdown 格式)</span
+                                >
+                            </label>
+                            <textarea
+                                id="news-desc"
+                                required
+                                rows="15"
+                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary leading-relaxed"
+                                placeholder="支援 Markdown 語法：
+# 大標題
+**粗體字**
+- 列表項目
+[連結文字](網址)"
+                            ></textarea>
+                        </div>
+                        <button
+                            type="submit"
+                            class="w-full bg-[#F2994A] text-white font-bold py-3 rounded-lg hover:bg-orange-500 transition-colors text-lg mt-2"
+                        >
+                            + 新增發布
+                        </button>
+                    </form>
+                </div>
+
+                <div
+                    class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
+                >
+                    <h3
+                        class="text-lg font-bold text-slate-800 mb-4 border-b pb-2"
+                    >
+                        已發布公告管理
+                    </h3>
+                    <div id="news-list" class="space-y-4">
+                        <p class="text-slate-500 text-center py-8">載入中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import { auth, db } from "../firebase/client.js";
+    import {
+        signInWithEmailAndPassword,
+        onAuthStateChanged,
+        signOut,
+    } from "firebase/auth";
+    import {
+        collection,
+        addDoc,
+        getDocs,
+        deleteDoc,
+        doc,
+        query,
+        orderBy,
+    } from "firebase/firestore";
+
+    // DOM 元素選取
+    const loginSection = document.getElementById("login-section");
+    const adminSection = document.getElementById("admin-section");
+    const loginForm = document.getElementById("login-form");
+    const logoutBtn = document.getElementById("logout-btn");
+    const addNewsForm = document.getElementById("add-news-form");
+    const newsListContainer = document.getElementById("news-list");
+    const loginError = document.getElementById("login-error");
+
+    // 防呆機制：確保 HTML 元素都有抓到，解決 TS possibly 'null' 的警告
+    if (
+        !loginSection ||
+        !adminSection ||
+        !loginForm ||
+        !logoutBtn ||
+        !addNewsForm ||
+        !newsListContainer ||
+        !loginError
+    ) {
+        throw new Error("找不到必要的 DOM 元素");
+    }
+
+    // ================= 1. 監聽登入狀態 =================
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loginSection.classList.add("hidden");
+            adminSection.classList.remove("hidden");
+            loadNews();
+        } else {
+            loginSection.classList.remove("hidden");
+            adminSection.classList.add("hidden");
+        }
+    });
+
+    // ================= 2. 處理登入與登出 =================
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = (document.getElementById("email") as HTMLInputElement)
+            .value;
+        const password = (
+            document.getElementById("password") as HTMLInputElement
+        ).value;
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            loginError.classList.add("hidden");
+        } catch (error) {
+            console.error("Login failed:", error);
+            loginError.classList.remove("hidden");
+        }
+    });
+
+    logoutBtn.addEventListener("click", () => {
+        signOut(auth);
+    });
+
+    // ================= 3. 讀取並顯示公告 (Read) =================
+    async function loadNews() {
+        newsListContainer!.innerHTML =
+            '<p class="text-slate-500 text-center py-4">載入中...</p>';
+        try {
+            const q = query(collection(db, "news"), orderBy("date", "desc"));
+            const querySnapshot = await getDocs(q);
+
+            newsListContainer!.innerHTML = ""; // 清空
+
+            if (querySnapshot.empty) {
+                newsListContainer!.innerHTML =
+                    '<p class="text-slate-500 text-center py-4">目前沒有任何公告。</p>';
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const id = docSnap.id;
+
+                const newsItem = document.createElement("div");
+                newsItem.className =
+                    "flex justify-between items-start p-4 border border-slate-100 rounded-xl bg-slate-50 hover:bg-white transition-colors";
+                newsItem.innerHTML = `
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-white bg-slate-400 px-2 py-0.5 rounded">${data.date}</span>
+                <span class="text-xs font-bold text-primary bg-blue-50 px-2 py-0.5 rounded-full">${data.category}</span>
+              </div>
+              <h4 class="font-bold text-slate-800">${data.title}</h4>
+              <p class="text-sm text-slate-500 mt-1 line-clamp-1">${data.desc}</p>
+            </div>
+            <button data-id="${id}" class="delete-btn text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-1 rounded text-sm font-bold transition-colors">
+              刪除
+            </button>
+          `;
+                newsListContainer!.appendChild(newsItem);
+            });
+
+            // 綁定刪除按鈕事件
+            document.querySelectorAll(".delete-btn").forEach((btn) => {
+                btn.addEventListener("click", async (e) => {
+                    const docId = (e.currentTarget as HTMLElement).getAttribute(
+                        "data-id",
+                    );
+                    // 確認 docId 不是 null 才執行
+                    if (
+                        docId &&
+                        confirm("確定要刪除這筆公告嗎？此動作無法復原。")
+                    ) {
+                        await deleteNews(docId);
+                    }
+                });
+            });
+        } catch (error) {
+            console.error("Error loading news: ", error);
+            newsListContainer!.innerHTML =
+                '<p class="text-red-500 text-center py-4">讀取失敗，請檢查權限或連線。</p>';
+        }
+    }
+
+    // ================= 4. 新增公告 (Create) =================
+    addNewsForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const dateStr = (
+            document.getElementById("news-date") as HTMLInputElement
+        ).value;
+        const dateFormatted = dateStr.replace(/-/g, ".");
+        const category = (
+            document.getElementById("news-category") as HTMLSelectElement
+        ).value;
+        const title = (
+            document.getElementById("news-title") as HTMLInputElement
+        ).value;
+        const desc = (
+            document.getElementById("news-desc") as HTMLTextAreaElement
+        ).value;
+
+        try {
+            await addDoc(collection(db, "news"), {
+                date: dateFormatted,
+                category: category,
+                title: title,
+                desc: desc,
+                timestamp: new Date(),
+            });
+
+            alert("公告新增成功！");
+            (addNewsForm as HTMLFormElement).reset();
+            loadNews();
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            alert("新增失敗，請稍後再試。");
+        }
+    });
+
+    // ================= 5. 刪除公告 (Delete) =================
+    // 加上 id: string 的型別宣告，解決 implicit any 的警告
+    async function deleteNews(id: string) {
+        try {
+            await deleteDoc(doc(db, "news", id));
+            loadNews();
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+            alert("刪除失敗，請檢查權限。");
+        }
+    }
+</script>

@@ -1,34 +1,294 @@
 ---
-const news = [
-  { date: "2026.03.01", category: "公告", title: "競賽報名正式開跑", desc: "2026 年度行動通訊實務競賽即日起開放報名，歡迎全國大專院校學生踴躍參加。" },
-  { date: "2026.03.10", category: "活動", title: "競賽說明會場次公告", desc: "將於北中南三地舉辦線上說明會，詳細解說競賽規則與評分標準。" },
-  { date: "2026.03.15", category: "重要", title: "新增競賽主題組別", desc: "今年新增「智慧數位應用組」，鼓勵參賽者結合 AI 與大數據技術。" },
-];
+
 ---
 
-<section id="news" class="py-20 bg-white">
+<section id="news" class="py-20 bg-white relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
+    <div class="text-center mb-16 animate-fade-up">
       <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
         最新消息
-        <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></span>
+        <span
+          class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"
+        ></span>
       </h2>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      {news.map((item) => (
-        <div class="group bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-sm font-bold text-primary">{item.date}</span>
-            <span class="text-xs font-medium px-2 py-1 bg-bg-light text-primary-dark rounded-full">{item.category}</span>
-          </div>
-          <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
-          <p class="text-slate-600 mb-4 line-clamp-2">{item.desc}</p>
-          <a href="#" class="inline-flex items-center text-sm font-bold text-primary hover:text-primary-dark">
-            了解更多 <span class="ml-1 transition-transform group-hover:translate-x-1">→</span>
-          </a>
+    <div id="news-container" class="grid md:grid-cols-3 gap-8 mb-12">
+      <div class="col-span-full text-center py-12 text-slate-500 animate-pulse">
+        正在載入最新公告...
+      </div>
+    </div>
+
+    <div class="text-center animate-fade-up" style="animation-delay: 600ms;">
+      <a
+        href="/news"
+        class="inline-flex items-center justify-center px-8 py-3 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1"
+      >
+        更多消息
+      </a>
+    </div>
+  </div>
+
+  <div
+    id="news-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center"
+  >
+    <div
+      id="modal-backdrop"
+      class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+    >
+    </div>
+
+    <div
+      class="relative bg-white rounded-2xl shadow-2xl w-[90%] max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-fade-up m-4"
+    >
+      <div
+        class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50"
+      >
+        <div class="flex items-center gap-3">
+          <span
+            id="modal-date"
+            class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm"
+          ></span>
+          <span
+            id="modal-category"
+            class="text-xs font-bold px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full"
+          ></span>
         </div>
-      ))}
+        <button
+          class="close-modal-btn text-slate-400 hover:text-red-500 transition-colors p-2 -mr-2 outline-none"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path></svg
+          >
+        </button>
+      </div>
+
+      <div class="p-6 md:p-8 overflow-y-auto">
+        <h3
+          id="modal-title"
+          class="text-2xl font-bold text-slate-800 mb-6 leading-snug"
+        >
+        </h3>
+        <div
+          id="modal-content"
+          class="text-slate-600 leading-relaxed text-base md:text-lg markdown-body"
+        >
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import { db } from "../firebase/client.js";
+  import {
+    collection,
+    query,
+    orderBy,
+    limit,
+    getDocs,
+  } from "firebase/firestore";
+  import { marked } from "marked";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    marked.setOptions({ breaks: true });
+
+    const container = document.getElementById("news-container");
+    // 讓 marked 支援單次 Enter 自動換行
+    if (!container) return;
+
+    const modal = document.getElementById("news-modal");
+    const modalBackdrop = document.getElementById("modal-backdrop");
+    const closeBtns = document.querySelectorAll(".close-modal-btn");
+    const modalDate = document.getElementById("modal-date");
+    const modalCategory = document.getElementById("modal-category");
+    const modalTitle = document.getElementById("modal-title");
+    const modalContent = document.getElementById("modal-content");
+
+    const newsDataMap: Record<string, any> = {};
+
+    const closeModal = () => {
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    };
+
+    closeBtns.forEach((btn) => btn.addEventListener("click", closeModal));
+    if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
+
+    try {
+      const q = query(
+        collection(db, "news"),
+        orderBy("date", "desc"),
+        limit(3),
+      );
+      const querySnapshot = await getDocs(q);
+
+      container.innerHTML = "";
+
+      if (querySnapshot.empty) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 bg-slate-50 rounded-2xl border border-slate-100">目前尚無最新消息發布。</div>`;
+        return;
+      }
+
+      // 替換前：querySnapshot.forEach((doc) => { ... })
+      // 替換為以下的寫法：
+      let index = 0;
+      for (const doc of querySnapshot.docs) {
+        const data = doc.data();
+        const docId = doc.id;
+        newsDataMap[docId] = data;
+        const delay = (index + 1) * 150;
+
+        // 1. 先將 Markdown 解析成完整 HTML
+        const parsedDesc = await marked.parse(data.desc);
+
+        // 2. 建立一個隱藏元素，把 HTML 裡的「純文字」萃取出來
+        // 這樣外層的預覽卡片就不會被大標題或清單撐破版面了
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = parsedDesc;
+        const plainText = tempDiv.textContent || tempDiv.innerText || "";
+
+        const cardHTML = `
+          <div class="group bg-white border-2 border-slate-100 rounded-[1.5rem] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary flex flex-col h-full animate-fade-up" style="animation-delay: ${delay}ms;">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm">${data.date}</span>
+              <span class="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-500 rounded-full">${data.category}</span>
+            </div>
+            
+            <h3 class="text-xl font-bold text-slate-800 mb-4 group-hover:text-primary transition-colors">${data.title}</h3>
+            
+            <p class="news-content text-slate-500 mb-6 line-clamp-2 leading-relaxed text-sm transition-all duration-300">
+              ${plainText}
+            </p>
+            
+            <div class="mt-auto text-right z-10">
+              <button data-id="${docId}" class="expand-btn inline-flex items-center text-sm font-bold text-primary hover:text-blue-700 transition-colors cursor-pointer outline-none">
+                <span class="btn-text">顯示全文</span>
+                <span class="btn-icon ml-1 transition-transform group-hover:translate-x-1">→</span>
+              </button>
+            </div>
+          </div>
+        `;
+
+        container.insertAdjacentHTML("beforeend", cardHTML);
+        index++;
+      }
+
+      // 替換前：btn.addEventListener('click', (e) => {
+      // 替換為以下的寫法：
+
+      document.querySelectorAll(".expand-btn").forEach((btn) => {
+        // 在 (e) 前面加上 async！
+        btn.addEventListener("click", async (e) => {
+          const docId = (e.currentTarget as HTMLElement).getAttribute(
+            "data-id",
+          );
+          const data = docId ? newsDataMap[docId] : null;
+
+          if (
+            data &&
+            modal &&
+            modalDate &&
+            modalCategory &&
+            modalTitle &&
+            modalContent
+          ) {
+            modalDate.textContent = data.date;
+            modalCategory.textContent = data.category;
+            modalTitle.textContent = data.title;
+
+            // 這裡就能正常使用 await 了
+            modalContent.innerHTML = await marked.parse(data.desc);
+
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+          }
+        });
+      });
+    } catch (error) {
+      console.error("讀取失敗:", error);
+      container.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 bg-red-50 rounded-2xl border border-red-100">無法載入，請確認網路連線。</div>`;
+    }
+  });
+</script>
+
+<style is:global>
+  .markdown-body h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .markdown-body h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .markdown-body h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .markdown-body p {
+    margin-bottom: 1rem;
+  }
+  .markdown-body ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #475569;
+  }
+  .markdown-body ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #475569;
+  }
+  .markdown-body li {
+    margin-bottom: 0.25rem;
+  }
+  .markdown-body a {
+    color: #2563eb;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .markdown-body a:hover {
+    color: #1d4ed8;
+  }
+  .markdown-body strong {
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .markdown-body blockquote {
+    border-left: 4px solid #cbd5e1;
+    padding-left: 1rem;
+    color: #64748b;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+  .markdown-body code {
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.875em;
+    color: #ef4444;
+  }
+</style>

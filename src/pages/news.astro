@@ -1,0 +1,288 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="最新消息 - 2026 MCPC 行動通訊實務競賽">
+    <Navbar />
+
+    <div class="bg-slate-50 pt-32 pb-16 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1
+                class="text-4xl md:text-5xl font-black text-slate-800 tracking-wide mb-4"
+            >
+                最新消息
+            </h1>
+            <p class="text-slate-500 text-lg">
+                競賽相關公告、活動資訊與重要時程更新
+            </p>
+        </div>
+    </div>
+
+    <section class="py-16 bg-white min-h-[50vh] relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="all-news-container" class="grid md:grid-cols-3 gap-8">
+                <div
+                    class="col-span-full text-center py-12 text-slate-500 animate-pulse"
+                >
+                    正在載入所有公告...
+                </div>
+            </div>
+        </div>
+
+        <div
+            id="news-modal"
+            class="fixed inset-0 z-[100] hidden items-center justify-center"
+        >
+            <div
+                id="modal-backdrop"
+                class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+            >
+            </div>
+
+            <div
+                class="relative bg-white rounded-2xl shadow-2xl w-[90%] max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-fade-up m-4"
+            >
+                <div
+                    class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50"
+                >
+                    <div class="flex items-center gap-3">
+                        <span
+                            id="modal-date"
+                            class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm"
+                        ></span>
+                        <span
+                            id="modal-category"
+                            class="text-xs font-bold px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full"
+                        ></span>
+                    </div>
+                    <button
+                        class="close-modal-btn text-slate-400 hover:text-red-500 transition-colors p-2 -mr-2 outline-none"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path></svg
+                        >
+                    </button>
+                </div>
+
+                <div class="p-6 md:p-8 overflow-y-auto">
+                    <h3
+                        id="modal-title"
+                        class="text-2xl font-bold text-slate-800 mb-6 leading-snug"
+                    >
+                    </h3>
+                    <div
+                        id="modal-content"
+                        class="text-slate-600 leading-relaxed text-base md:text-lg markdown-body"
+                    >
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</Layout>
+
+<Footer />
+
+<script>
+    import { db } from "../firebase/client.js";
+    import { collection, query, orderBy, getDocs } from "firebase/firestore";
+    import { marked } from "marked";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const container = document.getElementById("all-news-container");
+        if (!container) return;
+
+        // 設定 marked 選項：允許單次 Enter 換行
+        marked.setOptions({ breaks: true });
+
+        const modal = document.getElementById("news-modal");
+        const modalBackdrop = document.getElementById("modal-backdrop");
+        const closeBtns = document.querySelectorAll(".close-modal-btn");
+        const modalDate = document.getElementById("modal-date");
+        const modalCategory = document.getElementById("modal-category");
+        const modalTitle = document.getElementById("modal-title");
+        const modalContent = document.getElementById("modal-content");
+
+        // 宣告型別，解決 TS 7053 錯誤
+        const newsDataMap: Record<string, any> = {};
+
+        const closeModal = () => {
+            if (!modal) return;
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "";
+        };
+
+        closeBtns.forEach((btn) => btn.addEventListener("click", closeModal));
+        if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
+
+        try {
+            // 抓取「所有」資料 (無 limit)
+            const q = query(collection(db, "news"), orderBy("date", "desc"));
+            const querySnapshot = await getDocs(q);
+
+            container.innerHTML = "";
+
+            if (querySnapshot.empty) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 bg-slate-50 rounded-2xl border border-slate-100">目前尚無最新消息發布。</div>`;
+                return;
+            }
+
+            let index = 0;
+            // 改用 for...of 迴圈，解決 await 不在 async 函數內的錯誤
+            for (const doc of querySnapshot.docs) {
+                const data = doc.data();
+                const docId = doc.id;
+                newsDataMap[docId] = data;
+
+                const delay = (index + 1) * 150;
+
+                // 解析 Markdown，並加上 await 解決 TS 2322 Promise 錯誤
+                const parsedDesc = await marked.parse(data.desc);
+
+                // 萃取純文字，避免卡片預覽版面破裂
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = parsedDesc;
+                const plainText =
+                    tempDiv.textContent || tempDiv.innerText || "";
+
+                const cardHTML = `
+          <div class="group bg-white border-2 border-slate-100 rounded-[1.5rem] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary flex flex-col h-full animate-fade-up" style="animation-delay: ${delay}ms;">
+            <div class="flex items-center justify-between mb-6">
+              <span class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm">${data.date}</span>
+              <span class="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-500 rounded-full">${data.category}</span>
+            </div>
+            
+            <h3 class="text-xl font-bold text-slate-800 mb-4 group-hover:text-primary transition-colors">${data.title}</h3>
+            
+            <p class="news-content text-slate-500 mb-6 line-clamp-2 leading-relaxed text-sm transition-all duration-300">
+              ${plainText}
+            </p>
+            
+            <div class="mt-auto text-right z-10">
+              <button data-id="${docId}" class="expand-btn inline-flex items-center text-sm font-bold text-primary hover:text-blue-700 transition-colors cursor-pointer outline-none">
+                <span class="btn-text">顯示全文</span> 
+                <span class="btn-icon ml-1 transition-transform group-hover:translate-x-1">→</span>
+              </button>
+            </div>
+          </div>
+        `;
+                container.insertAdjacentHTML("beforeend", cardHTML);
+                index++;
+            }
+
+            // 綁定「了解更多」的 Modal 彈出事件，使用 async (e)
+            document.querySelectorAll(".expand-btn").forEach((btn) => {
+                btn.addEventListener("click", async (e) => {
+                    const docId = (e.currentTarget as HTMLElement).getAttribute(
+                        "data-id",
+                    );
+                    const data = docId ? newsDataMap[docId] : null;
+
+                    if (
+                        data &&
+                        modal &&
+                        modalDate &&
+                        modalCategory &&
+                        modalTitle &&
+                        modalContent
+                    ) {
+                        modalDate.textContent = data.date;
+                        modalCategory.textContent = data.category;
+                        modalTitle.textContent = data.title;
+
+                        // Modal 展開時，塞入完整的 Markdown 轉譯 HTML
+                        modalContent.innerHTML = await marked.parse(data.desc);
+
+                        modal.classList.remove("hidden");
+                        modal.classList.add("flex");
+                        document.body.style.overflow = "hidden";
+                    }
+                });
+            });
+        } catch (error) {
+            console.error("讀取失敗:", error);
+            container.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 bg-red-50 rounded-2xl border border-red-100">無法載入，請確認網路連線。</div>`;
+        }
+    });
+</script>
+
+<style is:global>
+    .markdown-body h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #1e293b;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .markdown-body h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .markdown-body h3 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #334155;
+        margin-top: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+    .markdown-body p {
+        margin-bottom: 1rem;
+    }
+    .markdown-body ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+        color: #475569;
+    }
+    .markdown-body ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+        color: #475569;
+    }
+    .markdown-body li {
+        margin-bottom: 0.25rem;
+    }
+    .markdown-body a {
+        color: #2563eb;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+    .markdown-body a:hover {
+        color: #1d4ed8;
+    }
+    .markdown-body strong {
+        font-weight: 700;
+        color: #0f172a;
+    }
+    .markdown-body blockquote {
+        border-left: 4px solid #cbd5e1;
+        padding-left: 1rem;
+        color: #64748b;
+        font-style: italic;
+        margin-bottom: 1rem;
+    }
+    .markdown-body code {
+        background-color: #f1f5f9;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+        font-size: 0.875em;
+        color: #ef4444;
+    }
+</style>
