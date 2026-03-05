@@ -5,295 +5,1009 @@ const themes = [
     title: "智慧節能與物聯網應用組",
     items: [
       "主軸一、戶外/室內節能省電的物聯網應用 (使用「智慧節能數據管理與分析平台」進行開發)",
-      "主軸二、智慧物聯網節能技術開發 (使用「B5G O-RAN-Based AI 通訊平台」進行開發)"
+      "主軸二、智慧物聯網節能技術開發 (使用「B5G O-RAN-Based AI 通訊平台」進行開發)",
     ],
-    borderColor: "border-emerald-400", iconBg: "bg-emerald-50", decorationBg: "bg-emerald-50", iconSrc: "/images/internet.png" 
+    borderColor: "border-emerald-400",
+    iconBg: "bg-emerald-50",
+    decorationBg: "bg-emerald-50",
+    iconSrc: "/images/internet.png",
   },
   {
     title: "智慧指向性傳輸組",
     items: [
       "主軸一、雙天線陣列智慧指向性波束設計與控制 (使用「雙毫米波天線陣列平台」開發)",
-      "主軸二、雙天線陣列智慧指向性傳輸與應用 (使用「雙毫米波天線陣列平台」開發)"
+      "主軸二、雙天線陣列智慧指向性傳輸與應用 (使用「雙毫米波天線陣列平台」開發)",
     ],
-    borderColor: "border-purple-400", iconBg: "bg-purple-50", decorationBg: "bg-purple-50", iconSrc: "/images/hotspot.png"
+    borderColor: "border-purple-400",
+    iconBg: "bg-purple-50",
+    decorationBg: "bg-purple-50",
+    iconSrc: "/images/hotspot.png",
   },
   {
     title: "智慧數位應用組",
     items: [
       "主軸一、數位孿生創新應用 (使用 AR/VR 沉浸式應用實作平台進行開發)",
-      "主軸二、延展實境創新應用 (使用 B5G 沉浸式智慧醫療行動通訊平台進行開發)"
+      "主軸二、延展實境創新應用 (使用 B5G 沉浸式智慧醫療行動通訊平台進行開發)",
     ],
-    borderColor: "border-sky-400", iconBg: "bg-sky-50", decorationBg: "bg-sky-50", iconSrc: "/images/virtual-reality.png"
-  }
+    borderColor: "border-sky-400",
+    iconBg: "bg-sky-50",
+    decorationBg: "bg-sky-50",
+    iconSrc: "/images/virtual-reality.png",
+  },
 ];
 
-// 2. 評分標準資料
-const criteria = [
-  { percent: "40%", title: "技術實作", desc: "系統架構完整度與技術難度", color: "text-blue-600 border-blue-200" },
-  { percent: "30%", title: "創新創意", desc: "原創性與解決方案之獨特性", color: "text-sky-600 border-sky-200" },
-  { percent: "20%", title: "應用價值", desc: "市場潛力與實際應用可行性", color: "text-indigo-600 border-indigo-200" },
-  { percent: "10%", title: "簡報表現", desc: "口語表達能力與問答邏輯", color: "text-slate-600 border-slate-200" },
+// 2. 評分標準資料 (拆分為初賽與決賽)
+const prelimCriteria = [
+  {
+    percent: 20,
+    percentText: "20%",
+    title: "企劃書與簡報",
+    desc: "",
+    barColor: "bg-sky-300",
+  },
+  {
+    percent: 20,
+    percentText: "20%",
+    title: "設計可行性",
+    desc: "",
+    barColor: "bg-sky-400",
+  },
+  {
+    percent: 20,
+    percentText: "20%",
+    title: "設計創意性",
+    desc: "",
+    barColor: "bg-blue-400",
+  },
+  {
+    percent: 40,
+    percentText: "40%",
+    title: "系統架構完整性",
+    desc: "(含競賽平台關聯性)",
+    barColor: "bg-blue-600",
+  },
 ];
 
-// 3. 重要日程資料
+const finalCriteria = [
+  {
+    percent: 20,
+    percentText: "20%",
+    title: "作品設計測試文件",
+    desc: "",
+    barColor: "bg-yellow-300",
+  },
+  {
+    percent: 20,
+    percentText: "20%",
+    title: "簡報表現",
+    desc: "",
+    barColor: "bg-amber-400",
+  },
+  {
+    percent: 60,
+    percentText: "60%",
+    title: "實體展示",
+    desc: "",
+    barColor: "bg-amber-500",
+  },
+];
+
+// 3. 競賽獎勵資料 (若有變更金額，請直接在此修改)
+const prizes = [
+  {
+    amount: "NT$ 50,000",
+    title: "第一名",
+    desc: "每人獎狀乙紙",
+    icon: "/images/1st-prize.png",
+    bgClass: "bg-gradient-to-r from-yellow-50 to-white",
+    borderClass: "border-yellow-200",
+    textClass: "text-yellow-600",
+    hoverClass:
+      "hover:border-yellow-400 hover:shadow-[0_0_15px_rgba(234,179,8,0.2)] hover:-translate-y-1",
+  },
+  {
+    amount: "NT$ 30,000",
+    title: "第二名",
+    desc: "每人獎狀乙紙",
+    icon: "/images/2nd-place.png",
+    bgClass: "bg-gradient-to-r from-slate-50 to-white",
+    borderClass: "border-slate-300",
+    textClass: "text-slate-500",
+    hoverClass:
+      "hover:border-slate-400 hover:shadow-[0_0_15px_rgba(148,163,184,0.2)] hover:-translate-y-1",
+  },
+  {
+    amount: "NT$ 10,000",
+    title: "第三名",
+    desc: "每人獎狀乙紙",
+    icon: "/images/3rd-place.png",
+    bgClass: "bg-gradient-to-r from-orange-50 to-white",
+    borderClass: "border-orange-200",
+    textClass: "text-orange-600",
+    hoverClass:
+      "hover:border-orange-400 hover:shadow-[0_0_15px_rgba(249,115,22,0.2)] hover:-translate-y-1",
+  },
+  {
+    amount: "NT$ 5,000",
+    title: "佳作 (2 隊)",
+    desc: "每人獎狀乙紙",
+    icon: "/images/medal.png",
+    bgClass: "bg-slate-50",
+    borderClass: "border-slate-100",
+    textClass: "text-slate-800",
+    hoverClass: "hover:border-slate-300 hover:-translate-y-1",
+  },
+];
+
+// 4. 重要日程資料
 const dates = [
-  { title: "線上報名", date: "即日起~114.09.26", desc: "延長至114年9月26日(五)晚上23:59止" },
-  { title: "線上說明會", date: "114.07.03", desc: "上午10-12點，使用Teams會議室" },
-  { title: "競賽平台培訓營", date: "114.07~08月", desc: "期間舉辦六場培訓營" },
-  { title: "初賽文件截止收件", date: "114.10.07", desc: "中午12點前" },
-  { title: "入圍決賽公告", date: "114.10.27", desc: "公布於競賽網頁" },
-  { title: "決賽文件截止收件", date: "114.12.01", desc: "下午5點前" },
-  { title: "決賽環境架設場布", date: "114.12.05", desc: "於元智大學" },
-  { title: "決賽與頒獎典禮", date: "114.12.06", desc: "於元智大學進行實體展示" },
-  { title: "得獎公告", date: "114.12.13", desc: "公布於競賽網頁" },
+  {
+    title: "線上報名",
+    date: "即日起 ~ 114.09.26",
+    desc: "延長至晚上 23:59 止",
+  },
+  {
+    title: "線上說明會",
+    date: "114.07.03",
+    desc: "10:00 - 12:00 / Teams 會議室",
+  },
+  {
+    title: "培訓營 / 收件截止",
+    date: "114.07 ~ 10.07",
+    desc: "初賽企劃書與簡報上傳截止",
+  },
+  {
+    title: "入圍公告 / 決賽",
+    date: "114.10.27 ~ 12.06",
+    desc: "決賽地點：元智大學",
+  },
 ];
 
-// 4. 20條注意事項
+// 5. 注意事項完整資料 (結構化處理以便精準對齊)
 const rulesList = [
-  "參賽隊伍未於期限完成或未依規定繳交各項參賽文件及相關資料者，主辦單位得取消其參賽資格。",
-  "參賽作品必須由參賽隊伍自行創作，不得抄襲或委託他人代勞，也不得侵犯著作權、專利權、智慧財產權或其他權利。參賽者若違反此規定，需自行承擔法律責任，主辦單位不負責任。如果經檢舉、告發或查證屬實，將取消其參賽和得獎資格，並追回已發放的獎金和獎狀。",
-  "參賽作品在創作過程中使用人工智慧(AI)或生成式人工智慧作為輔助工具，而非用於產生最終設計成果，參賽者必須在初賽文件或決賽簡報中揭露使用過程或步驟並進行標注。若經查核發現使用AI但未標明，主辦單位有權重新評分或不予計分。此外，若經檢舉屬實，將取消其參賽資格及得獎資格，並追回所得獎金及獎狀。",
-  "參賽者同意授權主辦單位及其指定的第三方，無償且不限時間及次數，使用其參賽作品及提案企劃書內容。這些使用方式包括但不限於紙本、實體、影音、網站及其他媒體形式的公布、展示、出版、刊登、發表和宣傳，並用於推廣及學校教學教材等非營利用途。參賽者同意不對主辦單位及其指定第三方行使智慧財產人格權（包括專利及著作人格權）。",
-  "參賽隊伍若以同一作品參加其他競賽並獲得獎項，不得參加本競賽。若經查證違反此規定，將立即取消其得獎資格，且不得提出異議。",
-  "參賽隊伍若以同一作品同時報名本競賽和其他競賽，並在本競賽決賽前接獲其他競賽通知進入該競賽之決賽（或複賽），必須放棄參加其他競賽，才能參加本競賽決賽。若被發現違反此規定，將取消其得獎資格，不得提出異議。",
-  "如果參賽作品已經在其他競賽中獲得獎勵，但經過顯著改進或修正（由競賽評審委員認定），則可以報名參加本次競賽。在初賽文件或決賽簡報中，必須詳細說明本次參賽作品與之前獲獎作品之間的不同之處。若被發現違反此規定，主辦單位將直接取消其得獎資格，不得提出任何異議。",
-  "如果參賽作品已接受國內外機構的經費補助，應在初賽文件或決賽簡報中註明補助單位及補助金額。此外，若有技術合作單位，也應一併揭露。",
-  "請勿使用已商品化作品參加本競賽。",
-  "如果參賽隊伍提出異議，必須提供具體證明。除非能具體證明其他作品違反本作業須知規定，否則不得提出其他異議。",
-  "晉級決賽之參賽隊伍必須依主辦單位規定的時間與地點參加決賽實地測試，未於指定時間到場者，視同放棄。",
-  "決賽當天提供電源和無線網路，主辦單位不提供電腦給參賽者，請自行攜帶筆記型電腦及所需設備。",
-  "獲獎隊伍將個別通知並於活動網頁公告之，未獲獎者不另行通知。",
-  "參賽隊伍同意活動期間，由主辦單位全程拍攝及錄製相關之活動及影像並得予以呈現。",
-  "參賽者同意主辦單位基於競賽評選工作及競賽活動運作等相關目的所需，茲同意蒐集、處理及利用其個人資料（遵循個人資料保護法規範，詳見報名同意書）。",
-  "如於競賽期間發生颱風、水災地震等重大天然災害、法定傳染病疫情、空襲、火災等重大事故時，競賽是否延期以主辦單位公告為主，主辦單位有權更改賽制或變更審查方式，盡力維護參賽者權益。",
-  "為因應嚴重特殊傳染性疾病發生，主辦單位得配合政府相關規定或疫情發展狀況採取對應防疫措施，各隊伍應隨時注意主辦單位公告資訊並遵守相關規定，如有違規之情事經勸阻無效者，將取消入場及競賽資格，以維護公共衛生安全。",
-  "凡支領教育部「行動通訊主題式跨層次系統整合教學聯盟計畫」、「下世代行動通訊垂直應用示範基地計畫」人事費之同學，不得報名參加本競賽。",
-  "參賽證明如有需要，請以團隊為單位自行向主辦單位提出申請。",
-  "本作業須知如有未盡事宜，得隨時修正之，並公告於競賽網頁。"
+  {
+    text: "參賽隊伍未於期限完成或未依規定繳交各項參賽文件及相關資料者，主辦單位得取消其參賽資格。",
+  },
+  {
+    text: "參賽作品必須由參賽隊伍自行創作，不得抄襲或委託他人代勞，也不得侵犯著作權、專利權、智慧財產權或其他權利。參賽者若違反此規定，需自行承擔法律責任，主辦單位不負責任。如果經檢舉、告發或查證屬實，將取消其參賽和得獎資格，並追回已發放的獎金和獎狀。",
+  },
+  {
+    text: "參賽作品在創作過程中使用人工智慧(Artificial Intelligence，以下簡稱AI)或生成式人工智慧(生成式AI)作為輔助工具，而非用於產生最終設計成果，參賽者必須在初賽文件或決賽簡報中揭露使用過程或步驟並進行標注。若經查核發現使用AI但未在初賽文件或決賽簡報中標明，主辦單位有權重新評分或不予計分。此外，若經檢舉、告發或查證屬實，將取消其參賽資格及得獎資格，並追回所得獎金及獎狀。",
+  },
+  {
+    text: "參賽者同意授權主辦單位及其指定的第三方，無償且不限時間及次數，使用其參賽作品及提案企劃書內容。這些使用方式包括但不限於紙本、實體、影音、網站及其他媒體形式的公布、展示、出版、刊登、發表和宣傳，並用於推廣及學校教學教材等非營利用途。參賽者同意不對主辦單位及其指定第三方行使智慧財產人格權（包括專利及著作人格權）。",
+  },
+  {
+    text: "參賽隊伍若以同一作品參加其他競賽並獲得獎項，不得參加本競賽。若經查證違反此規定，將立即取消其得獎資格，且不得提出異議。",
+  },
+  {
+    text: "參賽隊伍若以同一作品同時報名本競賽和其他競賽，並在本競賽決賽前接獲其他競賽通知進入該競賽之決賽（或複賽），必須放棄參加其他競賽，才能參加本競賽決賽。若被發現違反此規定，將取消其得獎資格，不得提出異議。",
+  },
+  {
+    text: "如果參賽作品已經在其他競賽中獲得獎勵，但經過顯著改進或修正（由競賽評審委員認定），則可以報名參加本次競賽。在初賽文件或決賽簡報中，必須詳細說明本次參賽作品與之前獲獎作品之間的不同之處。若被發現違反此規定，主辦單位將直接取消其得獎資格，不得提出任何異議。",
+  },
+  {
+    text: "如果參賽作品已接受國內外機構的經費補助，應在初賽文件或決賽簡報中註明補助單位及補助金額。此外，若有技術合作單位，也應一併揭露。",
+  },
+  { text: "請勿使用已商品化作品參加本競賽。" },
+  {
+    text: "如果參賽隊伍提出異議，必須提供具體證明。除非能具體證明其他作品違反本作業須知規定，否則不得提出其他異議。",
+  },
+  {
+    text: "晉級決賽之參賽隊伍必須依主辦單位規定的時間與地點參加決賽實地測試，未於指定時間到場者，視同放棄。",
+  },
+  {
+    text: "決賽當天提供電源和無線網路，主辦單位不提供電腦給參賽者，請自行攜帶筆記型電腦及所需設備。",
+  },
+  { text: "獲獎隊伍將個別通知並於活動網頁公告之，未獲獎者不另行通知。" },
+  {
+    text: "參賽隊伍同意活動期間，由主辦單位全程拍攝及錄製相關之活動及影像並得予以呈現。",
+  },
+  {
+    text: "參賽者同意主辦單位基於競賽評選工作及競賽活動運作等相關目的所需，茲同意以下事項(參賽者必須同意主辦單位及執行單位蒐集、處理及利用其個人資料)：",
+    subItems: [
+      {
+        title: "(一) 個人資料之蒐集目的和類別",
+        items: [
+          "1. 主辦單位因執行業務及活動蒐集您的個人資料。",
+          "2. 主辦單位所蒐集您的個人資料類別，包括姓名、出生年月日、地址、身分證統一編號、學歷、帳戶資料、聯絡地址、住家電話、行動電話、電子信箱、任職單位及其他得以直接或間接方式識別個人資料之身分文件等相關資料。個人資料之處理或利用主辦單位遵循「個人資料保護法」與相關法令規範並依據主辦單位隱私權政策聲明，蒐集、處理及利用您的個人資料。",
+        ],
+      },
+      {
+        title:
+          "(二) 主辦單位利用您的個人資料之方式為書面、電子、網際網路或其他適當方式。請務必提供完整正確的個人資料，若您不提供您的個人資料或提供不完整、有錯誤，將可能影響您相關的權益。您依個人資料保護法第3條規定得行使之權利及方式。",
+        items: [
+          "1. 查詢或請求閱覽、請求製給複製本，主辦單位得酌收必要成本費用。",
+          "2. 請求補充或更正。",
+          "3. 請求停止蒐集、處理或利用您的個人資料，或請求刪除您的個人資料，但因主辦單位執行職務或業務所必須者，不在此限。",
+          "4. 行使權利之方式：可親自至主辦單位或請代理人填委託書申請。",
+          "5. 若您行使上述權利，而影響權益時，主辦單位將不負相關賠償責任。如您對上述事項有相關疑問時，請與主辦單位聯繫。",
+        ],
+      },
+    ],
+  },
+  {
+    text: "如於競賽期間發生颱風、水災地震等重大天然災害、法定傳染病疫情、空襲、火災等重大事故時，競賽是否延期以主辦單位公告為主，主辦單位有權更改賽制或變更審查方式，盡力維護參賽者權益。",
+  },
+  {
+    text: "為因應嚴重特殊傳染性疾病發生，主辦單位得配合政府相關規定或疫情發展狀況採取對應防疫措施，各隊伍應隨時注意主辦單位公告資訊並遵守相關規定，如有違規之情事經勸阻無效者，將取消入場及競賽資格，以維護公共衛生安全。",
+  },
+  {
+    text: "凡支領教育部「行動通訊主題式跨層次系統整合教學聯盟計畫」、「下世代行動通訊垂直應用示範基地計畫」人事費之同學，不得報名參加本競賽。",
+  },
+  { text: "參賽證明如有需要，請以團隊為單位自行向主辦單位提出申請。" },
+  { text: "本作業須知如有未盡事宜，得隨時修正之，並公告於競賽網頁。" },
 ];
+
+// 將數字轉換為中文大寫 (一、二、三...)
+const toChineseNum = (num: number) => {
+  const chineseNums = [
+    "零",
+    "一",
+    "二",
+    "三",
+    "四",
+    "五",
+    "六",
+    "七",
+    "八",
+    "九",
+    "十",
+    "十一",
+    "十二",
+    "十三",
+    "十四",
+    "十五",
+    "十六",
+    "十七",
+    "十八",
+    "十九",
+    "二十",
+    "二十一",
+    "二十二",
+  ];
+  return chineseNums[num] || num.toString();
+};
 ---
 
-<section id="rules" class="py-20 bg-slate-50 relative">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
+<section id="rules" class="py-24 bg-slate-50 relative overflow-hidden">
+  <div
+    class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent opacity-50"
+  >
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-20 animate-fade-up">
+      <h2 class="text-4xl font-bold text-slate-800 tracking-tight">
         競賽辦法
-        <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-16 h-1 bg-primary rounded-full"></span>
+        <div class="mt-4 w-12 h-1.5 bg-primary mx-auto rounded-full"></div>
       </h2>
     </div>
 
-    <div class="bg-white border-2 border-slate-100 rounded-2xl p-8 mb-16 shadow-sm">
-      <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center">
-        <!-- <img src="/images/target.png" alt="競賽目的" class="w-7 h-7 mr-3 object-contain drop-shadow-sm" /> -->
-        競賽目的
-      </h3>
-      <p class="text-[1.05rem] sm:text-lg text-slate-600 leading-relaxed mb-8 text-justify">
-        因應行動通訊技術演進及產業需求，將藉由建立以重點技術主題為核心的全國性跨校教學聯盟，發展推廣具跨層次系統整合特性之教學資源，並強化與國際趨勢及產業需求接軌，透過共享教學資源以提高我國大學校院下世代行動通訊技術教學能量，有效培育具系統觀及國際觀的行動通訊專業人才並將所學實務應用。本競賽將藉由教育部下世代行動通訊技術人才培育計畫所發展的五個平台，並規劃三大主題提供參賽者進行創意發想，不同的題目主軸使用不同平台進行開發，讓參賽團隊可以進行多元創新設計與應用。
-      </p>
+    <div class="grid lg:grid-cols-2 gap-8 mb-20">
+      <div
+        class="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col h-full relative overflow-hidden"
+      >
+        <div
+          class="absolute -bottom-6 -right-6 opacity-[0.03] pointer-events-none"
+        >
+          <svg
+            width="160"
+            height="160"
+            viewBox="0 0 160 160"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <pattern
+              id="dots"
+              x="0"
+              y="0"
+              width="20"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="2" cy="2" r="2" fill="#0f172a"></circle>
+            </pattern>
+            <rect width="160" height="160" fill="url(#dots)"></rect>
+          </svg>
+        </div>
+        <div
+          class="absolute -bottom-12 -right-12 w-32 h-32 rounded-full border-[16px] border-primary/5 pointer-events-none"
+        >
+        </div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-8 relative z-10">
+          競賽目的
+        </h3>
+        <div class="flex-grow relative z-10">
+          <p class="text-slate-600 leading-loose text-lg">
+            因應行動通訊技術演進及產業需求，將藉由建立以重點技術主題為核心的全國性跨校教學聯盟，發展推廣具跨層次系統整合特性之教學資源，並強化與國際趨勢及產業需求接軌，透過共享教學資源以提高我國大學校院下世代行動通訊技術教學能量，有效培育具系統觀及國際觀的行動通訊專業人才並將所學實務應用。本競賽將藉由教育部下世代行動通訊技術人才培育計畫所發展的五個平台，並規劃三大主題提供參賽者進行創意發想，不同的題目主軸使用不同平台進行開發，讓參賽團隊可以進行多元創新設計與應用。
+          </p>
+        </div>
+      </div>
 
-      <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center">
-        <!-- <img src="/images/building.png" alt="辦理單位" class="w-7 h-7 mr-3 object-contain drop-shadow-sm" /> -->
-        競賽辦理單位
-      </h3>
-      <div class="grid md:grid-cols-3 gap-6 text-slate-600 text-base bg-slate-50 p-6 rounded-xl border border-slate-100">
-        <div><strong class="text-slate-700 block mb-1">指導單位</strong>教育部、下世代行動通訊技術人才培育計畫辦公室</div>
-        <div><strong class="text-slate-700 block mb-1">主辦單位</strong>次世代超高速傳輸系統整合教學聯盟中心</div>
-        <div><strong class="text-slate-700 block mb-1">協辦單位</strong>國立中興大學、國立虎尾科技大學、國立陽明交通大學、國立清華大學、國立臺灣科技大學、元智大學、長庚大學</div>
+      <div
+        class="bg-[#1a4f6e] rounded-3xl p-8 lg:p-12 shadow-lg border border-white/10 flex flex-col h-full"
+      >
+        <h3 class="text-2xl font-bold text-white mb-8">辦理單位</h3>
+        <div class="flex-grow space-y-8">
+          <div>
+            <p
+              class="text-sky-400 text-sm font-bold uppercase tracking-widest mb-2"
+            >
+              指導單位
+            </p>
+            <p class="text-white text-lg font-medium leading-relaxed">
+              教育部、下世代行動通訊技術人才培育計畫辦公室
+            </p>
+          </div>
+          <div>
+            <p
+              class="text-sky-400 text-sm font-bold uppercase tracking-widest mb-2"
+            >
+              主辦單位
+            </p>
+            <p class="text-white text-lg font-medium leading-relaxed">
+              次世代超高速傳輸系統整合教學聯盟中心
+            </p>
+          </div>
+          <div>
+            <p
+              class="text-sky-400 text-sm font-bold uppercase tracking-widest mb-2"
+            >
+              協辦單位
+            </p>
+            <p class="text-white text-lg font-medium leading-relaxed">
+              國立中興大學、國立虎尾科技大學、國立陽明交通大學、國立清華大學、國立臺灣科技大學、元智大學、長庚大學
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="w-1.5 h-8 bg-primary rounded-full mr-3"></span>
-        競賽主題
-      </h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {themes.map((theme) => (
-          <div class="bg-white rounded-[2rem] p-8 border border-slate-200 hover:border-primary transition-all duration-300 group flex flex-col h-full shadow-sm">
-            <div class={`w-16 h-16 ${theme.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
-              <img src={theme.iconSrc} alt={theme.title} class="w-8 h-8 object-contain" />
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">競賽主題</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        {
+          themes.map((theme) => (
+            <div class="bg-white rounded-[2rem] p-8 border border-slate-200 hover:border-primary/50 hover:shadow-xl transition-all duration-500 group flex flex-col h-full relative overflow-hidden">
+              <div
+                class={`absolute -bottom-10 -right-10 w-32 h-32 rounded-full ${theme.decorationBg} opacity-40 group-hover:scale-150 transition-transform duration-700`}
+              />
+              <div
+                class={`w-14 h-14 ${theme.iconBg} rounded-2xl flex items-center justify-center mb-8 shadow-inner`}
+              >
+                <img
+                  src={theme.iconSrc}
+                  alt={theme.title}
+                  class="w-7 h-7 object-contain"
+                />
+              </div>
+              <h4 class="text-xl font-bold text-slate-800 mb-6 group-hover:text-primary transition-colors">
+                {theme.title}
+              </h4>
+              <ul class="space-y-4 relative z-10 flex-grow">
+                {theme.items.map((item) => (
+                  <li class="text-base text-slate-600 leading-relaxed flex items-start">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary/40 mt-2 mr-3 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h4 class="text-xl font-bold text-slate-800 mb-4">{theme.title}</h4>
-            <ul class="space-y-3 text-slate-600 text-base leading-relaxed flex-grow">
-              {theme.items.map(item => (
-                <li class="flex items-start">
-                  <span class="text-primary mr-2 mt-0.5">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">參賽資格</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="mb-10">
+          <p
+            class="text-xl text-slate-700 font-bold mb-4 flex items-center gap-3"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            大專校院在校生 或 應屆（113學年度）畢業生組隊參加
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-slate-50/50 rounded-2xl p-8 border border-slate-100">
+            <h4 class="text-lg font-bold text-primary mb-6 flex items-center">
+              <i class="fa-solid fa-users text-sm"></i> 隊伍組成規定
+            </h4>
+            <ul class="space-y-4 text-slate-600 leading-relaxed">
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-primary font-bold mt-0.5">01.</span>
+                <p>
+                  每所學校報名隊數<strong
+                    class="text-slate-800 underline decoration-primary/30 decoration-4"
+                    >不限</strong
+                  >。
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-primary font-bold mt-0.5">02.</span>
+                <p>
+                  每隊指導教師 <strong class="text-slate-800 font-black"
+                    >1</strong
+                  > 人，隊員 <strong class="text-slate-800 font-black"
+                    >1 至 6</strong
+                  > 人（開放跨校組隊）。
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-primary font-bold mt-0.5">03.</span>
+                <p>
+                  需推派 <strong class="text-slate-800 font-black">1</strong> 位隊員擔任隊長，統籌報名與聯絡事宜。
+                </p>
+              </li>
             </ul>
           </div>
-        ))}
-      </div>
-    </div>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="w-1.5 h-8 bg-sky-500 rounded-full mr-3"></span>
-        參賽資格
-      </h3>
-      <div class="bg-white border-2 border-slate-100 rounded-2xl p-6 sm:p-8 shadow-sm">
-        <p class="text-lg font-bold text-slate-700 mb-4">由大專校院在校生或應屆（113學年度）畢業生組隊參加：</p>
-        <ul class="space-y-4 text-slate-600 text-[1.05rem]">
-          <li class="flex items-start">
-            <span class="bg-sky-100 text-sky-600 font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0 mr-3 mt-0.5 text-sm">1</span>
-            <span class="leading-relaxed">每所學校報名隊數不限。每隊指導教師 1 人，隊員 1 至 6 人（可以跨校），每隊應推派 1 位隊員擔任隊長並統籌相關事宜。</span>
-          </li>
-          <li class="flex items-start">
-            <span class="bg-sky-100 text-sky-600 font-bold rounded-full w-7 h-7 flex items-center justify-center shrink-0 mr-3 mt-0.5 text-sm">2</span>
-            <span class="leading-relaxed">每位學生僅可報名1隊，每位指導教師指導至多3隊。</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-8 mb-16">
-      <div class="bg-white border-2 border-slate-100 rounded-2xl p-8 shadow-sm relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full -z-10"></div>
-        <h4 class="text-2xl font-black text-slate-800 mb-4 flex items-center">
-          <!-- <img src="/images/document.png" alt="初賽" class="w-8 h-8 mr-3 object-contain drop-shadow-sm" /> -->
-          初賽
-        </h4>
-        <p class="text-[1.05rem] text-slate-600 leading-relaxed mb-4">
-          初賽採<strong class="text-primary">文件審查</strong>，於 114年10月7日(二) 中午12點前上傳「企劃書+簡報」至競賽網頁。由評審委員依各參賽隊伍所繳交之企劃書、簡報進行評選，每項競賽主題擇優選出參加決賽實地測試評審決賽晉級隊伍，並於 114年10月27日(一) 在競賽網頁公告隊伍名單。
-        </p>
-        <div class="bg-orange-50 text-orange-800 text-base p-4 rounded-xl border border-orange-100 leading-relaxed">
-          <strong class="flex items-center mb-1">
-            <!-- <img src="/images/warning.png" alt="注意" class="w-5 h-5 mr-2 object-contain" /> -->
-            注意事項：
-          </strong>
-          入圍作品隊數，經「競賽評審委員會議」依參賽隊伍數量差異、各項主題性質不同、主題難易度與作品優異情形議定，必要時可從缺、調整或減少隊數。
+          <div class="bg-slate-50/50 rounded-2xl p-8 border border-slate-100">
+            <h4 class="text-lg font-bold text-rose-500 mb-6 flex items-center">
+              <i class="fa-solid fa-circle-exclamation text-sm"></i> 報名限制事項
+            </h4>
+            <ul class="space-y-6 text-slate-600 leading-relaxed">
+              <li class="flex items-start gap-4">
+                <span class="font-mono text-rose-500 font-bold mt-0.5">01.</span
+                >
+                <p>
+                  每位學生僅可報名 <strong class="text-slate-800 font-black"
+                    >1</strong
+                  > 支隊伍。
+                </p>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="font-mono text-rose-500 font-bold mt-0.5">02.</span
+                >
+                <p>
+                  每位指導教師至多指導 <strong class="text-slate-800 font-black"
+                    >3</strong
+                  > 支隊伍。
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      
-      <div class="bg-white border-2 border-slate-100 rounded-2xl p-8 shadow-sm relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full -z-10"></div>
-        <h4 class="text-2xl font-black text-slate-800 mb-4 flex items-center">
-          <!-- <img src="/images/trophy.png" alt="決賽" class="w-8 h-8 mr-3 object-contain drop-shadow-sm" /> -->
-          決賽
-        </h4>
-        <p class="text-[1.05rem] text-slate-600 leading-relaxed mb-4">
-          決賽採<strong class="text-primary">實地測試</strong>，由評審委員實地評分，並於決賽現場展示系統及問題詢答。<br/><br/>
-          入圍隊伍須於 114年12月1日(一) 下午5點前上傳「決賽簡報+作品設計與測試文件+ 3-5 分鐘作品介紹與成果展示影片」至競賽網頁。若須更換隊員，最晚應於 114年11月19日(三) 下午5點前提出申請。
-        </p>
-        <ul class="text-base text-slate-600 space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
-          <li><strong>時間：</strong>114 年 12 月 6 日 (六)</li>
-          <li><strong>地點：</strong>元智大學遠東有庠通訊大樓 (元智七館)</li>
-        </ul>
-      </div>
     </div>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="w-1.5 h-8 bg-emerald-500 rounded-full mr-3"></span>
-        評審標準
-      </h3>
-      <div class="mb-6 text-[1.05rem] text-slate-600">
-        <p>一、主辦單位遴聘業界專家、學術單位或社群專家組成評選委員會，擔任競賽各項主題之評審委員。</p>
-        <p>二、競賽分文件審查初賽及實地測試評審決賽兩階段進行，其評分原則如下：</p>
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">初賽</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {criteria.map((item) => (
-          <div class={`bg-white border-2 rounded-2xl p-6 text-center shadow-sm ${item.color}`}>
-            <div class={`text-4xl font-black mb-2 ${item.color.split(' ')[0]}`}>{item.percent}</div>
-            <div class="text-slate-800 font-bold text-lg mb-2">{item.title}</div>
-            <div class="text-slate-600 text-base leading-relaxed">{item.desc}</div>
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden text-left"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="mb-10">
+          <p
+            class="text-xl text-slate-700 font-bold mb-4 flex items-center gap-3"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            初賽方式：文件審查
+          </p>
+          <div class="text-lg text-slate-600 leading-loose space-y-2 mb-10">
+            <p>
+              請於 <strong class="text-slate-900 font-bold"
+                >114年10月7日(一) 中午12點前</strong
+              > 上傳「企劃書+簡報」至競賽網頁。由評審委員依各參賽隊伍所繳交之企劃書、簡報進行評選。
+            </p>
+            <p>
+              每項競賽主題擇優選出晉級隊伍，並於 <strong
+                class="text-slate-900 font-bold">114年10月27日(一)</strong
+              > 在競賽網頁公告入圍名單。
+            </p>
           </div>
-        ))}
-      </div>
-    </div>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="w-1.5 h-8 bg-indigo-500 rounded-full mr-3"></span>
-        競賽獎勵
-      </h3>
-      <div class="bg-white border-2 border-slate-100 rounded-3xl p-8 shadow-sm">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div class="bg-slate-50 rounded-2xl p-6 text-center border border-yellow-200">
-            <div class="flex justify-center mb-4">
-              <img src="/images/1st-prize.png" alt="金牌" class="w-14 h-14 object-contain drop-shadow-md" />
+          <h4
+            class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-primary pl-3"
+          >
+            各組預計晉級決賽隊數
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div
+              class="border border-slate-100 rounded-xl p-5 flex justify-between items-center bg-slate-50/50"
+            >
+              <span class="text-slate-700 font-bold text-base"
+                >智慧節能與物聯網應用組</span
+              >
+              <span class="text-primary font-black text-2xl"
+                >10 <span class="text-sm font-normal text-slate-500">隊</span
+                ></span
+              >
             </div>
-            <div class="text-xl font-bold text-yellow-600 mb-1">金牌獎 (1隊)</div>
-            <div class="text-3xl font-black text-slate-800 mb-1">NT$ 100,000</div>
-            <div class="text-sm font-medium text-slate-500">及每人獎狀乙紙</div>
-          </div>
-          <div class="bg-slate-50 rounded-2xl p-6 text-center border border-slate-300">
-            <div class="flex justify-center mb-4">
-              <img src="/images/2nd-place.png" alt="銀牌" class="w-14 h-14 object-contain drop-shadow-md" />
+            <div
+              class="border border-slate-100 rounded-xl p-5 flex justify-between items-center bg-slate-50/50"
+            >
+              <span class="text-slate-700 font-bold text-base"
+                >智慧指向性傳輸組</span
+              >
+              <span class="text-primary font-black text-2xl"
+                >10 <span class="text-sm font-normal text-slate-500">隊</span
+                ></span
+              >
             </div>
-            <div class="text-xl font-bold text-slate-500 mb-1">銀牌獎 (1隊)</div>
-            <div class="text-3xl font-black text-slate-800 mb-1">NT$ 60,000</div>
-            <div class="text-sm font-medium text-slate-500">及每人獎狀乙紙</div>
-          </div>
-          <div class="bg-slate-50 rounded-2xl p-6 text-center border border-orange-200">
-            <div class="flex justify-center mb-4">
-              <img src="/images/3rd-place.png" alt="銅牌" class="w-14 h-14 object-contain drop-shadow-md" />
+            <div
+              class="border border-slate-100 rounded-xl p-5 flex justify-between items-center bg-slate-50/50"
+            >
+              <span class="text-slate-700 font-bold text-base"
+                >智慧數位應用組</span
+              >
+              <span class="text-primary font-black text-2xl"
+                >10 <span class="text-sm font-normal text-slate-500">隊</span
+                ></span
+              >
             </div>
-            <div class="text-xl font-bold text-orange-600 mb-1">銅牌獎 (1隊)</div>
-            <div class="text-3xl font-black text-slate-800 mb-1">NT$ 30,000</div>
-            <div class="text-sm font-medium text-slate-500">及每人獎狀乙紙</div>
           </div>
         </div>
-        <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 bg-slate-50 px-6 py-3 rounded-full border border-slate-200 text-slate-700">
-            <img src="/images/medal.png" alt="佳作" class="w-7 h-7 mr-1 object-contain drop-shadow-sm" />
-            <span class="font-bold text-base">佳作 (若干隊)：</span>
-            <span class="text-base">頒發獎金 NT$ 5,000 及每人獎狀乙紙</span>
-          </div>
-        </div>
-        
-        <div class="bg-orange-50 border border-orange-100 rounded-xl p-6 text-base text-orange-900 space-y-2 leading-relaxed">
-          <strong class="flex items-center mb-2 text-base">
-            <!-- <img src="/images/warning.png" alt="注意" class="w-5 h-5 mr-2 object-contain" /> -->
-            獎金注意事項：
-          </strong>
-          <p>1. 得獎作品隊數及獎項，經「競賽評審委員會議」議定，必要時可從缺、調整或增加，但以不超過獎金總額為原則。</p>
-          <p>2. 依所得稅法獎金需扣繳所得稅（獎額含稅），得獎金額在新臺幣 20,000 元(含)以上，由主辦單位代扣 10% 所得稅。非中華民國境內居住之個人(居留未達 183 天者) 均需依規定代扣 20% 所得稅。</p>
-          <p>3. 得獎作品除公開舉辦頒獎典禮與成果展示外，相關資料將整理公布於本競賽網頁提供參考。</p>
+
+        <div
+          class="bg-amber-50/50 rounded-2xl p-6 border border-amber-100 text-left"
+        >
+          <h4 class="text-lg font-bold text-amber-700 mb-2">注意事項</h4>
+          <p class="text-slate-600 leading-relaxed text-base">
+            入圍作品隊數由「競賽評審委員會議」依參賽隊伍數量差異、各項主題性質不同、主題難易度與作品優異情形議定，必要時可從缺、調整或減少隊數。
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="mb-16">
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="w-1.5 h-8 bg-slate-600 rounded-full mr-3"></span>
-        重要日程
-      </h3>
-      <div class="bg-white border-2 border-slate-100 rounded-2xl p-8 shadow-sm">
-        <div class="space-y-8 relative before:absolute before:left-[9px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
-          {dates.map((item) => (
-            <div class="relative pl-8">
-              <div class="absolute left-0 top-1.5 w-5 h-5 bg-white border-4 border-primary rounded-full z-10"></div>
-              <div class="md:flex md:items-center md:justify-between">
-                <div>
-                  <div class="font-bold text-lg text-slate-800">{item.title}</div>
-                  <div class="text-slate-500 text-base mt-1">{item.desc}</div>
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">決賽</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden text-left"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+        <div class="mb-10">
+          <p
+            class="text-xl text-slate-700 font-bold mb-4 flex items-center gap-3"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            決賽方式：實地測試
+          </p>
+          <div class="text-lg text-slate-600 leading-loose">
+            <p class="mb-6">
+              由評審委員實地評分，並於決賽現場進行展示及詢答。入圍隊伍須於 <strong
+                class="text-slate-900 font-bold"
+                >114年12月1日(一) 下午5點前</strong
+              > 完成以下資料上傳：
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div
+                class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
+              >
+                <span class="w-2 h-2 rounded-full bg-primary/60 shrink-0"
+                ></span>
+                <span class="font-bold text-slate-700">決賽簡報</span>
+              </div>
+              <div
+                class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
+              >
+                <span class="w-2 h-2 rounded-full bg-primary/60 shrink-0"
+                ></span>
+                <span class="font-bold text-slate-700">作品設計與測試文件</span>
+              </div>
+              <div
+                class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
+              >
+                <span class="w-2 h-2 rounded-full bg-primary/60 shrink-0"
+                ></span>
+                <span class="font-bold text-slate-700"
+                  >3-5 分鐘成果展示影片</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div
+            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 flex flex-col justify-center"
+          >
+            <h4
+              class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-4"
+            >
+              隊員更換申請
+            </h4>
+            <p class="text-slate-600 text-base leading-loose">
+              入圍晉級決賽名單公布後，若根據實際狀況須更換隊員者，最晚應於 <strong
+                class="text-slate-900">114年11月19日(三) 下午5點前</strong
+              > 填妥「隊員更換申請表」向主辦單位提出申請核備。逾期提出申請者，概不受理。
+            </p>
+          </div>
+
+          <div class="bg-primary/5 rounded-[2rem] p-8 border border-primary/10">
+            <h4 class="text-lg font-bold text-primary mb-6">活動資訊</h4>
+            <div class="space-y-6 text-left">
+              <div class="flex items-center gap-5">
+                <div
+                  class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0 border border-primary/20"
+                >
+                  <img
+                    src="/images/calendar.png"
+                    alt="日期"
+                    class="w-6 h-6 object-contain"
+                  />
                 </div>
-                <div class="mt-2 md:mt-0 font-mono font-bold text-primary bg-blue-50 px-4 py-1.5 rounded-lg border border-blue-100">
-                  {item.date}
+                <div>
+                  <p
+                    class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1"
+                  >
+                    決賽日期
+                  </p>
+                  <p class="text-lg font-bold text-slate-800">
+                    114 年 12 月 6 日 (六)
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-5 text-left">
+                <div
+                  class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0 border border-primary/20"
+                >
+                  <img
+                    src="/images/location.png"
+                    alt="地點"
+                    class="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <p
+                    class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1"
+                  >
+                    決賽地點
+                  </p>
+                  <p class="text-lg font-bold text-slate-800">
+                    元智大學 遠東有庠通訊大樓 <span
+                      class="text-sm font-normal text-slate-500"
+                      >(元智七館)</span
+                    >
+                  </p>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
 
-    <div>
-      <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-        <span class="w-1.5 h-8 bg-red-400 rounded-full mr-3"></span>
-        參賽注意事項
-      </h3>
-      <div class="bg-white border-2 border-slate-100 rounded-2xl p-6 sm:p-10 shadow-sm text-slate-600 text-[1.05rem] leading-relaxed">
-        <ol class="list-decimal list-outside pl-4 space-y-4">
-          {rulesList.map((rule) => (
-            <li class="pl-2">{rule}</li>
-          ))}
-        </ol>
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">評審標準</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="mb-12 relative z-10">
+          <ul class="space-y-3 text-lg text-slate-600 leading-relaxed">
+            <li class="flex items-start gap-3">
+              <p>
+                主辦單位遴聘業界專家、學術單位或社群專家組成評選委員會，擔任競賽各項主題之評審委員。
+              </p>
+            </li>
+            <li class="flex items-start gap-3">
+              <p>
+                競賽分文件審查初賽及實地測試評審決賽兩階段進行，其評分原則如下：
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+          <div
+            class="bg-slate-50/50 rounded-[2rem] p-8 lg:p-10 border border-slate-100"
+          >
+            <div class="mb-8">
+              <h4
+                class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3"
+              >
+                <span class="w-2 h-8 bg-blue-500 rounded-full inline-block"
+                ></span>
+                初賽
+              </h4>
+              <p class="text-slate-600 leading-relaxed">
+                由評審委員針對參賽隊伍提出的<strong class="text-slate-800"
+                  >企劃書+簡報</strong
+                >進行評審。
+              </p>
+            </div>
+            <div class="space-y-8">
+              {
+                prelimCriteria.map((item) => (
+                  <div class="group">
+                    <div class="flex justify-between items-end mb-3">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <div class="text-slate-800 font-bold text-lg">
+                          {item.title}
+                        </div>
+                        {item.desc && (
+                          <div class="text-slate-500 text-sm">{item.desc}</div>
+                        )}
+                      </div>
+                      <div class="text-2xl font-black text-slate-800">
+                        {item.percentText}
+                      </div>
+                    </div>
+                    <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        class={`h-full rounded-full ${item.barColor} progress-bar-fill`}
+                        style="width: 0%;"
+                        data-width={`${item.percent}%`}
+                      />
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+
+          <div
+            class="bg-slate-50/50 rounded-[2rem] p-8 lg:p-10 border border-slate-100"
+          >
+            <div class="mb-8">
+              <h4
+                class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3"
+              >
+                <span class="w-2 h-8 bg-amber-500 rounded-full inline-block"
+                ></span>
+                決賽
+              </h4>
+              <p class="text-slate-600 leading-relaxed">
+                由評審委員針對參賽隊伍的<strong class="text-slate-800"
+                  >決賽簡報+作品設計與測試文件</strong
+                >以及其<strong class="text-slate-800">現場作品展示</strong
+                >進行評分。
+              </p>
+            </div>
+            <div class="space-y-8">
+              {
+                finalCriteria.map((item) => (
+                  <div class="group">
+                    <div class="flex justify-between items-end mb-3">
+                      <div class="flex flex-wrap items-center gap-2">
+                        <div class="text-slate-800 font-bold text-lg">
+                          {item.title}
+                        </div>
+                        {item.desc && (
+                          <div class="text-slate-500 text-sm">{item.desc}</div>
+                        )}
+                      </div>
+                      <div class="text-2xl font-black text-slate-800">
+                        {item.percentText}
+                      </div>
+                    </div>
+                    <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                      <div
+                        class={`h-full rounded-full ${item.barColor} progress-bar-fill`}
+                        style="width: 0%;"
+                        data-width={`${item.percent}%`}
+                      />
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">競賽獎勵</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden text-left"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-10">
+          {
+            prizes.map((prize) => (
+              <div
+                class={`flex items-center p-6 rounded-2xl border transition-all duration-300 ${prize.bgClass} ${prize.borderClass} ${prize.hoverClass} text-left bg-white`}
+              >
+                <div class="w-16 flex justify-center shrink-0">
+                  <img
+                    src={prize.icon}
+                    alt={prize.title}
+                    class="w-10 h-10 object-contain drop-shadow-sm transition-transform"
+                  />
+                </div>
+                <div class="flex-grow pl-4">
+                  <div
+                    class={`font-bold text-xl mb-1 ${prize.title === "佳作 (若干隊)" ? "text-slate-800" : "text-slate-700"}`}
+                  >
+                    {prize.title}
+                  </div>
+                  <div class="text-slate-500 text-sm leading-relaxed">
+                    {prize.desc}
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span
+                    class={`text-xl md:text-2xl font-black tracking-tight block ${prize.textClass}`}
+                  >
+                    {prize.amount}
+                  </span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <div
+          class="bg-amber-50/50 rounded-2xl p-8 border border-amber-100 text-left"
+        >
+          <h4
+            class="text-lg font-bold text-amber-700 mb-4 flex items-center gap-2"
+          >
+            獎勵注意事項
+          </h4>
+          <ul class="space-y-4 text-slate-600 leading-relaxed text-base">
+            <li class="flex items-start gap-3">
+              <span class="font-bold text-amber-500 mt-0.5">•</span>
+              <p>
+                得獎作品隊數及獎項，經「競賽評審委員會議」依參賽隊伍數量差異、各項主題性質不同、主題難易度與作品優異情形議定，必要時可從缺、調整或增加，但以不超過獎金總額為原則。
+              </p>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="font-bold text-amber-500 mt-0.5">•</span>
+              <p>
+                各獎項獎金之領據應由參賽隊伍代表填寫，依所得稅法獎金需扣繳所得稅（獎額含稅），得獎人須攜帶個人身分證正本作為授獎查驗及辦理所得扣繳使用。得獎金額在新臺幣20,000元(含)以上，由主辦單位代扣10%所得稅，並併入該年度綜合所得稅申報納稅；如為非中華民國境內居住之個人(在中華民國境內居留未達
+                183 天者)，不論金額均需依規定代扣20%所得稅。
+              </p>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="font-bold text-amber-500 mt-0.5">•</span>
+              <p>
+                得獎作品除公開舉辦頒獎典禮與成果展示外，並將各得獎作品之指導教師與隊員名單與作品簡介等相關資料，整理公布於本競賽網頁提供參考。
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-white border-2 border-slate-100 rounded-[3rem] p-10 lg:p-16 shadow-sm"
+    >
+      <div class="max-w-4xl mx-auto">
+        <h3
+          class="text-3xl font-bold mb-12 text-slate-800 flex items-center justify-center gap-4 border-b border-slate-100 pb-6"
+        >
+          參賽注意事項
+        </h3>
+
+        <div class="space-y-6">
+          {
+            rulesList.map((rule, idx) => (
+              <div class="flex items-start gap-4 text-left">
+                <span class="text-primary font-black text-lg shrink-0 mt-0.5 w-16 text-right">
+                  {toChineseNum(idx + 1)}、
+                </span>
+
+                <div class="flex-grow">
+                  <p class="text-lg text-slate-700 leading-relaxed text-justify">
+                    {rule.text}
+                  </p>
+
+                  {rule.subItems && (
+                    <div class="mt-4 space-y-5 pl-2">
+                      {rule.subItems.map((sub) => (
+                        <div>
+                          <p class="text-[1.05rem] text-slate-700 font-bold mb-2">
+                            {sub.title}
+                          </p>
+                          <ul class="space-y-2 pl-6">
+                            {sub.items.map((item) => (
+                              <li class="text-[1.05rem] text-slate-600 leading-relaxed flex items-start">
+                                <span class="w-full">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<script is:inline>
+  // 使用簡單且支援度高的寫法，確保進入視窗後長出進度條
+  document.addEventListener("DOMContentLoaded", () => {
+    const bars = document.querySelectorAll(".progress-bar-fill");
+    
+    // 如果瀏覽器不支援 IntersectionObserver，直接執行
+    if (!('IntersectionObserver' in window)) {
+      bars.forEach(bar => {
+        bar.style.width = bar.getAttribute("data-width");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // 抓取元素內的 data-width 屬性
+            const targetWidth = entry.target.getAttribute("data-width");
+            // 設定寬度，觸發 CSS Transition 動畫
+            entry.target.style.width = targetWidth;
+            // 觸發後解除觀察，只播一次
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" } // 提早一點觸發
+    );
+
+    bars.forEach(bar => observer.observe(bar));
+  });
+</script>
+
+<style>
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  /* 使用 Transition 配合 JS 設定寬度，這是最穩定不會跑版的寫法 */
+  .progress-bar-fill {
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+</style>
