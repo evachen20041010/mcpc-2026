@@ -3,11 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import NewsSection from '../components/NewsSection.astro';
-// 已將 ThemesSection 移除，合併至 RulesSection 中
-// import ThemesSection from '../components/ThemesSection.astro';
-import RulesSection from '../components/RulesSection.astro';
-// import TimelineSection from '../components/TimelineSection.astro';
-// 新增引入的元件
+import RulesOverviewSection from '../components/RulesOverviewSection.astro';
 import RegistrationSection from '../components/RegistrationSection.astro';
 import DownloadSection from '../components/DownloadSection.astro';
 import VenueSection from '../components/VenueSection.astro';
@@ -17,15 +13,15 @@ import Footer from '../components/Footer.astro';
 
 <Layout title="2026 行動通訊實務競賽 | 首頁">
   <Navbar />
-  
+
   <main>
-	<Hero />
-	<NewsSection />
-	<RulesSection />
-	<RegistrationSection />
-	<DownloadSection />
-	<VenueSection />
-	<ContactFaqSection />
+    <Hero />
+    <NewsSection />
+    <RulesOverviewSection />
+    <RegistrationSection />
+    <DownloadSection />
+    <VenueSection />
+    <ContactFaqSection />
   </main>
 
   <Footer />
