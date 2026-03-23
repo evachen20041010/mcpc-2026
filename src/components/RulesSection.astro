@@ -139,31 +139,7 @@ const prizes = [
   },
 ];
 
-// 4. 重要日程資料
-const dates = [
-  {
-    title: "線上報名",
-    date: "即日起 ~ 114.09.26",
-    desc: "延長至晚上 23:59 止",
-  },
-  {
-    title: "線上說明會",
-    date: "114.07.03",
-    desc: "10:00 - 12:00 / Teams 會議室",
-  },
-  {
-    title: "培訓營 / 收件截止",
-    date: "114.07 ~ 10.07",
-    desc: "初賽企劃書與簡報上傳截止",
-  },
-  {
-    title: "入圍公告 / 決賽",
-    date: "114.10.27 ~ 12.06",
-    desc: "決賽地點：元智大學",
-  },
-];
-
-// 5. 注意事項完整資料 (結構化處理以便精準對齊)
+// 4. 注意事項完整資料 (結構化處理以便精準對齊)
 const rulesList = [
   {
     text: "參賽隊伍未於期限完成或未依規定繳交各項參賽文件及相關資料者，主辦單位得取消其參賽資格。",
@@ -730,20 +706,20 @@ const toChineseNum = (num: number) => {
           <div
             class="bg-slate-50/50 rounded-[2rem] p-8 lg:p-10 border border-slate-100"
           >
-            <div class="mb-8">
-              <h4
-                class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3"
-              >
-                <span class="w-2 h-8 bg-blue-500 rounded-full inline-block"
-                ></span>
-                初賽
-              </h4>
-              <p class="text-slate-600 leading-relaxed">
-                由評審委員針對參賽隊伍提出的<strong class="text-slate-800"
-                  >企劃書+簡報</strong
-                >進行評審。
-              </p>
-            </div>
+          <div class="mb-8">
+            <h4
+              class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3"
+            >
+              <span class="w-2 h-8 bg-blue-500 rounded-full inline-block"
+              ></span>
+              初賽
+            </h4>
+            <p class="text-slate-600 leading-relaxed">
+              由評審委員針對參賽隊伍提出的<strong class="text-slate-800"
+                >企劃書+簡報</strong
+              >進行評審。
+            </p>
+          </div>
             <div class="space-y-8">
               {
                 prelimCriteria.map((item) => (
@@ -763,9 +739,8 @@ const toChineseNum = (num: number) => {
                     </div>
                     <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
                       <div
-                        class={`h-full rounded-full ${item.barColor} progress-bar-fill`}
-                        style="width: 0%;"
-                        data-width={`${item.percent}%`}
+                        class={`h-full rounded-full ${item.barColor} animate-progress-bar`}
+                        style={`--progress: ${item.percent}%;`}
                       />
                     </div>
                   </div>
@@ -811,9 +786,8 @@ const toChineseNum = (num: number) => {
                     </div>
                     <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
                       <div
-                        class={`h-full rounded-full ${item.barColor} progress-bar-fill`}
-                        style="width: 0%;"
-                        data-width={`${item.percent}%`}
+                        class={`h-full rounded-full ${item.barColor} animate-progress-bar`}
+                        style={`--progress: ${item.percent}%;`}
                       />
                     </div>
                   </div>
@@ -907,6 +881,59 @@ const toChineseNum = (num: number) => {
       </div>
     </div>
 
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">重要日程</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="max-w-3xl mx-auto">
+          <div id="full-timeline-container" class="relative space-y-10 py-2">
+            <!-- Skeleton (loading) -->
+            <div class="grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start animate-pulse">
+              <div class="flex flex-col items-center pt-2">
+                <div class="w-3.5 h-3.5 rounded-full bg-slate-200"></div>
+                <div class="mt-4 w-px flex-1 min-h-[92px] bg-slate-200/60"></div>
+              </div>
+              <div class="space-y-4">
+                <div class="h-7 bg-slate-200 rounded-xl w-32"></div>
+                <div class="h-24 bg-slate-100 rounded-2xl w-full border border-slate-100"></div>
+              </div>
+            </div>
+        
+            <div class="grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start animate-pulse">
+              <div class="flex flex-col items-center pt-2">
+                <div class="w-3.5 h-3.5 rounded-full bg-slate-200"></div>
+                <div class="mt-4 w-px flex-1 min-h-[92px] bg-slate-200/60"></div>
+              </div>
+              <div class="space-y-4">
+                <div class="h-7 bg-slate-200 rounded-xl w-40"></div>
+                <div class="h-24 bg-slate-100 rounded-2xl w-full border border-slate-100"></div>
+              </div>
+            </div>
+        
+            <div class="grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start animate-pulse">
+              <div class="flex flex-col items-center pt-2">
+                <div class="w-3.5 h-3.5 rounded-full bg-slate-200"></div>
+              </div>
+              <div class="space-y-4">
+                <div class="h-7 bg-slate-200 rounded-xl w-36"></div>
+                <div class="h-24 bg-slate-100 rounded-2xl w-full border border-slate-100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div
       class="bg-white border-2 border-slate-100 rounded-[3rem] p-10 lg:p-16 shadow-sm"
     >
@@ -958,37 +985,153 @@ const toChineseNum = (num: number) => {
   </div>
 </section>
 
-<script is:inline>
-  // 使用簡單且支援度高的寫法，確保進入視窗後長出進度條
-  document.addEventListener("DOMContentLoaded", () => {
-    const bars = document.querySelectorAll(".progress-bar-fill");
-    
-    // 如果瀏覽器不支援 IntersectionObserver，直接執行
-    if (!('IntersectionObserver' in window)) {
-      bars.forEach(bar => {
-        bar.style.width = bar.getAttribute("data-width");
-      });
-      return;
-    }
+<script>
+  import { db } from '../firebase/client.js';
+  import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
-    const observer = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // 抓取元素內的 data-width 屬性
-            const targetWidth = entry.target.getAttribute("data-width");
-            // 設定寬度，觸發 CSS Transition 動畫
-            entry.target.style.width = targetWidth;
-            // 觸發後解除觀察，只播一次
-            observer.unobserve(entry.target);
-          }
+  type TimelineItem = {
+    id: string;
+    dateStr: string;
+    title: string;
+    desc: string;
+  };
+
+  // --- 從 Firebase 抓取並渲染完整日程表 ---
+  const renderFullTimeline = async () => {
+    const containerEl = document.getElementById('full-timeline-container');
+    if (!(containerEl instanceof HTMLElement)) return;
+
+    const escapeMap: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+
+    const escapeHtml = (value: string | undefined = ''): string => {
+      return String(value).replace(/[&<>"']/g, (char) => escapeMap[char] ?? char);
+    };
+
+    try {
+      const q = query(collection(db, 'timeline'), orderBy('dateStr', 'asc'));
+      const querySnapshot = await getDocs(q);
+
+      const allTimelines: TimelineItem[] = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as {
+          dateStr?: string;
+          title?: string;
+          desc?: string;
+        };
+
+        allTimelines.push({
+          id: doc.id,
+          dateStr: data.dateStr ?? '',
+          title: data.title ?? '未命名日程',
+          desc: data.desc ?? '',
         });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" } // 提早一點觸發
-    );
+      });
 
-    bars.forEach(bar => observer.observe(bar));
-  });
+      if (allTimelines.length === 0) {
+        containerEl.innerHTML = `
+          <div class="text-center text-slate-500 py-10">
+            目前尚無日程資訊
+          </div>
+        `;
+        return;
+      }
+
+      const today = new Date().toISOString().split('T')[0];
+      const activeIndex = allTimelines.findIndex((item) => item.dateStr >= today);
+
+      let html = '';
+
+      allTimelines.forEach((item, index) => {
+        const dateStr = escapeHtml(item.dateStr);
+        const title = escapeHtml(item.title);
+        const desc = escapeHtml(item.desc);
+
+        const isPast = item.dateStr < today;
+        const isActive = !isPast && index === activeIndex;
+        const isLast = index === allTimelines.length - 1;
+
+        const dotClass = isActive
+          ? 'bg-primary border-white shadow-[0_0_0_6px_rgba(59,130,246,0.12),0_0_18px_rgba(59,130,246,0.35)]'
+          : isPast
+            ? 'bg-slate-300 border-white'
+            : 'bg-white border-primary/50 shadow-[0_0_0_6px_rgba(59,130,246,0.08)]';
+
+        const segClass = isPast
+          ? 'bg-gradient-to-b from-slate-200/80 via-slate-200/40 to-transparent'
+          : isActive
+            ? 'bg-gradient-to-b from-primary/60 via-primary/20 to-transparent'
+            : 'bg-gradient-to-b from-slate-200 via-slate-200/55 to-transparent';
+
+        const dateBadgeClass = isActive
+          ? 'bg-primary/10 text-primary border border-primary/15'
+          : isPast
+            ? 'bg-slate-100 text-slate-500 border border-slate-200 line-through'
+            : 'bg-sky-50 text-sky-700 border border-sky-100';
+
+        const cardClass = isActive
+          ? 'border-primary/25 shadow-[0_18px_40px_rgba(2,6,23,0.08)]'
+          : isPast
+            ? 'border-slate-100'
+            : 'border-slate-200 group-hover:border-primary/25 group-hover:shadow-[0_18px_45px_rgba(2,6,23,0.10)]';
+
+        const titleClass = isPast ? 'text-slate-500 line-through' : 'text-slate-800';
+        const descClass = isPast ? 'text-slate-400' : 'text-slate-600';
+
+        const statusPill = isActive
+          ? `<span class="text-[11px] font-black tracking-widest text-primary bg-primary/10 border border-primary/15 px-2 py-1 rounded-full">NEXT</span>`
+          : isPast
+            ? `<span class="text-[11px] font-black tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded-full">DONE</span>`
+            : `<span class="text-[11px] font-black tracking-widest text-sky-700 bg-sky-50 border border-sky-100 px-2 py-1 rounded-full">UPCOMING</span>`;
+
+        html += `
+          <div class="group grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start ${isPast ? 'opacity-60' : ''}">
+            <div class="flex flex-col items-center pt-2">
+              <div class="w-3.5 h-3.5 rounded-full border-4 ${dotClass} transition-all duration-300"></div>
+              ${isLast ? '' : `<div class="mt-4 w-px flex-1 min-h-[92px] ${segClass}"></div>`}
+            </div>
+
+            <div class="${isPast ? '' : 'transition-transform duration-300 group-hover:-translate-y-0.5'}">
+              <div class="flex items-center justify-between gap-3 mb-3">
+                <span class="font-mono text-sm md:text-base font-bold px-3 py-1 rounded-xl inline-flex items-center ${dateBadgeClass}">
+                  ${dateStr.replace(/-/g, '.')}
+                </span>
+                ${statusPill}
+              </div>
+
+              <div class="bg-white border ${cardClass} p-5 md:p-6 rounded-2xl transition-all duration-300">
+                <h4 class="text-lg md:text-xl font-black ${titleClass}">
+                  ${title}
+                </h4>
+                ${desc ? `<p class="mt-2 text-sm md:text-base leading-relaxed ${descClass}">${desc}</p>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      containerEl.innerHTML = html;
+    } catch (error) {
+      console.error('Error loading full timeline:', error);
+      containerEl.innerHTML = `
+        <div class="text-center text-rose-500 py-10">
+          載入日程失敗，請重新整理頁面。
+        </div>
+      `;
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderFullTimeline);
+  } else {
+    renderFullTimeline();
+  }
 </script>
 
 <style>
@@ -1006,8 +1149,23 @@ const toChineseNum = (num: number) => {
     animation: fadeUp 0.8s ease-out forwards;
   }
 
-  /* 使用 Transition 配合 JS 設定寬度，這是最穩定不會跑版的寫法 */
-  .progress-bar-fill {
-    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  /* 使用純 CSS 動畫！
+    無論 JavaScript 發生什麼事，只要瀏覽器載入這段 CSS，
+    進度條就會從 0% 長到 --progress 變數指定的寬度。
+  */
+  @keyframes growProgressBar {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: var(--progress);
+    }
+  }
+
+  .animate-progress-bar {
+    width: 0%; /* 初始狀態 */
+    /* 動畫名稱 | 持續時間 | 緩動函數 | 延遲時間 | forwards(停留在最後一格) */
+    animation: growProgressBar 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
   }
 </style>
+

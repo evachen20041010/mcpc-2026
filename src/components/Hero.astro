@@ -73,13 +73,14 @@
                     >
                         <div
                             class="w-3 h-3 bg-sky-400 rounded-full shadow-[0_0_12px_#38bdf8] animate-pulse"
+                            id="countdown-dot"
                         >
                         </div>
                         <span
                             >距離<strong
                                 id="current-target-name"
                                 class="text-white mx-2 font-black"
-                                >讀取中</strong
+                                >載入中...</strong
                             >還有</span
                         >
                     </div>
@@ -134,76 +135,25 @@
                     </div>
 
                     <div
-                        class="relative flex flex-col gap-8 pl-6 sm:pl-8 pointer-events-auto"
+                        id="dynamic-timeline-container"
+                        class="relative flex flex-col pointer-events-auto"
                     >
                         <div
-                            class="absolute top-2 bottom-2 left-0 w-0.5 bg-white/15"
-                        >
-                        </div>
-
-                        <div
-                            id="ms-0"
-                            class="v-time-card relative flex items-center gap-4 sm:gap-6 group"
+                            class="v-time-card relative grid grid-cols-[20px_1fr] sm:grid-cols-[24px_1fr] gap-4 sm:gap-6 items-start pb-2"
                         >
                             <div
-                                class="v-time-dot absolute -left-[29px] sm:-left-[37px] w-3.5 h-3.5 bg-[#0f2b3d] border-2 border-white/30 rounded-full transition-all duration-300"
+                                class="v-time-marker self-stretch flex flex-col items-center pt-1"
                             >
+                                <div class="v-time-dot"></div>
+                                <div
+                                    class="v-time-segment mt-3 flex-1 min-h-[2.75rem]"
+                                >
+                                </div>
                             </div>
                             <div
-                                class="v-time-info flex justify-between items-center w-full transition-transform duration-300"
+                                class="v-time-info w-full text-white/50 animate-pulse"
                             >
-                                <span
-                                    class="text-white/80 text-base sm:text-lg font-bold transition-colors"
-                                    >報名截止</span
-                                >
-                                <strong
-                                    class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors"
-                                    >2026.03.01</strong
-                                >
-                            </div>
-                        </div>
-
-                        <div
-                            id="ms-1"
-                            class="v-time-card relative flex items-center gap-4 sm:gap-6 group"
-                        >
-                            <div
-                                class="v-time-dot absolute -left-[29px] sm:-left-[37px] w-3.5 h-3.5 bg-[#0f2b3d] border-2 border-white/30 rounded-full transition-all duration-300"
-                            >
-                            </div>
-                            <div
-                                class="v-time-info flex justify-between items-center w-full transition-transform duration-300"
-                            >
-                                <span
-                                    class="text-white/80 text-base sm:text-lg font-bold transition-colors"
-                                    >初審結果</span
-                                >
-                                <strong
-                                    class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors"
-                                    >2026.04.01</strong
-                                >
-                            </div>
-                        </div>
-
-                        <div
-                            id="ms-2"
-                            class="v-time-card relative flex items-center gap-4 sm:gap-6 group"
-                        >
-                            <div
-                                class="v-time-dot absolute -left-[29px] sm:-left-[37px] w-3.5 h-3.5 bg-[#0f2b3d] border-2 border-white/30 rounded-full transition-all duration-300"
-                            >
-                            </div>
-                            <div
-                                class="v-time-info flex justify-between items-center w-full transition-transform duration-300"
-                            >
-                                <span
-                                    class="text-white/80 text-base sm:text-lg font-bold transition-colors"
-                                    >決賽日期</span
-                                >
-                                <strong
-                                    class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors"
-                                    >2026.04.20</strong
-                                >
+                                時程同步中...
                             </div>
                         </div>
                     </div>
@@ -213,63 +163,119 @@
     </div>
 </section>
 
-<style>
+<style is:global>
     @import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
 
     .tech-font {
         font-family: "Share Tech Mono", monospace;
     }
 
-    /* ========== 新增：進場動畫定義 ========== */
     @keyframes fadeUpEnter {
         0% {
             opacity: 0;
-            transform: translateY(30px); /* 初始位置往下 30px */
+            transform: translateY(30px);
         }
         100% {
             opacity: 1;
-            transform: translateY(0); /* 回到原本位置 */
+            transform: translateY(0);
         }
     }
 
     .animate-fade-up {
-        opacity: 0; /* 預設隱藏，等待動畫觸發 */
-        /* 使用 cubic-bezier 讓動畫有「一開始快、後面慢慢停住」的高級煞車感 */
+        opacity: 0;
         animation: fadeUpEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    /* ======================================== */
 
-    /* 進行中的狀態 (Active) */
-    .v-time-card.active-state .v-time-dot {
-        background: #38bdf8;
-        border-color: white;
-        box-shadow: 0 0 12px #38bdf8;
+    /* Timeline */
+    .v-time-card {
+        transition: opacity 0.3s ease;
     }
 
-    /* 進行中的狀態 (Active) */
-    .v-time-card.active-state .v-time-dot {
-        background: #38bdf8;
-        border-color: white;
-        box-shadow: 0 0 12px #38bdf8;
+    .v-time-marker {
+        min-height: 100%;
     }
+
+    .v-time-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid rgba(255, 255, 255, 0.28);
+        transition:
+            background-color 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.3s ease,
+            opacity 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .v-time-segment {
+        width: 1px;
+        border-radius: 9999px;
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.18),
+            rgba(255, 255, 255, 0.08)
+        );
+        transition:
+            background 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    .v-time-info {
+        transition:
+            transform 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    /* Active */
+    .v-time-card.active-state .v-time-dot {
+        background: #38bdf8 !important;
+        border-color: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 0 14px rgba(56, 189, 248, 0.75) !important;
+        transform: scale(1.08);
+    }
+
+    .v-time-card.active-state .v-time-segment {
+        background: linear-gradient(
+            to bottom,
+            rgba(56, 189, 248, 0.55),
+            rgba(56, 189, 248, 0.12)
+        );
+    }
+
     .v-time-card.active-state .v-time-info {
         transform: translateX(8px);
     }
+
     .v-time-card.active-state .v-time-info span {
-        color: white;
-    }
-    .v-time-card.active-state .v-time-info strong {
-        color: #38bdf8;
+        color: white !important;
     }
 
-    /* 已過去的狀態 (Past) */
+    .v-time-card.active-state .v-time-info strong {
+        color: #38bdf8 !important;
+    }
+
+    /* Past */
     .v-time-card.past-state {
-        opacity: 0.3;
+        opacity: 0.38;
     }
+
     .v-time-card.past-state .v-time-dot {
-        background: transparent;
-        border-color: rgba(255, 255, 255, 0.2);
+        background: transparent !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        box-shadow: none !important;
     }
+
+    .v-time-card.past-state .v-time-segment {
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.04)
+        );
+    }
+
     .v-time-card.past-state .v-time-info span,
     .v-time-card.past-state .v-time-info strong {
         text-decoration: line-through;
@@ -277,131 +283,207 @@
 </style>
 
 <script>
-    // 等待 DOM 載入完成再執行
+    import { db } from "../firebase/client.js";
+    import { collection, getDocs, query, orderBy } from "firebase/firestore";
+
     document.addEventListener("DOMContentLoaded", () => {
-        // ================= 1. 智慧倒數邏輯 =================
-        const milestones = [
-            {
-                id: "ms-0",
-                name: "報名截止",
-                timestamp: new Date("2026-03-01T23:59:59").getTime(),
-            },
-            {
-                id: "ms-1",
-                name: "初審結果",
-                timestamp: new Date("2026-04-01T23:59:59").getTime(),
-            },
-            {
-                id: "ms-2",
-                name: "決賽日期",
-                timestamp: new Date("2026-04-20T23:59:59").getTime(),
-            },
-        ];
+        // ================= 1. 抓取 Firebase 日程並動態渲染 =================
+        const initHeroTimeline = async () => {
+            const timelineContainer = document.getElementById(
+                "dynamic-timeline-container",
+            );
+            const targetNameEl = document.getElementById("current-target-name");
 
-        const updateCountdown = setInterval(function () {
-            const now = new Date().getTime();
-            let activeIndex = -1;
+            if (!timelineContainer || !targetNameEl) return;
 
-            for (let i = 0; i < milestones.length; i++) {
-                if (milestones[i].timestamp > now) {
-                    activeIndex = i;
-                    break;
-                }
+            type MilestoneItem = {
+                id: string;
+                name: string;
+                timestamp: number;
+                dateStr: string;
+            };
+
+            let milestones: MilestoneItem[] = [];
+
+            try {
+                const q = query(
+                    collection(db, "timeline"),
+                    orderBy("dateStr", "asc"),
+                );
+                const querySnapshot = await getDocs(q);
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const targetTime = new Date(
+                        `${data.dateStr}T23:59:59`,
+                    ).getTime();
+
+                    milestones.push({
+                        id: doc.id,
+                        name: data.title,
+                        timestamp: targetTime,
+                        dateStr: data.dateStr.replace(/-/g, "."),
+                    });
+                });
+            } catch (error) {
+                console.error("Error loading timeline:", error);
+                targetNameEl.innerText = "系統連線錯誤";
+                return;
             }
 
-            milestones.forEach((ms, index) => {
-                const card = document.getElementById(ms.id);
-                if (!card) return;
-                card.classList.remove("active-state", "past-state");
+            if (milestones.length === 0) {
+                targetNameEl.innerText = "即將公布";
+                timelineContainer.innerHTML = `<p class="text-white/50">尚無日程資訊</p>`;
+                return;
+            }
 
-                if (index === activeIndex) {
-                    card.classList.add("active-state");
-                } else if (
-                    (activeIndex !== -1 && index < activeIndex) ||
-                    activeIndex === -1
-                ) {
-                    card.classList.add("past-state");
-                }
-            });
+            const now = new Date().getTime();
+            const upcoming = milestones.filter((m) => m.timestamp > now);
+            const past = milestones.filter((m) => m.timestamp <= now).reverse();
 
-            // 取得時間節點 (加入防呆檢查)
-            const cdDays = document.getElementById("cd-days");
-            const cdHours = document.getElementById("cd-hours");
-            const cdMins = document.getElementById("cd-mins");
-            const cdSecs = document.getElementById("cd-secs");
+            let displayItems: MilestoneItem[] = [];
+            if (upcoming.length >= 3) {
+                displayItems = upcoming.slice(0, 3);
+            } else {
+                displayItems = [...upcoming];
+                const needCount = 3 - displayItems.length;
+                displayItems = [
+                    ...past.slice(0, needCount).reverse(),
+                    ...displayItems,
+                ];
+            }
 
-            if (activeIndex === -1) {
-                clearInterval(updateCountdown);
+            const activeIndex = displayItems.findIndex(
+                (m) => m.timestamp > now,
+            );
+
+            const html = displayItems
+                .map((item, index) => {
+                    let stateClass = "";
+
+                    if (item.timestamp <= now) {
+                        stateClass = "past-state";
+                    } else if (index === activeIndex) {
+                        stateClass = "active-state";
+                    }
+
+                    const isLast = index === displayItems.length - 1;
+                    const cardPaddingClass = isLast ? "pb-0" : "pb-2";
+                    const segmentHtml = isLast
+                        ? ""
+                        : `<div class="v-time-segment mt-3 flex-1 min-h-[2.75rem]"></div>`;
+
+                    return `
+                    <div class="v-time-card relative grid grid-cols-[20px_1fr] sm:grid-cols-[24px_1fr] gap-4 sm:gap-6 items-start ${cardPaddingClass} group ${stateClass}">
+                        <div class="v-time-marker self-stretch flex flex-col items-center pt-1">
+                            <div class="v-time-dot"></div>
+                            ${segmentHtml}
+                        </div>
+                        <div class="v-time-info flex justify-between items-center gap-4 w-full min-w-0 transition-transform duration-300">
+                            <span class="text-white/80 text-base sm:text-lg font-bold transition-colors truncate">${item.name}</span>
+                            <strong class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors shrink-0">${item.dateStr}</strong>
+                        </div>
+                    </div>
+                `;
+                })
+                .join("");
+
+            timelineContainer.innerHTML = html;
+
+            // ================= 2. 啟動倒數計時 =================
+            const targetMs =
+                activeIndex !== -1 ? displayItems[activeIndex] : null;
+
+            if (targetMs) {
+                targetNameEl.innerText = targetMs.name;
+
+                const updateCountdown = setInterval(function () {
+                    const distance = targetMs.timestamp - new Date().getTime();
+
+                    if (distance <= 0) {
+                        clearInterval(updateCountdown);
+                        window.location.reload();
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor(
+                        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                    );
+                    const minutes = Math.floor(
+                        (distance % (1000 * 60 * 60)) / (1000 * 60),
+                    );
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    const cdDays = document.getElementById("cd-days");
+                    const cdHours = document.getElementById("cd-hours");
+                    const cdMins = document.getElementById("cd-mins");
+                    const cdSecs = document.getElementById("cd-secs");
+
+                    if (cdDays)
+                        cdDays.innerText =
+                            days < 10 ? "0" + days : days.toString();
+                    if (cdHours)
+                        cdHours.innerText =
+                            hours < 10 ? "0" + hours : hours.toString();
+                    if (cdMins)
+                        cdMins.innerText =
+                            minutes < 10 ? "0" + minutes : minutes.toString();
+                    if (cdSecs)
+                        cdSecs.innerText =
+                            seconds < 10 ? "0" + seconds : seconds.toString();
+                }, 1000);
+            } else {
+                const cdDays = document.getElementById("cd-days");
+                const cdHours = document.getElementById("cd-hours");
+                const cdMins = document.getElementById("cd-mins");
+                const cdSecs = document.getElementById("cd-secs");
+
                 if (cdDays) cdDays.innerText = "00";
                 if (cdHours) cdHours.innerText = "00";
                 if (cdMins) cdMins.innerText = "00";
                 if (cdSecs) cdSecs.innerText = "00";
 
-                const targetNameEl = document.getElementById(
-                    "current-target-name",
-                );
                 if (targetNameEl && targetNameEl.parentElement) {
                     targetNameEl.parentElement.innerHTML =
                         "本年度競賽 <strong class='text-white mx-2 font-bold'>已圓滿落幕</strong>";
                 }
 
-                const dot = document.querySelector(
-                    ".w-3.h-3.bg-sky-400",
-                ) as HTMLElement | null;
+                const dot = document.getElementById("countdown-dot");
                 if (dot) {
                     dot.style.backgroundColor = "#4CAF50";
                     dot.style.boxShadow = "0 0 12px #4CAF50";
                 }
-                return;
             }
+        };
 
-            const targetMs = milestones[activeIndex];
-            const distance = targetMs.timestamp - now;
-            const targetNameEl = document.getElementById("current-target-name");
-            if (targetNameEl) targetNameEl.innerText = targetMs.name;
+        initHeroTimeline();
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-            );
-            const minutes = Math.floor(
-                (distance % (1000 * 60 * 60)) / (1000 * 60),
-            );
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // ================= 3. Canvas 互動粒子 =================
+        const canvasEl = document.getElementById("innerCanvas");
+        const canvasContainerEl = document.getElementById(
+            "darkBlockCanvasContainer",
+        );
 
-            if (cdDays)
-                cdDays.innerText = days < 10 ? "0" + days : days.toString();
-            if (cdHours)
-                cdHours.innerText = hours < 10 ? "0" + hours : hours.toString();
-            if (cdMins)
-                cdMins.innerText =
-                    minutes < 10 ? "0" + minutes : minutes.toString();
-            if (cdSecs)
-                cdSecs.innerText =
-                    seconds < 10 ? "0" + seconds : seconds.toString();
-        }, 1000);
+        if (!(canvasEl instanceof HTMLCanvasElement)) return;
+        if (!(canvasContainerEl instanceof HTMLElement)) return;
 
-        // ================= 2. Canvas 互動粒子 =================
-        const canvas = document.getElementById(
-            "innerCanvas",
-        ) as HTMLCanvasElement | null;
-        if (!canvas) return; // 確保 canvas 存在
+        const canvas: HTMLCanvasElement = canvasEl;
+        const canvasContainer: HTMLElement = canvasContainerEl;
+        const ctxResult = canvas.getContext("2d");
+        if (!ctxResult) return;
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return; // 確保 ctx 存在
-
-        const container = document.getElementById("darkBlockCanvasContainer");
-        if (!container) return; // 確保 container 存在
+        const context: CanvasRenderingContext2D = ctxResult;
 
         function resizeCanvas() {
-            if (!canvas || !container) return;
-            canvas.width = container.clientWidth;
-            canvas.height = container.clientHeight;
+            canvas.width = canvasContainer.clientWidth;
+            canvas.height = canvasContainer.clientHeight;
         }
+
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        let mouse = {
+        const mouse = {
             targetX: canvas.width / 2,
             targetY: canvas.height / 2,
             x: canvas.width / 2,
@@ -409,141 +491,148 @@
             isActive: false,
         };
 
-        container.addEventListener("mousemove", function (event: MouseEvent) {
-            let rect = container.getBoundingClientRect();
-            mouse.targetX = event.clientX - rect.left;
-            mouse.targetY = event.clientY - rect.top;
-            mouse.isActive = true;
-        });
-        container.addEventListener("mouseleave", function () {
+        canvasContainer.addEventListener(
+            "mousemove",
+            function (event: MouseEvent) {
+                const rect = canvasContainer.getBoundingClientRect();
+                mouse.targetX = event.clientX - rect.left;
+                mouse.targetY = event.clientY - rect.top;
+                mouse.isActive = true;
+            },
+        );
+
+        canvasContainer.addEventListener("mouseleave", function () {
             mouse.isActive = false;
         });
 
-        container.addEventListener(
+        canvasContainer.addEventListener(
             "touchmove",
             function (event: TouchEvent) {
-                let rect = container.getBoundingClientRect();
+                const rect = canvasContainer.getBoundingClientRect();
                 mouse.targetX = event.touches[0].clientX - rect.left;
                 mouse.targetY = event.touches[0].clientY - rect.top;
                 mouse.isActive = true;
             },
             { passive: true },
         );
-        container.addEventListener("touchend", function () {
+
+        canvasContainer.addEventListener("touchend", function () {
             mouse.isActive = false;
         });
 
-        // 定義 Particle 類別
         class Particle {
             x: number;
             y: number;
             speedX: number;
             speedY: number;
             baseSize: number;
+
             constructor() {
-                this.x = Math.random() * canvas!.width;
-                this.y = Math.random() * canvas!.height;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
                 this.speedX = (Math.random() - 0.5) * 0.8;
                 this.speedY = (Math.random() - 0.5) * 0.8;
                 this.baseSize = Math.random() * 2 + 1;
             }
+
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas!.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas!.height) this.speedY *= -1;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
+
             draw() {
-                let dx = this.x - mouse.x;
-                let dy = this.y - mouse.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let signalStrength =
-                    mouse.isActive && distance < signalRadius
-                        ? 1 - distance / signalRadius
-                        : 0;
+                const dx = this.x - mouse.x;
+                const dy = this.y - mouse.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const signalStrength =
+                    mouse.isActive && distance < 200 ? 1 - distance / 200 : 0;
 
-                let currentOpacity = 0.2 + signalStrength * 0.8;
-                let currentSize = this.baseSize + signalStrength * 2;
+                const currentOpacity = 0.2 + signalStrength * 0.8;
+                const currentSize = this.baseSize + signalStrength * 2;
 
-                ctx!.beginPath();
-                ctx!.arc(this.x, this.y, currentSize, 0, Math.PI * 2);
+                context.beginPath();
+                context.arc(this.x, this.y, currentSize, 0, Math.PI * 2);
 
                 if (signalStrength > 0.1) {
-                    ctx!.fillStyle = `rgba(56, 189, 248, ${currentOpacity})`;
-                    ctx!.shadowBlur = 10 * signalStrength;
-                    ctx!.shadowColor = "#38bdf8";
+                    context.fillStyle = `rgba(56, 189, 248, ${currentOpacity})`;
+                    context.shadowBlur = 10 * signalStrength;
+                    context.shadowColor = "#38bdf8";
                 } else {
-                    ctx!.fillStyle = `rgba(255, 255, 255, 0.2)`;
-                    ctx!.shadowBlur = 0;
+                    context.fillStyle = "rgba(255, 255, 255, 0.2)";
+                    context.shadowBlur = 0;
                 }
-                ctx!.fill();
-                ctx!.shadowBlur = 0;
+
+                context.fill();
+                context.shadowBlur = 0;
             }
         }
 
-        // 明確宣告陣列型別為 Particle[]
         const particlesArray: Particle[] = [];
         const numberOfParticles = window.innerWidth < 768 ? 30 : 60;
-        const connectionDistance = 140;
-        const signalRadius = 200;
 
-        function init() {
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
+        for (let i = 0; i < numberOfParticles; i++) {
+            particlesArray.push(new Particle());
         }
 
         function connect() {
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
-                    let pa = particlesArray[a];
-                    let pb = particlesArray[b];
-                    let distanceNodes = Math.hypot(pa.x - pb.x, pa.y - pb.y);
-                    if (distanceNodes < connectionDistance) {
-                        let avgDistToMouse =
+                    const pa = particlesArray[a];
+                    const pb = particlesArray[b];
+                    const distanceNodes = Math.hypot(pa.x - pb.x, pa.y - pb.y);
+
+                    if (distanceNodes < 140) {
+                        const avgDistToMouse =
                             (Math.hypot(pa.x - mouse.x, pa.y - mouse.y) +
                                 Math.hypot(pb.x - mouse.x, pb.y - mouse.y)) /
                             2;
-                        let baseOpacity =
-                            1 - distanceNodes / connectionDistance;
-                        let isLit =
-                            mouse.isActive && avgDistToMouse < signalRadius;
+
+                        const baseOpacity = 1 - distanceNodes / 140;
+                        const isLit = mouse.isActive && avgDistToMouse < 200;
 
                         if (isLit) {
-                            let signalOpacity = Math.max(
+                            const signalOpacity = Math.max(
                                 0.1,
-                                1 - avgDistToMouse / signalRadius,
+                                1 - avgDistToMouse / 200,
                             );
-                            ctx!.strokeStyle = `rgba(56, 189, 248, ${baseOpacity * signalOpacity * 1.5})`;
-                            ctx!.lineWidth = 0.8;
+                            context.strokeStyle = `rgba(56, 189, 248, ${baseOpacity * signalOpacity * 1.5})`;
+                            context.lineWidth = 0.8;
                         } else {
-                            ctx!.strokeStyle = `rgba(255, 255, 255, ${baseOpacity * 0.1})`;
-                            ctx!.lineWidth = 0.4;
+                            context.strokeStyle = `rgba(255, 255, 255, ${baseOpacity * 0.1})`;
+                            context.lineWidth = 0.4;
                         }
-                        ctx!.beginPath();
-                        ctx!.moveTo(pa.x, pa.y);
-                        ctx!.lineTo(pb.x, pb.y);
-                        ctx!.stroke();
+
+                        context.beginPath();
+                        context.moveTo(pa.x, pa.y);
+                        context.lineTo(pb.x, pb.y);
+                        context.stroke();
                     }
                 }
             }
         }
 
         function animate() {
-            ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
             mouse.x += (mouse.targetX - mouse.x) * 0.1;
             mouse.y += (mouse.targetY - mouse.y) * 0.1;
+
             particlesArray.forEach((p) => {
                 p.update();
             });
+
             connect();
+
             particlesArray.forEach((p) => {
                 p.draw();
             });
+
             requestAnimationFrame(animate);
         }
 
-        init();
         animate();
     });
 </script>

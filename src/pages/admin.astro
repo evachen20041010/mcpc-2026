@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="管理後台 - 2026 MCPC">
     <div class="min-h-screen bg-slate-50 pt-24 pb-12 px-4 sm:px-6">
+        
         <div
             id="login-section"
             class="max-w-md mx-auto bg-white border-2 border-slate-200 rounded-2xl p-8 shadow-sm"
@@ -15,9 +16,7 @@ import Layout from "../layouts/Layout.astro";
 
             <form id="login-form" class="space-y-5">
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1"
-                        >Email 帳號</label
-                    >
+                    <label class="block text-sm font-bold text-slate-700 mb-1">Email 帳號</label>
                     <input
                         type="email"
                         id="email"
@@ -27,9 +26,7 @@ import Layout from "../layouts/Layout.astro";
                     />
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-1"
-                        >密碼</label
-                    >
+                    <label class="block text-sm font-bold text-slate-700 mb-1">密碼</label>
                     <input
                         type="password"
                         id="password"
@@ -38,132 +35,121 @@ import Layout from "../layouts/Layout.astro";
                         placeholder="••••••••"
                     />
                 </div>
-                <p id="login-error" class="text-red-500 text-sm hidden">
-                    登入失敗，請檢查帳號密碼。
-                </p>
-                <button
-                    type="submit"
-                    class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                >
+                <p id="login-error" class="text-red-500 text-sm hidden">登入失敗，請檢查帳號密碼。</p>
+                <button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors">
                     登入
                 </button>
             </form>
         </div>
 
-        <div id="admin-section" class="max-w-5xl mx-auto hidden">
-            <div
-                class="flex justify-between items-center bg-white border border-slate-200 rounded-xl p-6 mb-8 shadow-sm"
-            >
+        <div id="admin-section" class="max-w-6xl mx-auto hidden space-y-10">
+            
+            <div class="flex justify-between items-center bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-800">
-                        後台管理系統
-                    </h2>
-                    <p class="text-sm text-slate-500">
-                        目前可管理：最新消息公告
-                    </p>
+                    <h2 class="text-2xl font-bold text-slate-800">後台管理系統</h2>
+                    <p class="text-sm text-slate-500 mt-1">目前可管理：最新消息公告、重要日程</p>
                 </div>
-                <button
-                    id="logout-btn"
-                    class="px-5 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg hover:bg-slate-200 transition-colors"
-                >
+                <button id="logout-btn" class="px-5 py-2 bg-slate-100 text-slate-600 font-bold rounded-lg hover:bg-slate-200 transition-colors">
                     登出系統
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div
-                    class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm h-fit"
-                >
-                    <h3
-                        class="text-lg font-bold text-slate-800 mb-4 border-b pb-2"
-                    >
-                        發布新公告
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="bg-slate-800 px-6 py-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-bullhorn text-sky-400"></i> 最新消息公告管理
                     </h3>
-                    <form id="add-news-form" class="space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label
-                                    class="block text-sm font-bold text-slate-700 mb-1"
-                                    >發布日期</label
-                                >
-                                <input
-                                    type="date"
-                                    id="news-date"
-                                    required
-                                    class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary"
-                                />
-                            </div>
-                            <div>
-                                <label
-                                    class="block text-sm font-bold text-slate-700 mb-1"
-                                    >分類標籤</label
-                                >
-                                <select
-                                    id="news-category"
-                                    class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary"
-                                >
-                                    <option value="重要">重要</option>
-                                    <option value="公告">公告</option>
-                                    <option value="活動">活動</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label
-                                class="block text-sm font-bold text-slate-700 mb-1"
-                                >公告標題</label
-                            >
-                            <input
-                                type="text"
-                                id="news-title"
-                                required
-                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary"
-                                placeholder="例如：報名日期延長"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                class="block text-sm font-bold text-slate-700 mb-1"
-                            >
-                                公告內容 <span
-                                    class="text-slate-400 font-normal ml-2"
-                                    >(支援 Markdown 格式)</span
-                                >
-                            </label>
-                            <textarea
-                                id="news-desc"
-                                required
-                                rows="15"
-                                class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary leading-relaxed"
-                                placeholder="支援 Markdown 語法：
-# 大標題
-**粗體字**
-- 列表項目
-[連結文字](網址)"
-                            ></textarea>
-                        </div>
-                        <button
-                            type="submit"
-                            class="w-full bg-[#F2994A] text-white font-bold py-3 rounded-lg hover:bg-orange-500 transition-colors text-lg mt-2"
-                        >
-                            + 新增發布
-                        </button>
-                    </form>
                 </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x border-t border-slate-200">
+                    <div class="p-6">
+                        <form id="add-news-form" class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1">發布日期</label>
+                                    <input type="date" id="news-date" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1">分類標籤</label>
+                                    <select id="news-category" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary">
+                                        <option value="重要">重要</option>
+                                        <option value="公告">公告</option>
+                                        <option value="活動">活動</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">公告標題</label>
+                                <input type="text" id="news-title" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary" placeholder="例如：報名日期延長" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">
+                                    公告內容 <span class="text-slate-400 font-normal ml-2">(支援 Markdown 格式)</span>
+                                </label>
+                                <textarea id="news-desc" required rows="8" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-primary leading-relaxed text-sm font-mono" placeholder="支援 Markdown 語法..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-[#F2994A] text-white font-bold py-3 rounded-lg hover:bg-orange-500 transition-colors mt-2">
+                                + 新增發布
+                            </button>
+                        </form>
+                    </div>
 
-                <div
-                    class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
-                >
-                    <h3
-                        class="text-lg font-bold text-slate-800 mb-4 border-b pb-2"
-                    >
-                        已發布公告管理
-                    </h3>
-                    <div id="news-list" class="space-y-4">
-                        <p class="text-slate-500 text-center py-8">載入中...</p>
+                    <div class="p-6 bg-slate-50/50">
+                        <h4 class="font-bold text-slate-700 mb-4 border-b pb-2">已發布公告</h4>
+                        <div id="news-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                            <p class="text-slate-500 text-center py-8">載入中...</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="bg-emerald-700 px-6 py-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-emerald-300"></i> 重要日程管理
+                    </h3>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-5 divide-y lg:divide-y-0 lg:divide-x border-t border-slate-200">
+                    
+                    <div class="p-6 lg:col-span-2">
+                        <form id="timeline-form" class="space-y-5">
+                            <input type="hidden" id="edit-timeline-id" value="" />
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">發生日期</label>
+                                <input type="date" id="timeline-date" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">事件名稱</label>
+                                <input type="text" id="timeline-title" required class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="例如：線上報名截止" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">詳細說明 <span class="text-slate-400 font-normal ml-1">(選填)</span></label>
+                                <input type="text" id="timeline-desc" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" placeholder="例如：延長至晚上 23:59 止" />
+                            </div>
+                            
+                            <div class="flex gap-3 pt-2">
+                                <button type="submit" id="timeline-submit-btn" class="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition-colors">
+                                    + 新增日程
+                                </button>
+                                <button type="button" id="timeline-cancel-btn" class="hidden px-5 py-3 bg-slate-200 text-slate-700 font-bold rounded-lg hover:bg-slate-300 transition-colors">
+                                    取消
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="p-6 lg:col-span-3 bg-slate-50/50">
+                        <h4 class="font-bold text-slate-700 mb-4 border-b pb-2 flex justify-between">
+                            <span>現有日程表 (依日期自動排序)</span>
+                            <span class="text-xs font-normal text-slate-500 bg-white px-2 py-1 rounded border">過期日程會自動劃線</span>
+                        </h4>
+                        <div id="timeline-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                            <p class="text-slate-500 text-center py-8">載入中...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </Layout>
@@ -181,29 +167,30 @@ import Layout from "../layouts/Layout.astro";
         getDocs,
         deleteDoc,
         doc,
+        updateDoc,
         query,
         orderBy,
     } from "firebase/firestore";
 
-    // DOM 元素選取
+    // ================= DOM 元素選取 =================
     const loginSection = document.getElementById("login-section");
     const adminSection = document.getElementById("admin-section");
     const loginForm = document.getElementById("login-form");
     const logoutBtn = document.getElementById("logout-btn");
+    const loginError = document.getElementById("login-error");
+    
+    // News DOM
     const addNewsForm = document.getElementById("add-news-form");
     const newsListContainer = document.getElementById("news-list");
-    const loginError = document.getElementById("login-error");
+    
+    // Timeline DOM
+    const timelineForm = document.getElementById("timeline-form");
+    const timelineListContainer = document.getElementById("timeline-list");
+    const editTimelineIdInput = document.getElementById("edit-timeline-id") as HTMLInputElement;
+    const timelineSubmitBtn = document.getElementById("timeline-submit-btn");
+    const timelineCancelBtn = document.getElementById("timeline-cancel-btn");
 
-    // 防呆機制：確保 HTML 元素都有抓到，解決 TS possibly 'null' 的警告
-    if (
-        !loginSection ||
-        !adminSection ||
-        !loginForm ||
-        !logoutBtn ||
-        !addNewsForm ||
-        !newsListContainer ||
-        !loginError
-    ) {
+    if (!loginSection || !adminSection || !loginForm || !logoutBtn || !addNewsForm || !newsListContainer || !timelineForm || !timelineListContainer) {
         throw new Error("找不到必要的 DOM 元素");
     }
 
@@ -213,6 +200,7 @@ import Layout from "../layouts/Layout.astro";
             loginSection.classList.add("hidden");
             adminSection.classList.remove("hidden");
             loadNews();
+            loadTimeline(); // 登入後載入日程
         } else {
             loginSection.classList.remove("hidden");
             adminSection.classList.add("hidden");
@@ -222,18 +210,15 @@ import Layout from "../layouts/Layout.astro";
     // ================= 2. 處理登入與登出 =================
     loginForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const email = (document.getElementById("email") as HTMLInputElement)
-            .value;
-        const password = (
-            document.getElementById("password") as HTMLInputElement
-        ).value;
+        const email = (document.getElementById("email") as HTMLInputElement).value;
+        const password = (document.getElementById("password") as HTMLInputElement).value;
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            loginError.classList.add("hidden");
+            loginError!.classList.add("hidden");
         } catch (error) {
             console.error("Login failed:", error);
-            loginError.classList.remove("hidden");
+            loginError!.classList.remove("hidden");
         }
     });
 
@@ -241,111 +226,193 @@ import Layout from "../layouts/Layout.astro";
         signOut(auth);
     });
 
-    // ================= 3. 讀取並顯示公告 (Read) =================
+    // ================= 3. 最新消息模組 (Read, Create, Delete) =================
     async function loadNews() {
-        newsListContainer!.innerHTML =
-            '<p class="text-slate-500 text-center py-4">載入中...</p>';
+        newsListContainer!.innerHTML = '<p class="text-slate-500 text-center py-4">載入中...</p>';
         try {
             const q = query(collection(db, "news"), orderBy("date", "desc"));
             const querySnapshot = await getDocs(q);
-
-            newsListContainer!.innerHTML = ""; // 清空
+            newsListContainer!.innerHTML = "";
 
             if (querySnapshot.empty) {
-                newsListContainer!.innerHTML =
-                    '<p class="text-slate-500 text-center py-4">目前沒有任何公告。</p>';
+                newsListContainer!.innerHTML = '<p class="text-slate-500 text-center py-4">目前沒有任何公告。</p>';
                 return;
             }
 
             querySnapshot.forEach((docSnap) => {
                 const data = docSnap.data();
-                const id = docSnap.id;
-
                 const newsItem = document.createElement("div");
-                newsItem.className =
-                    "flex justify-between items-start p-4 border border-slate-100 rounded-xl bg-slate-50 hover:bg-white transition-colors";
+                newsItem.className = "flex justify-between items-start p-4 border border-slate-100 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow";
                 newsItem.innerHTML = `
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-bold text-white bg-slate-400 px-2 py-0.5 rounded">${data.date}</span>
-                <span class="text-xs font-bold text-primary bg-blue-50 px-2 py-0.5 rounded-full">${data.category}</span>
-              </div>
-              <h4 class="font-bold text-slate-800">${data.title}</h4>
-              <p class="text-sm text-slate-500 mt-1 line-clamp-1">${data.desc}</p>
-            </div>
-            <button data-id="${id}" class="delete-btn text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-1 rounded text-sm font-bold transition-colors">
-              刪除
-            </button>
-          `;
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">${data.date}</span>
+                            <span class="text-xs font-bold text-primary bg-blue-50 px-2 py-0.5 rounded-full">${data.category}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-800">${data.title}</h4>
+                    </div>
+                    <button data-id="${docSnap.id}" class="delete-news-btn text-red-500 hover:bg-red-50 px-3 py-1 rounded text-sm font-bold transition-colors shrink-0">
+                        刪除
+                    </button>
+                `;
                 newsListContainer!.appendChild(newsItem);
             });
 
-            // 綁定刪除按鈕事件
-            document.querySelectorAll(".delete-btn").forEach((btn) => {
+            document.querySelectorAll(".delete-news-btn").forEach((btn) => {
                 btn.addEventListener("click", async (e) => {
-                    const docId = (e.currentTarget as HTMLElement).getAttribute(
-                        "data-id",
-                    );
-                    // 確認 docId 不是 null 才執行
-                    if (
-                        docId &&
-                        confirm("確定要刪除這筆公告嗎？此動作無法復原。")
-                    ) {
-                        await deleteNews(docId);
+                    const docId = (e.currentTarget as HTMLElement).getAttribute("data-id");
+                    if (docId && confirm("確定要刪除這筆公告嗎？此動作無法復原。")) {
+                        await deleteDoc(doc(db, "news", docId));
+                        loadNews();
                     }
                 });
             });
         } catch (error) {
             console.error("Error loading news: ", error);
-            newsListContainer!.innerHTML =
-                '<p class="text-red-500 text-center py-4">讀取失敗，請檢查權限或連線。</p>';
         }
     }
 
-    // ================= 4. 新增公告 (Create) =================
     addNewsForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const dateStr = (
-            document.getElementById("news-date") as HTMLInputElement
-        ).value;
-        const dateFormatted = dateStr.replace(/-/g, ".");
-        const category = (
-            document.getElementById("news-category") as HTMLSelectElement
-        ).value;
-        const title = (
-            document.getElementById("news-title") as HTMLInputElement
-        ).value;
-        const desc = (
-            document.getElementById("news-desc") as HTMLTextAreaElement
-        ).value;
+        const dateStr = (document.getElementById("news-date") as HTMLInputElement).value;
+        const title = (document.getElementById("news-title") as HTMLInputElement).value;
+        const desc = (document.getElementById("news-desc") as HTMLTextAreaElement).value;
+        const category = (document.getElementById("news-category") as HTMLSelectElement).value;
 
         try {
             await addDoc(collection(db, "news"), {
-                date: dateFormatted,
-                category: category,
-                title: title,
-                desc: desc,
+                date: dateStr.replace(/-/g, "."),
+                category, title, desc,
                 timestamp: new Date(),
             });
-
             alert("公告新增成功！");
             (addNewsForm as HTMLFormElement).reset();
             loadNews();
         } catch (error) {
-            console.error("Error adding document: ", error);
-            alert("新增失敗，請稍後再試。");
+            alert("新增公告失敗。");
         }
     });
 
-    // ================= 5. 刪除公告 (Delete) =================
-    // 加上 id: string 的型別宣告，解決 implicit any 的警告
-    async function deleteNews(id: string) {
+
+    // ================= 4. 重要日程模組 (Create, Read, Update, Delete) =================
+    
+    // 讀取日程 (Read)
+    async function loadTimeline() {
+        timelineListContainer!.innerHTML = '<p class="text-slate-500 text-center py-4">載入中...</p>';
         try {
-            await deleteDoc(doc(db, "news", id));
-            loadNews();
+            // Firestore 若以 YYYY-MM-DD 字串儲存，可直接依照字串排序達到日期排序效果
+            const q = query(collection(db, "timeline"), orderBy("dateStr", "asc"));
+            const querySnapshot = await getDocs(q);
+            timelineListContainer!.innerHTML = "";
+
+            if (querySnapshot.empty) {
+                timelineListContainer!.innerHTML = '<p class="text-slate-500 text-center py-4">目前沒有任何日程。</p>';
+                return;
+            }
+
+            // 取得今日字串供比較 (YYYY-MM-DD)
+            const today = new Date().toISOString().split('T')[0];
+
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const isPast = data.dateStr < today; // 判斷是否過期
+
+                const timelineItem = document.createElement("div");
+                timelineItem.className = `flex justify-between items-center p-4 border rounded-xl transition-colors ${isPast ? 'bg-slate-100 border-slate-200 opacity-60' : 'bg-white border-emerald-100 shadow-sm'}`;
+                
+                // 將資料綁在 dataset 以供編輯按鈕讀取
+                timelineItem.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="font-mono font-bold px-3 py-1 rounded-lg ${isPast ? 'text-slate-500 bg-slate-200 line-through' : 'text-emerald-700 bg-emerald-50'}">${data.dateStr}</span>
+                        <div>
+                            <strong class="block ${isPast ? 'text-slate-500 line-through' : 'text-slate-800'}">${data.title}</strong>
+                            ${data.desc ? `<span class="text-xs text-slate-500">${data.desc}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="flex gap-1 shrink-0">
+                        <button data-id="${docSnap.id}" data-date="${data.dateStr}" data-title="${data.title}" data-desc="${data.desc || ''}" class="edit-timeline-btn text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded text-sm font-bold transition-colors">
+                            編輯
+                        </button>
+                        <button data-id="${docSnap.id}" class="delete-timeline-btn text-rose-500 hover:bg-rose-50 px-3 py-1.5 rounded text-sm font-bold transition-colors">
+                            刪除
+                        </button>
+                    </div>
+                `;
+                timelineListContainer!.appendChild(timelineItem);
+            });
+
+            // 綁定編輯按鈕
+            document.querySelectorAll(".edit-timeline-btn").forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                    const ds = (e.currentTarget as HTMLElement).dataset;
+                    (document.getElementById("timeline-date") as HTMLInputElement).value = ds.date!;
+                    (document.getElementById("timeline-title") as HTMLInputElement).value = ds.title!;
+                    (document.getElementById("timeline-desc") as HTMLInputElement).value = ds.desc!;
+                    editTimelineIdInput.value = ds.id!;
+
+                    timelineSubmitBtn!.textContent = "儲存修改";
+                    timelineSubmitBtn!.className = "flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors";
+                    timelineCancelBtn!.classList.remove("hidden");
+                });
+            });
+
+            // 綁定刪除按鈕
+            document.querySelectorAll(".delete-timeline-btn").forEach((btn) => {
+                btn.addEventListener("click", async (e) => {
+                    const docId = (e.currentTarget as HTMLElement).getAttribute("data-id");
+                    if (docId && confirm("確定要刪除這筆日程嗎？此動作無法復原。")) {
+                        await deleteDoc(doc(db, "timeline", docId));
+                        loadTimeline();
+                    }
+                });
+            });
+
         } catch (error) {
-            console.error("Error deleting document: ", error);
-            alert("刪除失敗，請檢查權限。");
+            console.error("Error loading timeline: ", error);
         }
     }
+
+    // 取消編輯按鈕邏輯
+    timelineCancelBtn!.addEventListener("click", () => {
+        (timelineForm as HTMLFormElement).reset();
+        editTimelineIdInput.value = "";
+        timelineSubmitBtn!.textContent = "+ 新增日程";
+        timelineSubmitBtn!.className = "flex-1 bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition-colors";
+        timelineCancelBtn!.classList.add("hidden");
+    });
+
+    // 新增與更新表單提交 (Create & Update)
+    timelineForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const dateStr = (document.getElementById("timeline-date") as HTMLInputElement).value;
+        const title = (document.getElementById("timeline-title") as HTMLInputElement).value;
+        const desc = (document.getElementById("timeline-desc") as HTMLInputElement).value;
+        const editId = editTimelineIdInput.value;
+
+        try {
+            if (editId) {
+                // 更新模式
+                await updateDoc(doc(db, "timeline", editId), {
+                    dateStr, title, desc
+                });
+                alert("日程已更新！");
+            } else {
+                // 新增模式
+                await addDoc(collection(db, "timeline"), {
+                    dateStr, title, desc,
+                    timestamp: new Date() // 備用時間戳
+                });
+                alert("日程新增成功！");
+            }
+            
+            // 重置表單狀態並重新載入列表
+            timelineCancelBtn!.click(); 
+            loadTimeline();
+        } catch (error) {
+            console.error("Error saving timeline: ", error);
+            alert("儲存失敗，請檢查權限。");
+        }
+    });
+
 </script>
