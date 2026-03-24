@@ -1,16 +1,42 @@
 ---
-// 取得目前網址路徑，用來判斷哪個選項要亮起
+// Navbar.astro
+
 const pathname = Astro.url.pathname;
 
-const links = [
+const navLinks = [
   { name: "首頁", href: "/" },
   { name: "最新消息", href: "/news" },
   { name: "競賽辦法", href: "/rules" },
-  { name: "報名專區", href: "/registration" },
   { name: "檔案下載", href: "/downloads" },
   { name: "交通地點", href: "/venue" },
-  { name: "聯絡我們", href: "/contact" },
 ];
+
+const themeLinks = [
+  {
+    name: "智慧節能與物聯網應用組",
+    href: "/themes/energy-iot",
+  },
+  {
+    name: "智慧指向性傳輸 / 通訊網路與資訊安全組",
+    href: "/themes/directional-security",
+  },
+  {
+    name: "智慧數位應用組",
+    href: "/themes/digital-app",
+  },
+];
+
+const uploadLink = {
+  name: "報名 / 資料上傳",
+  href: "/upload",
+};
+
+const isExactActive = (href: string) => pathname === href;
+const isSectionActive = (href: string) =>
+  pathname === href || pathname.startsWith(`${href}/`);
+
+const isThemeActive = themeLinks.some((item) => isSectionActive(item.href));
+const isUploadActive = isSectionActive(uploadLink.href);
 ---
 
 <nav
@@ -19,6 +45,7 @@ const links = [
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
       <div class="flex-shrink-0">
         <a
           href="/"
@@ -33,22 +60,21 @@ const links = [
         </a>
       </div>
 
+      <!-- Desktop -->
       <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8">
+        <div class="ml-10 flex items-center space-x-8">
           {
-            links.map((link) => {
-              // 判斷是否為當前頁面
+            navLinks.map((link) => {
               const isActive =
                 link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href);
+                  ? isExactActive(link.href)
+                  : isSectionActive(link.href);
 
               return (
                 <a
                   href={link.href}
                   class:list={[
-                    "text-base font-bold transition-colors relative py-2 group",
-                    // 尚未選取是深灰色，Hover 變主色 (primary)
+                    "text-base font-bold transition-colors relative py-2 group whitespace-nowrap",
                     isActive
                       ? "text-primary"
                       : "text-slate-600 hover:text-primary",
@@ -56,21 +82,97 @@ const links = [
                 >
                   {link.name}
 
-                  {/* 底部線條 (改成 Banner 色系) */}
                   {isActive ? (
-                    // 當前頁面：顯示實線 (Primary Blue)
                     <span class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-full" />
                   ) : (
-                    // Hover 動畫：滑鼠移上去時展開 (Primary Blue with Opacity)
                     <span class="absolute bottom-0 left-0 w-0 h-[3px] bg-primary/60 rounded-full transition-all duration-300 group-hover:w-full" />
                   )}
                 </a>
               );
             })
           }
+
+          <!-- 競賽主題資訊 dropdown -->
+          <div class="relative group">
+            <button
+              type="button"
+              class:list={[
+                "text-base font-bold transition-colors relative py-2 flex items-center gap-2 whitespace-nowrap",
+                isThemeActive
+                  ? "text-primary"
+                  : "text-slate-600 hover:text-primary",
+              ]}
+            >
+              競賽主題資訊
+              <svg
+                class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+
+              {isThemeActive ? (
+                <span class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-full" />
+              ) : (
+                <span class="absolute bottom-0 left-0 w-0 h-[3px] bg-primary/60 rounded-full transition-all duration-300 group-hover:w-full" />
+              )}
+            </button>
+
+            <div
+              class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+            >
+              <div class="w-[370px] rounded-2xl bg-white border border-slate-200 shadow-[0_18px_40px_rgba(15,23,42,0.12)] p-3">
+                {
+                  themeLinks.map((item) => {
+                    const isActive = isSectionActive(item.href);
+
+                    return (
+                      <a
+                        href={item.href}
+                        class:list={[
+                          "block rounded-xl px-4 py-3 text-[15px] font-bold transition-colors leading-relaxed",
+                          isActive
+                            ? "bg-slate-50 text-primary"
+                            : "text-slate-700 hover:bg-slate-50 hover:text-primary",
+                        ]}
+                      >
+                        {item.name}
+                      </a>
+                    );
+                  })
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- 報名 / 資料上傳 -->
+          <a
+            href={uploadLink.href}
+            class:list={[
+              "text-base font-bold transition-colors relative py-2 group whitespace-nowrap",
+              isUploadActive
+                ? "text-primary"
+                : "text-slate-600 hover:text-primary",
+            ]}
+          >
+            {uploadLink.name}
+
+            {isUploadActive ? (
+              <span class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-full" />
+            ) : (
+              <span class="absolute bottom-0 left-0 w-0 h-[3px] bg-primary/60 rounded-full transition-all duration-300 group-hover:w-full" />
+            )}
+          </a>
         </div>
       </div>
 
+      <!-- Mobile button -->
       <div class="md:hidden flex items-center">
         <button
           id="mobile-menu-btn"
@@ -88,30 +190,32 @@ const links = [
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"></path>
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
       </div>
     </div>
   </div>
 
+  <!-- Mobile menu -->
   <div
     id="mobile-menu"
     class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full left-0 shadow-lg"
   >
     <div class="px-4 pt-2 pb-6 space-y-1">
       {
-        links.map((link) => {
+        navLinks.map((link) => {
           const isActive =
             link.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(link.href);
+              ? isExactActive(link.href)
+              : isSectionActive(link.href);
+
           return (
             <a
               href={link.href}
               class:list={[
                 "block px-3 py-3 rounded-lg text-base font-medium transition-colors",
-                // 手機版：選取時背景變淡藍色 (bg-light)，文字變主色 (primary)
                 isActive
                   ? "bg-bg-light text-primary"
                   : "text-slate-600 hover:bg-slate-50 hover:text-primary",
@@ -122,12 +226,47 @@ const links = [
           );
         })
       }
+
+      <div class="pt-2 pb-1 px-3 text-sm font-bold text-slate-400 tracking-wide">
+        競賽主題資訊
+      </div>
+
+      {
+        themeLinks.map((item) => {
+          const isActive = isSectionActive(item.href);
+
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "block px-3 py-3 rounded-lg text-base font-medium transition-colors",
+                isActive
+                  ? "bg-bg-light text-primary"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-primary",
+              ]}
+            >
+              {item.name}
+            </a>
+          );
+        })
+      }
+
+      <a
+        href={uploadLink.href}
+        class:list={[
+          "block px-3 py-3 rounded-lg text-base font-medium transition-colors",
+          isUploadActive
+            ? "bg-bg-light text-primary"
+            : "text-slate-600 hover:bg-slate-50 hover:text-primary",
+        ]}
+      >
+        {uploadLink.name}
+      </a>
     </div>
   </div>
 </nav>
 
 <script>
-  // 處理手機版選單開關
   const btn = document.getElementById("mobile-menu-btn");
   const menu = document.getElementById("mobile-menu");
 
