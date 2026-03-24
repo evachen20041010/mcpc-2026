@@ -2,6 +2,25 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // 只允許特定 email 寫入
+    function isAdmin() {
+      return request.auth != null &&
+        request.auth.token.email in [
+          "a0937510149@gmail.com",
+          "nextgeneration1140331@gmail.com"
+        ];
+    }
+
+    match /news/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /timeline/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
