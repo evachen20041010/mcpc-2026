@@ -22,12 +22,20 @@
           class="animate-fade-up flex items-center justify-center lg:justify-start gap-4 mb-6 mx-auto lg:mx-0"
           style="animation-delay: 100ms;"
         >
-          <span class="w-8 h-[2px] bg-sky-400/80 rounded-full shadow-[0_0_8px_#38bdf8]"></span>
-          <span class="text-sky-300 font-bold text-lg md:text-xl tracking-[0.2em] drop-shadow-md">
+          <span
+            class="w-8 h-[2px] bg-sky-400/80 rounded-full shadow-[0_0_8px_#38bdf8]"
+          ></span>
+          <span
+            class="text-sky-300 font-bold text-lg md:text-xl tracking-[0.2em] drop-shadow-md"
+          >
             2026 年度競賽
           </span>
-          <span class="w-8 h-[2px] bg-sky-400/80 rounded-full shadow-[0_0_8px_#38bdf8]"></span>
-          <span class="w-8 h-[2px] bg-sky-400/80 rounded-full shadow-[0_0_8px_#38bdf8] lg:hidden"></span>
+          <span
+            class="w-8 h-[2px] bg-sky-400/80 rounded-full shadow-[0_0_8px_#38bdf8]"
+          ></span>
+          <span
+            class="w-8 h-[2px] bg-sky-400/80 rounded-full shadow-[0_0_8px_#38bdf8] lg:hidden"
+          ></span>
         </div>
 
         <h1
@@ -144,16 +152,14 @@
 
           <div
             id="dynamic-timeline-container"
-            class="relative flex flex-col pointer-events-auto"
+            class="relative flex flex-col gap-4 pointer-events-auto"
           >
             <div
-              class="v-time-card relative grid grid-cols-[20px_1fr] sm:grid-cols-[24px_1fr] gap-4 sm:gap-6 items-start pb-2"
+              class="v-time-card relative grid grid-cols-[20px_1fr] sm:grid-cols-[24px_1fr] gap-4 sm:gap-6 items-center"
             >
-              <div
-                class="v-time-marker self-stretch flex flex-col items-center pt-1"
-              >
+              <div class="v-time-marker flex flex-col items-center pt-[2px]">
                 <div class="v-time-dot"></div>
-                <div class="v-time-segment mt-3 flex-1 min-h-[2.4rem]"></div>
+                <div class="v-time-segment mt-2 h-8"></div>
               </div>
               <div class="v-time-info w-full text-white/50 animate-pulse">
                 時程同步中...
@@ -194,30 +200,47 @@
    ========================================================= */
   .v-time-card {
     position: relative;
+    min-height: 40px;
     transition: opacity 0.3s ease;
   }
 
   .v-time-marker {
-    min-height: 100%;
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 640px) {
+    .v-time-marker {
+      width: 24px;
+    }
   }
 
   .v-time-dot {
     width: 14px;
     height: 14px;
     border-radius: 9999px;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(255, 255, 255, 0.28);
-    z-index: 10;
     flex-shrink: 0;
-    transition: all 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease,
+      opacity 0.3s ease;
   }
 
   .v-time-segment {
     width: 2px;
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.15);
-    transition: all 0.3s ease;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.08)
+    );
+    transition:
+      background 0.3s ease,
+      opacity 0.3s ease;
   }
 
   .v-time-info {
