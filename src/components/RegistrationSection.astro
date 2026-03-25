@@ -19,7 +19,6 @@ const steps = [
         報名專區
         <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"></span>
       </h2>
-      <p class="text-slate-600 mt-4 text-lg">簡單四步驟，展現您的創新實力</p>
     </div>
 
     <div class="grid md:grid-cols-4 gap-8 mb-16">
@@ -35,31 +34,26 @@ const steps = [
     </div>
 
     <div class="text-center">
-      
-      <a 
-        href="https://docs.google.com/forms/..." 
-        target="_blank" 
-        class="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-gradient-to-r from-primary to-blue-600 text-white text-xl font-bold rounded-full shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300 overflow-hidden mb-12"
-      >
-        <div class="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
-        <span class="relative z-10">前往線上報名系統</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 relative z-10 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </a>
+        <a
+          href="/rules"
+          class="group relative inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-primary text-white font-bold tracking-[0.08em] transition-all duration-300 shadow-[0_12px_24px_rgba(26,79,110,0.2)] hover:shadow-[0_18px_30px_rgba(26,79,110,0.28)] hover:-translate-y-1 overflow-hidden mb-12"
+        >
+          <div class="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+          <span class="relative z-10">前往線上報名系統 →</span>
+        </a>
       
       <div class="max-w-3xl mx-auto">
         <div class="bg-white rounded-2xl p-6 border border-primary/10 shadow-sm flex flex-col md:flex-row items-start md:items-center gap-5 text-left transition-shadow hover:shadow-md">
-            <div class="w-14 h-14 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center text-2xl flex-shrink-0">
-                💡
+            
+            <div class="w-14 h-14 bg-amber-300 rounded-full flex items-center justify-center flex-shrink-0 shadow-md shadow-amber-200">
+                <img src="/images/lightbulb.png" alt="Lightbulb" class="w-7 h-7 object-contain opacity-95" style="filter: brightness(0) invert(1);" />
             </div>
+            
             <div>
                  <h4 class="text-lg font-bold text-slate-800 mb-2">報名狀態查詢說明</h4>
                  <p class="text-slate-600 leading-relaxed">
                     完成報名後，系統將自動寄發確認信。如需查詢報名進度或修改資料，請來信 
-                    <a href="mailto:mcpc2026@example.edu.tw" class="text-primary font-bold hover:underline transition-colors">
-                      mcpc2026@example.edu.tw
-                    </a>，並於信中註明您的「隊伍名稱」與「隊長姓名」，我們將盡快為您查詢。
+                    ，並於信中註明您的「隊伍名稱」與「隊長姓名」，我們將盡快為您查詢。
                 </p>
             </div>
         </div>
