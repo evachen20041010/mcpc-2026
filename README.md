@@ -5,7 +5,6 @@
 本專案用於建置競賽資訊網站，提供首頁形象展示、最新消息、競賽辦法、檔案下載、交通地點、競賽主題資訊，以及報名 / 資料上傳等內容。  
 網站後端串接 Firebase，可支援最新消息與時程資料的動態管理，並提供管理後台供管理員登入維護內容。
 
----
 
 ## 特色
 
@@ -17,7 +16,6 @@
 - 首頁 Hero 區塊包含倒數計時與動態時程顯示
 - 提供後台頁面管理公告與日程資料
 
----
 
 ## 技術
 
@@ -28,7 +26,6 @@
   - Cloud Firestore
   - Hosting
 
----
 
 ## 網站主要功能
 
@@ -46,7 +43,6 @@
 - 最新消息公告管理
 - 重要日程管理
 
----
 
 ## 專案結構
 
@@ -67,7 +63,6 @@ mcpc-2026/
 └─ package.json
 ```
 
----
 
 ## A. PowerShell 權限
 
@@ -85,7 +80,6 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 npm.cmd install
 ```
 
----
 
 ## B. 專案環境建置與部署指令
 
@@ -131,7 +125,6 @@ npx.cmd firebase deploy
 npm.cmd run dev
 ```
 
----
 
 ## C. VS Code 擴充套件
 
@@ -151,7 +144,6 @@ class 提示、顏色 / 樣式預覽
 
 看 rules / deploy 會方便
 
----
 
 ## 建置與部署
 
@@ -165,7 +157,6 @@ npm.cmd run build
 npx.cmd firebase deploy
 ```
 
----
 
 ## Firebase 相關說明
 
@@ -179,7 +170,6 @@ npx.cmd firebase deploy
 - **Hosting**
   - 部署正式網站
 
----
 
 ## 管理後台說明
 
@@ -196,7 +186,6 @@ npx.cmd firebase deploy
 3. Firestore 規則已正確部署
 4. `.env` 已填入正確的 Firebase Web App 設定
 
----
 
 ## 授權
 
