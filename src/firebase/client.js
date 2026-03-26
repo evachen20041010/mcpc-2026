@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth"; // 引入 auth 功能
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY,
@@ -11,6 +11,10 @@ const firebaseConfig = {
   appId: import.meta.env.PUBLIC_FIREBASE_APP_ID
 };
 
+console.log("apiKey raw =", JSON.stringify(firebaseConfig.apiKey));
+console.log("apiKey length =", firebaseConfig.apiKey?.length);
+console.log("authDomain raw =", JSON.stringify(firebaseConfig.authDomain));
+
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const auth = getAuth(app); // 匯出 auth 實例
+export const auth = getAuth(app);
