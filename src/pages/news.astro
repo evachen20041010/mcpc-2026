@@ -38,8 +38,7 @@ import Footer from "../components/Footer.astro";
       </div>
     </section>
 
-    <!-- 內容區：比照競賽辦法頁的容器感 -->
-    <section class="py-20 bg-slate-50 relative overflow-hidden min-h-[50vh]">
+    <section class="py-16 bg-slate-50 relative overflow-hidden min-h-[50vh]">
       <div
         class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent opacity-50"
       >
@@ -52,22 +51,13 @@ import Footer from "../components/Footer.astro";
         </div> -->
 
         <div
-          class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden"
+          id="all-news-container"
+          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
         >
           <div
-            class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+            class="col-span-full text-center py-12 text-slate-500 animate-pulse"
           >
-          </div>
-
-          <div
-            id="all-news-container"
-            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
-          >
-            <div
-              class="col-span-full text-center py-12 text-slate-500 animate-pulse"
-            >
-              正在載入所有公告...
-            </div>
+            正在載入所有公告...
           </div>
         </div>
       </div>
