@@ -1,0 +1,166 @@
+---
+import {
+  themePlatformData,
+  trainingCampIntro,
+  type ThemeKey,
+} from "../../data/themePlatformData";
+
+interface Props {
+  themeKey: ThemeKey;
+}
+
+const { themeKey } = Astro.props;
+const theme = themePlatformData[themeKey];
+
+const displayText = (value?: string) => (value && value.trim() ? value : "—");
+---
+
+<section class="pt-20">
+  <section class="relative overflow-hidden bg-white border-b border-slate-200">
+    <div class="absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-slate-50"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 lg:py-24">
+      <div class="max-w-4xl">
+        <p class="text-sm font-bold tracking-[0.25em] text-primary/80 mb-4">
+          {theme.heroLabel}
+        </p>
+
+        <h1 class="text-4xl lg:text-5xl font-black text-slate-800 tracking-tight mb-6 leading-tight">
+          {theme.pageTitle}
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-slate-50 relative overflow-hidden">
+    <div
+      class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent opacity-50"
+    ></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <h2 class="text-2xl font-bold text-slate-800">競賽平台培訓營</h2>
+          <div class="flex-1 h-px bg-slate-200"></div>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] p-8 lg:p-10 shadow-sm border border-slate-100">
+          <ul class="space-y-3 text-slate-600 leading-relaxed">
+            {trainingCampIntro.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 shrink-0"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="space-y-12">
+        {theme.platforms.map((platform, index) => (
+          <section>
+            <div class="flex items-center gap-4 mb-8">
+              <h2 class="text-2xl font-bold text-slate-800">
+                平台 {index + 1}
+              </h2>
+              <div class="flex-1 h-px bg-slate-200"></div>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden">
+              <div
+                class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+              ></div>
+
+              <div class="mb-10">
+                <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-bold mb-4">
+                  競賽平台
+                </span>
+                <h3 class="text-3xl font-black text-slate-800 leading-tight">
+                  {platform.name}
+                </h3>
+              </div>
+
+              <div class="grid lg:grid-cols-2 gap-8 mb-10">
+                <div class="bg-slate-50/60 rounded-[2rem] p-8 border border-slate-100">
+                  <h4 class="text-lg font-bold text-slate-800 mb-4">平台介紹</h4>
+                  <p class="text-slate-600 leading-relaxed">
+                    {displayText(platform.intro)}
+                  </p>
+                </div>
+
+                <div class="bg-slate-50/60 rounded-[2rem] p-8 border border-slate-100">
+                  <h4 class="text-lg font-bold text-slate-800 mb-4">設備租借方式</h4>
+                  <p class="text-slate-600 leading-relaxed">
+                    {displayText(platform.rentalMethod)}
+                  </p>
+                </div>
+              </div>
+
+              <div class="mb-10">
+                <div class="flex items-center gap-4 mb-6">
+                  <h4 class="text-xl font-bold text-slate-800">培訓營場次</h4>
+                  <div class="flex-1 h-px bg-slate-200"></div>
+                </div>
+
+                {
+                  platform.campSessions.length > 0 ? (
+                    <div class="grid gap-5">
+                      {platform.campSessions.map((session) => (
+                        <div class="bg-white border border-slate-200 rounded-[1.75rem] p-6 shadow-sm">
+                          <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-sm font-bold border border-sky-100">
+                              {session.region}
+                            </span>
+                          </div>
+
+                          <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
+                                時間
+                              </p>
+                              <p class="text-slate-700 font-medium leading-relaxed">
+                                {session.datetime}
+                              </p>
+                            </div>
+
+                            <div>
+                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
+                                地點
+                              </p>
+                              <p class="text-slate-700 font-medium leading-relaxed">
+                                {session.location}
+                              </p>
+                            </div>
+                          </div>
+
+                          {
+                            session.note && (
+                              <p class="mt-4 text-sm text-slate-500 leading-relaxed">
+                                {session.note}
+                              </p>
+                            )
+                          }
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div class="bg-slate-50/60 rounded-[1.75rem] p-6 border border-slate-100 text-slate-500">
+                      —
+                    </div>
+                  )
+                }
+              </div>
+
+              <div class="bg-amber-50/50 rounded-[2rem] p-8 border border-amber-100">
+                <h4 class="text-lg font-bold text-slate-800 mb-4">培訓營聯絡窗口</h4>
+                <p class="text-slate-600 leading-relaxed">
+                  {displayText(platform.trainingContact)}
+                </p>
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+</section>
