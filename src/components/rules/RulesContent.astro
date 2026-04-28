@@ -1,0 +1,1112 @@
+---
+import {
+  themes,
+  organizers,
+  prelimCriteria,
+  finalCriteria,
+  prizeCards,
+  honorablePrize,
+  rulesList,
+  toChineseNum,
+} from "../../data/rulesData";
+
+interface Props {
+  variant?: "overview" | "full";
+}
+
+const { variant = "full" } = Astro.props;
+
+const isOverview = variant === "overview";
+const showJudging = !isOverview;
+const showPrize = !isOverview;
+const showNotes = !isOverview;
+const showOverviewHeader = isOverview;
+const showOverviewCTA = isOverview;
+---
+
+<section
+  id="rules"
+  class="py-24 bg-slate-50 relative overflow-hidden"
+  data-rules-content
+  data-variant={variant}
+>
+  <div
+    class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent opacity-50"
+  >
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    {
+      showOverviewHeader && (
+        <div class="text-center mb-16 animate-fade-up">
+          <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
+            競賽辦法
+            <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full" />
+          </h2>
+          <p class="mt-6 text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            完整規範、評審標準、獎勵與注意事項請前往詳情頁查看
+          </p>
+        </div>
+      )
+    }
+
+    <div class="grid lg:grid-cols-2 gap-8 mb-20">
+      <div
+        class="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col h-full relative overflow-hidden"
+      >
+        <div
+          class="absolute -bottom-6 -right-6 opacity-[0.03] pointer-events-none"
+        >
+          <svg
+            width="160"
+            height="160"
+            viewBox="0 0 160 160"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <pattern
+              id={isOverview ? "dots-overview" : "dots-full"}
+              x="0"
+              y="0"
+              width="20"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="2" cy="2" r="2" fill="#0f172a"></circle>
+            </pattern>
+            <rect
+              width="160"
+              height="160"
+              fill={`url(#${isOverview ? "dots-overview" : "dots-full"})`}
+            ></rect>
+          </svg>
+        </div>
+
+        <div
+          class="absolute -bottom-12 -right-12 w-32 h-32 rounded-full border-[16px] border-primary/5 pointer-events-none"
+        >
+        </div>
+
+        <h3 class="text-2xl font-bold text-slate-800 mb-8 relative z-10">
+          競賽目的
+        </h3>
+
+        <div class="flex-grow relative z-10">
+          <p class="text-slate-600 leading-loose text-lg">
+            因應行動通訊技術演進及產業需求，將藉由建立以重點技術主題為核心的全國性跨校教學聯盟，發展推廣具跨層次系統整合特性之教學資源，並強化與國際趨勢及產業需求接軌，透過共享教學資源以提高我國大學校院下世代行動通訊技術教學能量，有效培育具系統觀及國際觀的行動通訊專業人才並將所學實務應用。本競賽將藉由教育部下世代行動通訊技術人才培育計畫所發展的五個平台，並規劃三大主題提供參賽者進行創意發想，不同的題目主軸使用不同平台進行開發，讓參賽團隊可以進行多元創新設計與應用。
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-[#1a4f6e] rounded-3xl p-8 lg:p-12 shadow-lg border border-white/10 flex flex-col h-full"
+      >
+        <h3 class="text-2xl font-bold text-white mb-8">辦理單位</h3>
+        <div class="flex-grow space-y-8">
+          {
+            organizers.map((item) => (
+              <div>
+                <p class="text-sky-400 text-sm font-bold uppercase tracking-widest mb-2">
+                  {item.label}
+                </p>
+
+                {Array.isArray(item.value) ? (
+                  <p class="text-white text-lg font-medium leading-relaxed flex flex-wrap gap-y-2">
+                    {item.value.map((unit, index) => (
+                      <span class="inline-block whitespace-nowrap mr-1">
+                        {unit}
+                        {index < item.value.length - 1 ? "、" : ""}
+                      </span>
+                    ))}
+                  </p>
+                ) : (
+                  <p class="text-white text-lg font-medium leading-relaxed">
+                    {item.value}
+                  </p>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">競賽主題</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {
+          themes.map((theme) => (
+            <div
+              id={theme.id}
+              class="scroll-mt-28 bg-white rounded-[2rem] p-8 border border-slate-200 hover:border-primary/50 hover:shadow-xl transition-all duration-500 group flex flex-col h-full relative overflow-hidden"
+            >
+              <div
+                class={`absolute -bottom-10 -right-10 w-32 h-32 rounded-full ${theme.decorationBg} opacity-40 group-hover:scale-150 transition-transform duration-700`}
+              />
+              <div
+                class={`w-14 h-14 ${theme.iconBg} rounded-2xl flex items-center justify-center mb-8 shadow-inner`}
+              >
+                <img
+                  src={theme.iconSrc}
+                  alt={theme.title}
+                  class="w-7 h-7 object-contain"
+                />
+              </div>
+              <h4 class="text-xl font-bold text-slate-800 mb-6 group-hover:text-primary transition-colors">
+                {theme.title}
+              </h4>
+              <ul class="space-y-4 relative z-10 flex-grow">
+                {theme.items.map((item) => (
+                  <li class="text-base text-slate-600 leading-relaxed flex items-start">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary/40 mt-2 mr-3 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">參賽資格</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="mb-10">
+          <p
+            class="text-xl text-slate-700 font-bold mb-4 flex items-center gap-3"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            大專校院在校生 或 應屆（114學年度）畢業生組隊參加
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-slate-50/50 rounded-2xl p-8 border border-slate-100">
+            <h4 class="text-lg font-bold text-primary mb-6 flex items-center">
+              <i class="fa-solid fa-users text-sm"></i> 隊伍組成規定
+            </h4>
+            <ul class="space-y-4 text-slate-600 leading-relaxed">
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-primary font-bold mt-0.5">1.</span>
+                <p>
+                  每所學校報名隊數<strong
+                    class="text-slate-800 underline decoration-primary/30 decoration-4"
+                    >不限</strong
+                  >。
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-primary font-bold mt-0.5">2.</span>
+                <p>
+                  每隊指導教師 <strong class="text-slate-800 font-black"
+                    >1</strong
+                  > 人，隊員 <strong class="text-slate-800 font-black"
+                    >1 至 6</strong
+                  > 人（開放跨校組隊）。
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-primary font-bold mt-0.5">3.</span>
+                <p>
+                  需推派 <strong class="text-slate-800 font-black">1</strong> 位隊員擔任隊長，統籌報名與聯絡事宜。
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-slate-50/50 rounded-2xl p-8 border border-slate-100">
+            <h4 class="text-lg font-bold text-rose-500 mb-6 flex items-center">
+              <i class="fa-solid fa-circle-exclamation text-sm"></i> 報名限制事項
+            </h4>
+            <ul class="space-y-6 text-slate-600 leading-relaxed">
+              <li class="flex items-start gap-4">
+                <span class="font-mono text-rose-500 font-bold mt-0.5">1.</span>
+                <p>
+                  每位學生僅可報名 <strong class="text-slate-800 font-black"
+                    >1</strong
+                  > 支隊伍。
+                </p>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="font-mono text-rose-500 font-bold mt-0.5">2.</span>
+                <p>
+                  每位指導教師至多指導 <strong class="text-slate-800 font-black"
+                    >3</strong
+                  > 支隊伍。
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">初賽</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden text-left"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="mb-10">
+          <p
+            class="text-xl text-slate-700 font-bold mb-4 flex items-center gap-3"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            初賽方式：文件審查
+          </p>
+          <div class="text-lg text-slate-600 leading-loose space-y-2 mb-10">
+            <p>
+              請於 <strong class="text-slate-900 font-bold"
+                >115年10月6日(二) 中午12點前</strong
+              > 上傳「提案企劃書+提案簡報」至競賽網頁。由評審委員依各參賽隊伍所繳交之提案企劃書與提案簡報進行評選。
+            </p>
+            <p>
+              每項競賽主題擇優選出晉級隊伍，並於 <strong
+                class="text-slate-900 font-bold">115年11月2日(一)</strong
+              > 在競賽網頁公告入圍名單。
+            </p>
+          </div>
+
+          <h4
+            class="text-lg font-bold text-slate-800 mb-4 border-l-4 border-primary pl-3"
+          >
+            各組預計晉級決賽隊數
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div
+              class="border border-slate-100 rounded-xl p-6 flex flex-col justify-center items-center bg-slate-50/50 text-center gap-3"
+            >
+              <span class="text-slate-700 font-bold text-base leading-snug">
+                智慧節能與物聯網<br />應用組
+              </span>
+              <div class="w-8 h-px bg-slate-200"></div>
+              <span class="text-primary font-black text-3xl">
+                10 <span class="text-sm font-bold text-slate-500 ml-1">隊</span>
+              </span>
+            </div>
+
+            <div
+              class="border border-slate-100 rounded-xl p-6 flex flex-col justify-center items-center bg-slate-50/50 text-center gap-3"
+            >
+              <span class="text-slate-700 font-bold text-base leading-snug">
+                智慧指向性傳輸暨<br />通訊網路與資訊安全組
+              </span>
+              <div class="w-8 h-px bg-slate-200"></div>
+              <span class="text-primary font-black text-3xl">
+                10 <span class="text-sm font-bold text-slate-500 ml-1">隊</span>
+              </span>
+            </div>
+
+            <div
+              class="border border-slate-100 rounded-xl p-6 flex flex-col justify-center items-center bg-slate-50/50 text-center gap-3"
+            >
+              <span class="text-slate-700 font-bold text-base leading-snug">
+                智慧數位<br />應用組
+              </span>
+              <div class="w-8 h-px bg-slate-200"></div>
+              <span class="text-primary font-black text-3xl">
+                10 <span class="text-sm font-bold text-slate-500 ml-1">隊</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-amber-50/50 rounded-2xl p-6 border border-amber-100 text-left"
+        >
+          <h4 class="text-lg font-bold text-amber-700 mb-2">注意事項</h4>
+          <p class="text-slate-600 leading-relaxed text-base">
+            入圍作品隊數由「競賽評審委員會議」依參賽隊伍數量差異、各項主題性質不同、主題難易度與作品優異情形議定，必要時可從缺、調整或減少隊數。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">決賽</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden text-left"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+        <div class="mb-10">
+          <p
+            class="text-xl text-slate-700 font-bold mb-4 flex items-center gap-3"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary"></span>
+            決賽方式：實地測試
+          </p>
+          <div class="text-lg text-slate-600 leading-loose">
+            <p class="mb-6">
+              由評審委員實地評分，並於決賽現場進行展示及詢答。入圍隊伍須於 <strong
+                class="text-slate-900 font-bold"
+                >115年12月2日(一) 下午5點前</strong
+              > 完成以下資料上傳：
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div
+                class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
+              >
+                <span class="w-2 h-2 rounded-full bg-primary/60 shrink-0"
+                ></span>
+                <span class="font-bold text-slate-700">決賽簡報</span>
+              </div>
+              <div
+                class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
+              >
+                <span class="w-2 h-2 rounded-full bg-primary/60 shrink-0"
+                ></span>
+                <span class="font-bold text-slate-700">作品設計與測試文件</span>
+              </div>
+              <div
+                class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
+              >
+                <span class="w-2 h-2 rounded-full bg-primary/60 shrink-0"
+                ></span>
+                <span class="font-bold text-slate-700"
+                  >3-5 分鐘作品介紹與成果展示影片</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div
+            class="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 flex flex-col justify-center"
+          >
+            <h4
+              class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-200 pb-4"
+            >
+              隊員更換申請
+            </h4>
+            <p class="text-slate-600 text-base leading-loose">
+              入圍晉級決賽名單公布後，若根據實際狀況須更換隊員者，最晚應於 <strong
+                class="text-slate-900">115年11月6日(五) 下午5點前</strong
+              > 填妥「隊員更換申請表」向主辦單位提出申請核備。逾期提出申請者，概不受理。
+            </p>
+          </div>
+
+          <div class="bg-primary/5 rounded-[2rem] p-8 border border-primary/10">
+            <h4 class="text-lg font-bold text-primary mb-6">活動資訊</h4>
+            <div class="space-y-6 text-left">
+              <div class="flex items-center gap-5">
+                <div
+                  class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0 border border-primary/20"
+                >
+                  <img
+                    src="/images/calendar.png"
+                    alt="日期"
+                    class="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <p
+                    class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1"
+                  >
+                    決賽日期
+                  </p>
+                  <p class="text-lg font-bold text-slate-800">
+                    115 年 12 月 12 日 (六)
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-5 text-left">
+                <div
+                  class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0 border border-primary/20"
+                >
+                  <img
+                    src="/images/location.png"
+                    alt="地點"
+                    class="w-6 h-6 object-contain"
+                  />
+                </div>
+                <div>
+                  <p
+                    class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1"
+                  >
+                    決賽地點
+                  </p>
+                  <p class="text-lg font-bold text-slate-800">
+                    國立中興大學電機工程系 <span
+                      class="text-sm font-normal text-slate-500">(1 樓)</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {
+      showJudging && (
+        <div class="mb-24">
+          <div class="flex items-center gap-4 mb-10">
+            <h3 class="text-2xl font-bold text-slate-800">評審標準</h3>
+            <div class="flex-1 h-px bg-slate-200" />
+          </div>
+
+          <div class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 flex flex-col relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60" />
+
+            <div class="mb-12 relative z-10">
+              <ul class="space-y-3 text-lg text-slate-600 leading-relaxed">
+                <li class="flex items-start gap-3">
+                  <p>
+                    主辦單位遴聘業界專家、學術單位或社群專家組成評選委員會，擔任競賽各項主題之評審委員。
+                  </p>
+                </li>
+                <li class="flex items-start gap-3">
+                  <p>
+                    競賽分文件審查初賽及實地測試評審決賽兩階段進行，其評分原則如下：
+                  </p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+              <div class="bg-slate-50/50 rounded-[2rem] p-8 lg:p-10 border border-slate-100">
+                <div class="mb-8">
+                  <h4 class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-blue-500 rounded-full inline-block" />
+                    初賽
+                  </h4>
+                  <p class="text-slate-600 leading-relaxed">
+                    由評審委員針對參賽隊伍提出的
+                    <strong class="text-slate-800">企劃書+簡報</strong>
+                    進行評審。
+                  </p>
+                </div>
+                <div class="space-y-8">
+                  {prelimCriteria.map((item) => (
+                    <div class="group">
+                      <div class="flex justify-between items-end mb-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                          <div class="text-slate-800 font-bold text-lg">
+                            {item.title}
+                          </div>
+                          {item.desc && (
+                            <div class="text-slate-500 text-sm">
+                              {item.desc}
+                            </div>
+                          )}
+                        </div>
+                        <div class="text-2xl font-black text-slate-800">
+                          {item.percentText}
+                        </div>
+                      </div>
+                      <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                        <div
+                          class={`h-full rounded-full ${item.barColor} animate-progress-bar`}
+                          style={`--progress: ${item.percent}%;`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="bg-slate-50/50 rounded-[2rem] p-8 lg:p-10 border border-slate-100">
+                <div class="mb-8">
+                  <h4 class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-amber-500 rounded-full inline-block" />
+                    決賽
+                  </h4>
+                  <p class="text-slate-600 leading-relaxed">
+                    由評審委員針對參賽隊伍的
+                    <strong class="text-slate-800">
+                      決賽簡報+作品設計與測試文件
+                    </strong>
+                    以及其<strong class="text-slate-800">現場作品展示</strong>
+                    進行評分。
+                  </p>
+                </div>
+                <div class="space-y-8">
+                  {finalCriteria.map((item) => (
+                    <div class="group">
+                      <div class="flex justify-between items-end mb-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                          <div class="text-slate-800 font-bold text-lg">
+                            {item.title}
+                          </div>
+                          {item.desc && (
+                            <div class="text-slate-500 text-sm">
+                              {item.desc}
+                            </div>
+                          )}
+                        </div>
+                        <div class="text-2xl font-black text-slate-800">
+                          {item.percentText}
+                        </div>
+                      </div>
+                      <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                        <div
+                          class={`h-full rounded-full ${item.barColor} animate-progress-bar`}
+                          style={`--progress: ${item.percent}%;`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      showPrize && (
+        <div class="mb-24">
+          <div class="flex items-center gap-4 mb-10">
+            <h3 class="text-2xl font-bold text-slate-800">獎勵方式</h3>
+            <span class="text-sm font-bold text-primary bg-primary/10 px-4 py-1.5 rounded-full">
+              獎金頒發對象僅針對參賽學生
+            </span>
+            <div class="flex-1 h-px bg-slate-200" />
+          </div>
+
+          <div class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden text-left">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-bl-full -z-10 opacity-60" />
+
+            <div class="mb-10">
+              <h4 class="text-xl font-bold text-slate-800 flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-amber-500" />
+                各競賽主題得獎隊伍獎狀與獎金頒發原則
+              </h4>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-6">
+              {prizeCards.map((prize) => (
+                <div
+                  class={`rounded-2xl p-6 lg:p-8 relative group hover:-translate-y-1 transition-transform duration-300 ${prize.cardClass}`}
+                >
+                  <div class="absolute -top-5 -right-2 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <img
+                      src={prize.icon}
+                      class="w-full h-full object-contain"
+                      alt={prize.title}
+                    />
+                  </div>
+
+                  <div
+                    class={`font-bold mb-1 text-sm tracking-widest ${prize.badgeClass}`}
+                  >
+                    {prize.teams}
+                  </div>
+
+                  <h5 class="text-2xl font-black text-slate-800 mb-4">
+                    {prize.title}
+                  </h5>
+
+                  <div class="text-slate-600 font-medium flex items-baseline gap-1">
+                    每隊獎金
+                    <span
+                      class={`text-base font-bold opacity-80 ml-1 ${prize.amountClass}`}
+                    >
+                      NT$
+                    </span>
+                    <span class={`text-2xl font-bold ${prize.amountClass}`}>
+                      {prize.amount}
+                    </span>
+                  </div>
+
+                  <div class="text-slate-500 text-sm mt-1">
+                    {prize.certificate}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div class="mb-10">
+              <div
+                class={`rounded-2xl p-6 lg:p-8 hover:border-primary/30 hover:shadow-md transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ${honorablePrize.cardClass}`}
+              >
+                <div>
+                  <div class="flex items-center gap-3 mb-2">
+                    <h5 class="text-xl font-bold text-slate-800">
+                      {honorablePrize.title}
+                    </h5>
+                    <span class="bg-slate-50 border border-slate-100 text-slate-500 text-xs font-bold px-3 py-1 rounded-full">
+                      {honorablePrize.teams}
+                    </span>
+                  </div>
+                  <div class="text-slate-500 text-sm">
+                    {honorablePrize.certificate}
+                  </div>
+                </div>
+
+                <div class="text-slate-600 font-medium flex items-baseline gap-1">
+                  每隊獎金
+                  <span class="text-lg font-bold text-primary opacity-80 ml-1">
+                    NT$
+                  </span>
+                  <span class="text-2xl lg:text-3xl font-black text-primary">
+                    {honorablePrize.amount}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-t border-slate-100 pt-10">
+              <h4 class="text-lg font-bold text-slate-800 mb-6">注意事項</h4>
+
+              <div class="space-y-4">
+                <div class="grid grid-cols-[2rem_1fr] items-start">
+                  <span class="text-primary font-bold text-lg">1.</span>
+                  <p class="text-slate-600 leading-relaxed pt-0.5 text-justify">
+                    得獎作品隊數及獎項，經「競賽評審委員會議」依參賽隊伍數量差異、各項主題性質不同、主題難易度與作品優異情形議定，必要時可從缺、調整或增加，但以不超過獎金總額為原則。
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-[2rem_1fr] items-start">
+                  <span class="text-primary font-bold text-lg">2.</span>
+                  <p class="text-slate-600 leading-relaxed pt-0.5 text-justify">
+                    各獎項獎金之領據應由參賽隊伍代表填寫，依所得稅法獎金需扣繳所得稅（獎額含稅），得獎人須攜帶個人身分證正本作為授獎查驗及辦理所得扣繳使用，得獎金額在新臺幣20,000元(含)以上，由主辦單位代扣10%所得稅，並併入該年度綜合所得稅申報納稅，如為非中華民國境內居住之個人（在中華民國境內居留未達183天者），不論金額均需依規定代扣20%所得稅。
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-[2rem_1fr] items-start">
+                  <span class="text-primary font-bold text-lg">3.</span>
+                  <p class="text-slate-600 leading-relaxed pt-0.5 text-justify">
+                    得獎作品除公開舉辦頒獎典禮與成果展示外，並將各得獎作品之指導教師與隊員名單與作品簡介等相關資料，整理公布於本競賽網頁提供參考。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="mb-24">
+      <div class="flex items-center gap-4 mb-10">
+        <h3 class="text-2xl font-bold text-slate-800">重要日程</h3>
+        <div class="flex-1 h-px bg-slate-200"></div>
+      </div>
+
+      <div
+        class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden"
+      >
+        <div
+          class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
+        >
+        </div>
+
+        <div class="max-w-3xl mx-auto">
+          <div data-timeline-container class="relative space-y-10 py-2">
+            <div
+              class="grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start animate-pulse"
+            >
+              <div class="flex flex-col items-center pt-2">
+                <div class="w-3.5 h-3.5 rounded-full bg-slate-200"></div>
+                <div class="mt-4 w-px flex-1 min-h-[92px] bg-slate-200/60">
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="h-7 bg-slate-200 rounded-xl w-32"></div>
+                <div
+                  class="h-24 bg-slate-100 rounded-2xl w-full border border-slate-100"
+                >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start animate-pulse"
+            >
+              <div class="flex flex-col items-center pt-2">
+                <div class="w-3.5 h-3.5 rounded-full bg-slate-200"></div>
+                <div class="mt-4 w-px flex-1 min-h-[92px] bg-slate-200/60">
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="h-7 bg-slate-200 rounded-xl w-40"></div>
+                <div
+                  class="h-24 bg-slate-100 rounded-2xl w-full border border-slate-100"
+                >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start animate-pulse"
+            >
+              <div class="flex flex-col items-center pt-2">
+                <div class="w-3.5 h-3.5 rounded-full bg-slate-200"></div>
+              </div>
+              <div class="space-y-4">
+                <div class="h-7 bg-slate-200 rounded-xl w-36"></div>
+                <div
+                  class="h-24 bg-slate-100 rounded-2xl w-full border border-slate-100"
+                >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {
+            isOverview && (
+              <p class="mt-5 text-center text-xs sm:text-sm text-slate-400 leading-relaxed">
+                ※ 首頁僅顯示近期重要日程，完整時程請見競賽辦法。
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    {
+      showNotes && (
+        <div class="bg-white border-2 border-slate-100 rounded-[3rem] p-10 lg:p-16 shadow-sm">
+          <div class="max-w-4xl mx-auto">
+            <h3 class="text-3xl font-bold mb-12 text-slate-800 flex items-center justify-center gap-4 border-b border-slate-100 pb-6">
+              參賽注意事項
+            </h3>
+
+            <div class="space-y-6">
+              {rulesList.map((rule, idx) => (
+                <div class="flex items-start gap-4 text-left">
+                  <span class="text-primary font-black text-lg shrink-0 mt-0.5 w-16 text-right">
+                    {toChineseNum(idx + 1)}、
+                  </span>
+
+                  <div class="flex-grow">
+                    <p class="text-lg text-slate-700 leading-relaxed text-justify">
+                      {rule.text}
+                    </p>
+
+                    {rule.subItems && (
+                      <div class="mt-4 space-y-5 pl-2">
+                        {rule.subItems.map((sub) => (
+                          <div>
+                            <p class="text-[1.05rem] text-slate-700 font-bold mb-2">
+                              {sub.title}
+                            </p>
+                            <ul class="space-y-2 pl-6">
+                              {sub.items.map((item) => (
+                                <li class="text-[1.05rem] text-slate-600 leading-relaxed flex items-start">
+                                  <span class="w-full">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      showOverviewCTA && (
+        <div class="bg-white border border-slate-100 rounded-[2.5rem] p-8 lg:p-12 shadow-sm text-center">
+          <div class="max-w-3xl mx-auto">
+            <p class="text-sm font-bold tracking-[0.25em] text-primary/80 mb-4">
+              FULL DETAILS
+            </p>
+            <h3 class="text-3xl lg:text-4xl font-black text-slate-800 mb-4">
+              查看完整競賽辦法
+            </h3>
+            <p class="text-slate-600 text-lg leading-relaxed mb-8">
+              完整頁面包含評審標準、競賽獎勵、完整注意事項與更完整的說明內容。
+            </p>
+            <a
+              href="/rules"
+              class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-primary text-white font-bold tracking-[0.08em] transition-all duration-300 shadow-[0_12px_24px_rgba(26,79,110,0.2)] hover:shadow-[0_18px_30px_rgba(26,79,110,0.28)] hover:-translate-y-1"
+            >
+              前往詳情 →
+            </a>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  import { db } from "../../firebase/client.js";
+  import { collection, getDocs, query, orderBy } from "firebase/firestore";
+
+  type TimelineItem = {
+    id: string;
+    dateStr: string;
+    title: string;
+    desc: string;
+  };
+
+  const escapeMap: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  };
+
+  const escapeHtml = (value: string | undefined = ""): string => {
+    return String(value).replace(/[&<>"']/g, (char) => escapeMap[char] ?? char);
+  };
+
+  const getLocalDateString = () => {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const d = String(now.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
+  const buildTimelineHtml = (
+    items: TimelineItem[],
+    today: string,
+    activeIndex: number,
+  ) => {
+    let html = "";
+
+    items.forEach((item, index) => {
+      const dateStr = escapeHtml(item.dateStr);
+      const title = escapeHtml(item.title);
+      const desc = escapeHtml(item.desc);
+
+      const isPast = item.dateStr < today;
+      const isActive = activeIndex !== -1 && index === activeIndex;
+      const isLast = index === items.length - 1;
+
+      const dotClass = isActive
+        ? "bg-primary border-white shadow-[0_0_0_6px_rgba(59,130,246,0.12),0_0_18px_rgba(59,130,246,0.35)]"
+        : isPast
+          ? "bg-slate-300 border-white"
+          : "bg-white border-primary/50 shadow-[0_0_0_6px_rgba(59,130,246,0.08)]";
+
+      const segClass = isPast
+        ? "bg-gradient-to-b from-slate-200/80 via-slate-200/40 to-transparent"
+        : isActive
+          ? "bg-gradient-to-b from-primary/60 via-primary/20 to-transparent"
+          : "bg-gradient-to-b from-slate-200 via-slate-200/55 to-transparent";
+
+      const dateBadgeClass = isActive
+        ? "bg-primary/10 text-primary border border-primary/15"
+        : isPast
+          ? "bg-slate-100 text-slate-500 border border-slate-200 line-through"
+          : "bg-sky-50 text-sky-700 border border-sky-100";
+
+      const cardClass = isActive
+        ? "border-primary/25 shadow-[0_18px_40px_rgba(2,6,23,0.08)]"
+        : isPast
+          ? "border-slate-100"
+          : "border-slate-200 group-hover:border-primary/25 group-hover:shadow-[0_18px_45px_rgba(2,6,23,0.10)]";
+
+      const titleClass = isPast
+        ? "text-slate-500 line-through"
+        : "text-slate-800";
+      const descClass = isPast ? "text-slate-400" : "text-slate-600";
+
+      const statusPill = isActive
+        ? `<span class="text-[11px] font-black tracking-widest text-primary bg-primary/10 border border-primary/15 px-2 py-1 rounded-full">NEXT</span>`
+        : isPast
+          ? `<span class="text-[11px] font-black tracking-widest text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded-full">DONE</span>`
+          : `<span class="text-[11px] font-black tracking-widest text-sky-700 bg-sky-50 border border-sky-100 px-2 py-1 rounded-full">UPCOMING</span>`;
+
+      html += `
+        <div class="group grid grid-cols-[28px_1fr] md:grid-cols-[36px_1fr] gap-6 items-start ${isPast ? "opacity-60" : ""}">
+          <div class="flex flex-col items-center pt-2">
+            <div class="w-3.5 h-3.5 rounded-full border-4 ${dotClass} transition-all duration-300"></div>
+            ${isLast ? "" : `<div class="mt-4 w-px flex-1 min-h-[92px] ${segClass}"></div>`}
+          </div>
+
+          <div class="${isPast ? "" : "transition-transform duration-300 group-hover:-translate-y-0.5"}">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <span class="font-mono text-sm md:text-base font-bold px-3 py-1 rounded-xl inline-flex items-center ${dateBadgeClass}">
+                ${dateStr.replace(/-/g, ".")}
+              </span>
+              ${statusPill}
+            </div>
+
+            <div class="bg-white border ${cardClass} p-5 md:p-6 rounded-2xl transition-all duration-300">
+              <h4 class="text-lg md:text-xl font-black ${titleClass}">
+                ${title}
+              </h4>
+              ${desc ? `<p class="mt-2 text-sm md:text-base leading-relaxed ${descClass}">${desc}</p>` : ""}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    return html;
+  };
+
+  const renderTimelineForRoot = async (root: HTMLElement) => {
+    const containerEl = root.querySelector("[data-timeline-container]");
+    if (!(containerEl instanceof HTMLElement)) return;
+
+    const variant = root.dataset.variant ?? "full";
+
+    try {
+      const q = query(collection(db, "timeline"), orderBy("dateStr", "asc"));
+      const querySnapshot = await getDocs(q);
+
+      const allTimelines: TimelineItem[] = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as {
+          dateStr?: string;
+          title?: string;
+          desc?: string;
+        };
+
+        allTimelines.push({
+          id: doc.id,
+          dateStr: data.dateStr ?? "",
+          title: data.title ?? "未命名日程",
+          desc: data.desc ?? "",
+        });
+      });
+
+      if (allTimelines.length === 0) {
+        containerEl.innerHTML = `
+          <div class="text-center text-slate-500 py-10">
+            目前尚無日程資訊
+          </div>
+        `;
+        return;
+      }
+
+      const today = getLocalDateString();
+      let displayItems = [...allTimelines];
+      let activeDisplayIndex = displayItems.findIndex(
+        (item) => item.dateStr >= today,
+      );
+
+      if (variant === "overview") {
+        const currentIndex = allTimelines.findIndex(
+          (item) => item.dateStr >= today,
+        );
+        const BEFORE_COUNT = 2;
+        const AFTER_COUNT = 2;
+        const WINDOW_SIZE = BEFORE_COUNT + AFTER_COUNT + 1;
+
+        let start = 0;
+        let end = allTimelines.length;
+
+        if (currentIndex === -1) {
+          end = allTimelines.length;
+          start = Math.max(0, end - WINDOW_SIZE);
+        } else {
+          start = Math.max(0, currentIndex - BEFORE_COUNT);
+          end = Math.min(allTimelines.length, currentIndex + AFTER_COUNT + 1);
+
+          const currentWindowSize = end - start;
+          if (currentWindowSize < WINDOW_SIZE) {
+            const missing = WINDOW_SIZE - currentWindowSize;
+            if (start === 0) {
+              end = Math.min(allTimelines.length, end + missing);
+            } else if (end === allTimelines.length) {
+              start = Math.max(0, start - missing);
+            }
+          }
+        }
+
+        displayItems = allTimelines.slice(start, end);
+        activeDisplayIndex = displayItems.findIndex(
+          (item) => item.dateStr >= today,
+        );
+      }
+
+      containerEl.innerHTML = buildTimelineHtml(
+        displayItems,
+        today,
+        activeDisplayIndex,
+      );
+    } catch (error) {
+      console.error("Error loading timeline:", error);
+      containerEl.innerHTML = `
+        <div class="text-center text-rose-500 py-10">
+          載入日程失敗，請重新整理頁面。
+        </div>
+      `;
+    }
+  };
+
+  const initRulesContentTimelines = async () => {
+    const roots = document.querySelectorAll("[data-rules-content]");
+    for (const root of roots) {
+      if (root instanceof HTMLElement) {
+        await renderTimelineForRoot(root);
+      }
+    }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initRulesContentTimelines);
+  } else {
+    initRulesContentTimelines();
+  }
+</script>
+
+<style>
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  @keyframes growProgressBar {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: var(--progress);
+    }
+  }
+
+  .animate-progress-bar {
+    width: 0%;
+    animation: growProgressBar 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+</style>
