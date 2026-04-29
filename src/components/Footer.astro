@@ -14,19 +14,18 @@ import { organizers } from "../data/rulesData";
               <div>
                 <h3 class="text-white text-lg font-bold mb-4">{item.label}</h3>
 
-                {
-                  Array.isArray(item.value) ? (
-                    <div class="leading-relaxed flex flex-wrap gap-x-1 gap-y-1">
-                      {item.value.map((unit, index) => (
-                        <span class="inline-block whitespace-nowrap">
-                          {unit}{index < item.value.length - 1 ? "、" : ""}
-                        </span>
-                      ))}
-                    </div>
-                  ) : (
-                    <p class="eading-relaxed">{item.value}</p>
-                  )
-                }
+                {Array.isArray(item.value) ? (
+                  <div class="leading-relaxed flex flex-wrap gap-x-1 gap-y-1">
+                    {item.value.map((unit, index) => (
+                      <span class="inline-block whitespace-nowrap">
+                        {unit}
+                        {index < item.value.length - 1 ? "、" : ""}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <p class="eading-relaxed">{item.value}</p>
+                )}
               </div>
             ))
           }
@@ -50,19 +49,15 @@ import { organizers } from "../data/rulesData";
             >
           </li>
           <li>
-            <a href="/" class="hover:text-primary transition-colors"
-              >檔案下載</a
+            <a href="/" class="hover:text-primary transition-colors">檔案下載</a
+            >
+          </li>
+          <li>
+            <a href="/" class="hover:text-primary transition-colors">交通地點</a
             >
           </li>
           <li>
             <a href="/" class="hover:text-primary transition-colors"
-              >交通地點</a
-            >
-          </li>
-          <li>
-            <a
-              href="/"
-              class="hover:text-primary transition-colors"
               >報名 / 資料上傳</a
             >
           </li>
@@ -72,6 +67,20 @@ import { organizers } from "../data/rulesData";
       <div>
         <h3 class="text-white text-lg font-bold mb-4">聯絡我們</h3>
         <ul class="space-y-4">
+          <li class="flex items-center gap-3">
+            <div
+              class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center shrink-0"
+            >
+              <img
+                src="/images/user.png"
+                alt="Email"
+                class="w-4 h-4 object-contain opacity-80"
+                style="filter: brightness(0) invert(1);"
+              />
+            </div>
+            <span>李小姐</span>
+          </li>
+
           <li class="flex items-center gap-3">
             <div
               class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center shrink-0"
@@ -117,7 +126,9 @@ import { organizers } from "../data/rulesData";
       </div>
     </div>
 
-    <div class="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
+    <div
+      class="border-t border-slate-800 pt-8 text-center text-sm text-slate-500"
+    >
       Copyright &copy; 次世代超高速傳輸系統整合教學聯盟中心 All Rights Reserved.
     </div>
   </div>
