@@ -1,35 +1,20 @@
 ---
-// VenueSection.astro - 交通地點區塊 (優化排版與文案版)
+import { venueData } from "../data/venueData";
 
-const transportMethods = [
-  {
-    title: "搭乘市區公車",
-    desc: "<strong>【自高鐵臺中站】</strong>可搭乘 33、158 路。<br/><strong>【自臺中火車站】</strong>可搭乘 35、50、52、59、65、73 等路。<br/><span class='text-[13px] opacity-75 mt-1.5 block leading-tight'>※ 興大路正門及國光路側門皆有站牌，上車前請先向司機確認行駛方向。</span>",
-    iconSrc: "/images/bus.png",
-    bgClass: "bg-emerald-500",
-  },
-  {
-    title: "雙鐵轉乘與計程車",
-    desc: "<strong>【計程車】</strong>火車站至本校約 10-15 分鐘；高鐵站約 20-30 分鐘。<br/><strong>【火車轉乘】</strong>可於高鐵站轉搭台鐵區間車至「臺中火車站」，出站後再轉乘公車或計程車前往本校。",
-    iconSrc: "/images/taxi.png",
-    bgClass: "bg-blue-600",
-  },
-  {
-    title: "公共自行車 YouBike",
-    desc: "本校距臺中火車站約 2.7 公里，校園周邊設有多個租借站點（如：國立中興大學、中興湖、興大美村路口），借還車便利，邀請您一同響應低碳環保。",
-    iconSrc: "/images/bicycle.png",
-    bgClass: "bg-orange-500",
-  },
-  {
-    title: "自行開車",
-    desc: `導航請定位「國立中興大學」。<a href="https://oga.nchu.edu.tw/unit-news-detail/id/1204/unit/4/mid/29" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">停車線上繳費連結</a><br/><span class='text-[13px] text-rose-500 font-bold mt-1.5 block leading-tight'>※ 貼心提醒：車輛進入校園需依規定繳交停車管理費，離校前至行政大樓繳費機繳費（可用現金、行動及電子支付），另可採掃描 QRcode 線上繳費，未逾 30 分鐘免費，逾 30 分鐘自入校時起每小時 40 元，每日／次收費上限 300 元，建議參賽者多加利用大眾運輸工具。</span>`,
-    iconSrc: "/images/car.png",
-    bgClass: "bg-slate-700",
-  },
-];
+interface Props {
+  standalone?: boolean;
+}
+
+const { standalone = false } = Astro.props;
 ---
 
-<section id="venue" class="py-20 bg-slate-50 relative overflow-hidden">
+<section
+  id="venue"
+  class:list={[
+    "relative overflow-hidden",
+    standalone ? "py-20 bg-slate-50" : "py-20 bg-slate-50",
+  ]}
+>
   <div
     class="absolute inset-0 opacity-[0.03]"
     style="background-image: radial-gradient(#2E86AB 1px, transparent 1px); background-size: 30px 30px;"
@@ -37,14 +22,16 @@ const transportMethods = [
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
-        交通與地點
-        <span
-          class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full"
-        ></span>
-      </h2>
-    </div>
+    {
+      !standalone && (
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-slate-800 relative inline-block">
+            交通與地點
+            <span class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 w-12 h-1 bg-primary rounded-full" />
+          </h2>
+        </div>
+      )
+    }
 
     <div
       class="bg-white rounded-[2rem] p-8 lg:p-12 shadow-lg border border-slate-100 overflow-hidden"
@@ -52,9 +39,11 @@ const transportMethods = [
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="space-y-10">
           <div class="border-l-4 border-primary pl-6">
-            <h3 class="text-3xl font-bold text-slate-800 mb-2">國立中興大學</h3>
+            <h3 class="text-3xl font-bold text-slate-800 mb-2">
+              {venueData.schoolName}
+            </h3>
             <p class="text-xl text-primary font-bold tracking-wide">
-              電機資訊學院暨電機大樓 1 樓
+              {venueData.buildingName}
             </p>
             <p class="text-slate-500 mt-2 flex items-center gap-2">
               <svg
@@ -62,24 +51,26 @@ const transportMethods = [
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                ><path
+              >
+                <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                ></path><path
+                ></path>
+                <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg
-              >
-              臺中市南區興大路145號
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              {venueData.address}
             </p>
           </div>
 
           <div class="space-y-4">
             {
-              transportMethods.map((method) => (
+              venueData.transportMethods.map((method) => (
                 <div class="group flex items-start gap-4 p-4 rounded-2xl transition-colors hover:bg-slate-50 border border-transparent hover:border-slate-100">
                   <div
                     class={`w-14 h-14 mt-1 ${method.bgClass} rounded-2xl flex items-center justify-center shadow-md shadow-blue-100 flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
@@ -87,7 +78,7 @@ const transportMethods = [
                     <img
                       src={method.iconSrc}
                       alt={method.title}
-                      class="w-7 h-7 object-contain filter brightness-0 invert"
+                      class="w-7 h-7 object-contain"
                       style="filter: brightness(0) invert(1);"
                     />
                   </div>
@@ -111,13 +102,14 @@ const transportMethods = [
           class="h-[500px] bg-slate-100 rounded-[2rem] overflow-hidden relative shadow-inner border border-slate-200 group"
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d910.3525594043513!2d120.67599010506343!3d24.12222711670683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693d02be604cd3%3A0xd49a3b0aa67b6d87!2z6Zu75qmf6LOH6KiK5a246Zmi5pqo6Zu75qmf5aSn5qiT!5e0!3m2!1szh-TW!2stw!4v1774498608097!5m2!1szh-TW!2stw"
+            src={venueData.mapEmbedUrl}
             width="600"
             height="450"
-            style="border:0;"
+            style="border:0; width:100%; height:100%;"
             allowfullscreen=""
             loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+            referrerpolicy="no-referrer-when-downgrade"
+            title={venueData.mapTitle}></iframe>
 
           <div
             class="absolute bottom-6 left-6 bg-white/95 backdrop-blur px-5 py-3 rounded-xl shadow-lg border border-slate-100 flex items-center gap-3 animate-float"
@@ -126,7 +118,7 @@ const transportMethods = [
             <div>
               <p class="text-xs text-slate-500 font-bold uppercase">Location</p>
               <p class="text-sm font-bold text-slate-800">
-                中興大學電機資訊學院
+                {venueData.mapTitle}
               </p>
             </div>
           </div>
@@ -148,6 +140,7 @@ const transportMethods = [
       transform: translateY(0px);
     }
   }
+
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
