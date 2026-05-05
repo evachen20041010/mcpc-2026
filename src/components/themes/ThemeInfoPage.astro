@@ -12,20 +12,73 @@ interface Props {
 const { themeKey } = Astro.props;
 const theme = themePlatformData[themeKey];
 
-const displayText = (value?: string) => (value && value.trim() ? value : "—");
+const displayText = (value?: string) =>
+  typeof value === "string" && value.trim() ? value : "—";
+
+const hasContactInfo = (contact?: {
+  name?: string;
+  phone?: string;
+  email?: string;
+}) => {
+  return Boolean(contact?.name || contact?.phone || contact?.email);
+};
+
+const hasTrainingContacts = (
+  contacts?: {
+    name?: string;
+    phone?: string;
+    email?: string;
+  }[],
+) => {
+  return (
+    Array.isArray(contacts) &&
+    contacts.some((contact) => hasContactInfo(contact))
+  );
+};
+
+const isExternalUrl = (value?: string) =>
+  typeof value === "string" && /^(https?:\/\/)/i.test(value.trim());
+
+const splitEmails = (value?: string) => {
+  if (typeof value !== "string" || !value.trim()) return [];
+  return value
+    .split(/[、，,]\s*/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+};
+
+const canUseMailto = (value?: string) =>
+  typeof value === "string" &&
+  value.trim() &&
+  !/[、，,]/.test(value.trim()) &&
+  /\S+@\S+\.\S+/.test(value.trim());
+
+const hasRelatedLinks = (platform: {
+  equipmentReservationLink?: string;
+  materialLink?: string;
+}) => {
+  return Boolean(platform.equipmentReservationLink || platform.materialLink);
+};
 ---
 
 <section class="pt-20">
   <section class="relative overflow-hidden bg-white border-b border-slate-200">
-    <div class="absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-slate-50"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-slate-50"
+    >
+    </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 lg:py-24">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 lg:py-24"
+    >
       <div class="max-w-4xl">
         <p class="text-sm font-bold tracking-[0.25em] text-primary/80 mb-4">
           {theme.heroLabel}
         </p>
 
-        <h1 class="text-4xl lg:text-5xl font-black text-slate-800 tracking-tight mb-6 leading-tight">
+        <h1
+          class="text-4xl lg:text-5xl font-black text-slate-800 tracking-tight leading-tight"
+        >
           {theme.pageTitle}
         </h1>
       </div>
@@ -35,80 +88,85 @@ const displayText = (value?: string) => (value && value.trim() ? value : "—");
   <section class="py-20 bg-slate-50 relative overflow-hidden">
     <div
       class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent opacity-50"
-    ></div>
+    >
+    </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="mb-16">
-        <div class="flex items-center gap-4 mb-8">
-          <h2 class="text-2xl font-bold text-slate-800">競賽平台培訓營</h2>
-          <div class="flex-1 h-px bg-slate-200"></div>
-        </div>
+      <div class="mb-14">
+        <div
+          class="bg-white rounded-[2rem] border border-slate-100 shadow-sm px-8 py-8 lg:px-10"
+        >
+          <div class="flex items-center gap-4 mb-6">
+            <h2 class="text-2xl font-bold text-slate-800">競賽平台培訓營</h2>
+          </div>
 
-        <div class="bg-white rounded-[2.5rem] p-8 lg:p-10 shadow-sm border border-slate-100">
           <ul class="space-y-3 text-slate-600 leading-relaxed">
-            {trainingCampIntro.map((item) => (
-              <li class="flex items-start gap-3">
-                <span class="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 shrink-0"></span>
-                <span>{item}</span>
-              </li>
-            ))}
+            {
+              trainingCampIntro.map((item) => (
+                <li class="flex items-start gap-3">
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
           </ul>
         </div>
       </div>
 
-      <div class="space-y-12">
-        {theme.platforms.map((platform, index) => (
-          <section>
-            <div class="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-slate-100 relative overflow-hidden">
-              <div
-                class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-bl-full -z-10 opacity-60"
-              ></div>
-
-              <div class="mb-10">
-                <h3 class="text-3xl font-black text-slate-800 leading-tight">
+      <div class="space-y-10">
+        {
+          theme.platforms.map((platform, index) => (
+            <section class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
+              <div class="px-8 pt-8 pb-6 lg:px-10 border-b border-slate-200 bg-white">
+                <h3 class="text-2xl lg:text-3xl font-black text-slate-800 leading-tight">
                   {platform.name}
                 </h3>
               </div>
 
-              <div class="grid lg:grid-cols-2 gap-8 mb-10">
-                <div class="bg-slate-50/60 rounded-[2rem] p-8 border border-slate-100">
-                  <h4 class="text-lg font-bold text-slate-800 mb-4">平台介紹</h4>
-                  <p class="text-slate-600 leading-relaxed">
+              <div class="px-7 lg:px-10 divide-y divide-slate-200">
+                <section class="py-7">
+                  <h4 class="text-lg font-bold text-slate-800 mb-4">
+                    平台介紹
+                  </h4>
+                  <p class="text-slate-600 leading-loose">
                     {displayText(platform.intro)}
                   </p>
-                </div>
 
-                <div class="bg-slate-50/60 rounded-[2rem] p-8 border border-slate-100">
-                  <h4 class="text-lg font-bold text-slate-800 mb-4">設備租借方式</h4>
-                  <p class="text-slate-600 leading-relaxed">
-                    {displayText(platform.rentalMethod)}
-                  </p>
-                </div>
-              </div>
+                  {platform.features && platform.features.length > 0 && (
+                    <div class="mt-6">
+                      <h5 class="text-sm font-bold tracking-wide text-slate-500 mb-3">
+                        平台功能
+                      </h5>
+                      <ol class="space-y-2.5 list-decimal pl-6 text-slate-600 leading-loose">
+                        {platform.features.map((feature) => (
+                          <li>{feature}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
+                </section>
 
-              <div class="mb-10">
-                <div class="flex items-center gap-4 mb-6">
-                  <h4 class="text-xl font-bold text-slate-800">培訓營場次</h4>
-                  <div class="flex-1 h-px bg-slate-200"></div>
-                </div>
+                <section class="py-7">
+                  <h4 class="text-lg font-bold text-slate-800 mb-5">
+                    培訓營場次
+                  </h4>
 
-                {
-                  platform.campSessions.length > 0 ? (
-                    <div class="grid gap-5">
+                  {platform.campSessions.length > 0 ? (
+                    <div class="space-y-4">
                       {platform.campSessions.map((session) => (
-                        <div class="bg-white border border-slate-200 rounded-[1.75rem] p-6 shadow-sm">
-                          <div class="flex flex-wrap items-center gap-3 mb-4">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-sm font-bold border border-sky-100">
+                        <div class="rounded-2xl bg-slate-50/70 px-6 py-6">
+                          <div class="mb-5">
+                            <p class="text-xl font-bold text-slate-800">
                               {session.region}
-                            </span>
+                            </p>
                           </div>
 
-                          <div class="grid md:grid-cols-2 gap-4">
+                          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                               <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
                                 時間
                               </p>
-                              <p class="text-slate-700 font-medium leading-relaxed">
+                              <p class="text-slate-700 leading-relaxed font-medium">
                                 {session.datetime}
                               </p>
                             </div>
@@ -117,39 +175,197 @@ const displayText = (value?: string) => (value && value.trim() ? value : "—");
                               <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
                                 地點
                               </p>
-                              <p class="text-slate-700 font-medium leading-relaxed">
+                              <p class="text-slate-700 leading-relaxed font-medium">
                                 {session.location}
                               </p>
                             </div>
                           </div>
 
-                          {
-                            session.note && (
-                              <p class="mt-4 text-sm text-slate-500 leading-relaxed">
-                                {session.note}
+                          {session.registrationLink && (
+                            <div class="mt-5">
+                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-2">
+                                報名
                               </p>
-                            )
-                          }
+
+                              {isExternalUrl(session.registrationLink) ? (
+                                <a
+                                  href={session.registrationLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-primary text-white font-bold hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
+                                >
+                                  前往報名
+                                </a>
+                              ) : (
+                                <p class="text-slate-700 leading-relaxed">
+                                  {session.registrationLink}
+                                </p>
+                              )}
+                            </div>
+                          )}
+
+                          {session.note && (
+                            <p class="mt-4 text-sm text-slate-500 leading-relaxed">
+                              {session.note}
+                            </p>
+                          )}
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <div class="bg-slate-50/60 rounded-[1.75rem] p-6 border border-slate-100 text-slate-500">
-                      —
-                    </div>
-                  )
-                }
-              </div>
+                    <p class="text-slate-500">—</p>
+                  )}
+                </section>
 
-              <div class="bg-amber-50/50 rounded-[2rem] p-8 border border-amber-100">
-                <h4 class="text-lg font-bold text-slate-800 mb-4">培訓營聯絡窗口</h4>
-                <p class="text-slate-600 leading-relaxed">
-                  {displayText(platform.trainingContact)}
-                </p>
+                <section class="py-9">
+                  <div class="grid lg:grid-cols-2 gap-10">
+                    <div>
+                      <h4 class="text-lg font-bold text-slate-800 mb-5">
+                        設備租借方式
+                      </h4>
+                      <p class="text-slate-600 leading-loose">
+                        {displayText(platform.rentalMethod)}
+                      </p>
+                    </div>
+
+                    {hasRelatedLinks(platform) && (
+                      <div>
+                        <h4 class="text-lg font-bold text-slate-800 mb-5">
+                          相關連結
+                        </h4>
+
+                        <div class="space-y-4 text-slate-600 leading-relaxed">
+                          {platform.equipmentReservationLink && (
+                            <div>
+                              {isExternalUrl(
+                                platform.equipmentReservationLink,
+                              ) ? (
+                                <p>
+                                  <span class="text-slate-700">
+                                    設備預約連結：
+                                  </span>
+                                  <a
+                                    href={platform.equipmentReservationLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary underline underline-offset-2 break-all"
+                                  >
+                                    {platform.equipmentReservationLink}
+                                  </a>
+                                </p>
+                              ) : (
+                                <p class="text-slate-700">
+                                  {platform.equipmentReservationLink}
+                                </p>
+                              )}
+                            </div>
+                          )}
+
+                          {platform.materialLink && (
+                            <div>
+                              {isExternalUrl(platform.materialLink) ? (
+                                <p>
+                                  <span class="text-slate-700">
+                                    平台教材連結：
+                                  </span>
+                                  <a
+                                    href={platform.materialLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary underline underline-offset-2 break-all"
+                                  >
+                                    {platform.materialLink}
+                                  </a>
+                                </p>
+                              ) : (
+                                <p class="text-slate-700">
+                                  {platform.materialLink}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                <section class="py-7">
+                  <h4 class="text-lg font-bold text-slate-800 mb-4">
+                    培訓營聯絡窗口
+                  </h4>
+
+                  {hasTrainingContacts(platform.trainingContacts) ? (
+                    <div class="space-y-1">
+                      {platform.trainingContacts?.map((contact, index) => (
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                          <div>
+                            {index === 0 && (
+                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
+                                姓名
+                              </p>
+                            )}
+                            <p class="text-slate-700 leading-relaxed">
+                              {contact.name || "—"}
+                            </p>
+                          </div>
+
+                          <div>
+                            {index === 0 && (
+                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
+                                電話
+                              </p>
+                            )}
+                            <p class="text-slate-700 leading-relaxed">
+                              {contact.phone || "—"}
+                            </p>
+                          </div>
+
+                          <div>
+                            {index === 0 && (
+                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
+                                Email
+                              </p>
+                            )}
+
+                            {contact.email ? (
+                              canUseMailto(contact.email) ? (
+                                <a
+                                  href={`mailto:${contact.email}`}
+                                  class="text-primary underline underline-offset-2 break-words inline-block leading-relaxed"
+                                >
+                                  {contact.email}
+                                </a>
+                              ) : (
+                                <div class="space-y-1">
+                                  {splitEmails(contact.email).length > 0 ? (
+                                    splitEmails(contact.email).map((email) => (
+                                      <p class="text-slate-700 break-words leading-relaxed">
+                                        {email}
+                                      </p>
+                                    ))
+                                  ) : (
+                                    <p class="text-slate-700 break-words leading-relaxed">
+                                      {contact.email}
+                                    </p>
+                                  )}
+                                </div>
+                              )
+                            ) : (
+                              <p class="text-slate-700">—</p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p class="text-slate-500">—</p>
+                  )}
+                </section>
               </div>
-            </div>
-          </section>
-        ))}
+            </section>
+          ))
+        }
       </div>
     </div>
   </section>
