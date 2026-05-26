@@ -1,47 +1,71 @@
 ---
-// Navbar.astro
+const currentPath = Astro.url.pathname;
 
-const pathname = Astro.url.pathname;
-
-const navLinks = [
-  { name: "首頁", href: "/" },
-  { name: "最新消息", href: "/news" },
-  { name: "競賽辦法", href: "/rules" },
-  { name: "檔案下載", href: "/downloads" },
-  { name: "交通地點", href: "/venue" },
-];
+const isActive = (path: string) => {
+  if (path === "/") return currentPath === "/";
+  return currentPath === path || currentPath.startsWith(`${path}/`);
+};
 
 const themeLinks = [
   {
-    name: "智慧節能與物聯網應用組",
     href: "/themes/energy-iot",
+    label: "智慧節能與物聯網應用組",
   },
   {
-    name: "智慧指向性傳輸暨通訊網路與資訊安全組",
-    href: "/themes/directional-security",
+    href: "/themes/intelligent-transport-security",
+    label: "智慧指向性傳輸通訊網路與資訊安全組",
   },
   {
-    name: "智慧數位應用組",
-    href: "/themes/digital-app",
+    href: "/themes/digital-application",
+    label: "智慧數位應用組",
   },
 ];
 
-const uploadLink = {
-  name: "報名 / 資料上傳",
-  href: "/upload",
-};
+const uploadLinks = [
+  {
+    href: "/upload/register",
+    label: "線上報名",
+  },
+  {
+    href: "/upload/preliminary",
+    label: "初賽資料上傳",
+  },
+  {
+    href: "/upload/final",
+    label: "決賽資料上傳",
+  },
+];
 
-const isExactActive = (href: string) => pathname === href;
-const isSectionActive = (href: string) =>
-  pathname === href || pathname.startsWith(`${href}/`);
+const navLinks = [
+  {
+    href: "/",
+    label: "首頁",
+  },
+  {
+    href: "/news",
+    label: "最新消息",
+  },
+  {
+    href: "/rules",
+    label: "競賽辦法",
+  },
+  {
+    href: "/downloads",
+    label: "檔案下載",
+  },
+  {
+    href: "/venue",
+    label: "交通地點",
+  },
+];
 
-const isThemeActive = themeLinks.some((item) => isSectionActive(item.href));
-const isUploadActive = isSectionActive(uploadLink.href);
+const isThemeActive = themeLinks.some((link) => isActive(link.href));
+const isUploadActive = uploadLinks.some((link) => isActive(link.href));
 ---
 
 <nav
-  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300"
-  id="navbar"
+  id="main-navbar"
+  class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
@@ -60,219 +84,314 @@ const isUploadActive = isSectionActive(uploadLink.href);
         </a>
       </div>
 
-      <!-- Desktop -->
-      <div class="hidden md:block">
-        <div class="ml-10 flex items-center space-x-8">
-          {
-            navLinks.map((link) => {
-              const isActive =
-                link.href === "/"
-                  ? isExactActive(link.href)
-                  : isSectionActive(link.href);
-
-              return (
-                <a
-                  href={link.href}
-                  class:list={[
-                    "text-base font-bold transition-colors relative py-2 group whitespace-nowrap",
-                    isActive
-                      ? "text-primary"
-                      : "text-slate-600 hover:text-primary",
-                  ]}
-                >
-                  {link.name}
-
-                  {isActive ? (
-                    <span class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-full" />
-                  ) : (
-                    <span class="absolute bottom-0 left-0 w-0 h-[3px] bg-primary/60 rounded-full transition-all duration-300 group-hover:w-full" />
-                  )}
-                </a>
-              );
-            })
-          }
-
-          <!-- 競賽主題資訊 dropdown -->
-          <div class="relative group">
-            <button
-              type="button"
-              class:list={[
-                "text-base font-bold transition-colors relative py-2 flex items-center gap-2 whitespace-nowrap",
-                isThemeActive
+      <div class="hidden lg:flex items-center gap-8">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`relative text-base font-bold transition-colors duration-300 ${
+                isActive(link.href)
                   ? "text-primary"
-                  : "text-slate-600 hover:text-primary",
-              ]}
+                  : "text-slate-700 hover:text-primary"
+              }`}
             >
-              競賽主題資訊
-              <svg
-                class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              {link.label}
+              <span
+                class={`absolute left-0 -bottom-2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
+                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
+            </a>
+          ))
+        }
 
-              {isThemeActive ? (
-                <span class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-full" />
-              ) : (
-                <span class="absolute bottom-0 left-0 w-0 h-[3px] bg-primary/60 rounded-full transition-all duration-300 group-hover:w-full" />
-              )}
-            </button>
+        <div class="relative group" data-theme-root>
+          <button
+            type="button"
+            class={`relative flex items-center gap-1 text-base font-bold transition-colors duration-300 ${
+              isThemeActive
+                ? "text-primary"
+                : "text-slate-700 hover:text-primary"
+            }`}
+            data-theme-button
+          >
+            競賽主題資訊
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
 
+            <span
+              class={`absolute left-0 -bottom-2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
+                isThemeActive ? "w-full" : "w-0 group-hover:w-full"
+              }`}></span>
+          </button>
+
+          <div
+            class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+            data-theme-menu
+          >
             <div
-              class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+              class="w-80 bg-white border border-slate-200 rounded-2xl shadow-xl p-3"
             >
-              <div class="w-[370px] rounded-2xl bg-white border border-slate-200 shadow-[0_18px_40px_rgba(15,23,42,0.12)] p-3">
-                {
-                  themeLinks.map((item) => {
-                    const isActive = isSectionActive(item.href);
-
-                    return (
-                      <a
-                        href={item.href}
-                        class:list={[
-                          "block rounded-xl px-4 py-3 text-[15px] font-bold transition-colors leading-relaxed",
-                          isActive
-                            ? "bg-slate-50 text-primary"
-                            : "text-slate-700 hover:bg-slate-50 hover:text-primary",
-                        ]}
-                      >
-                        {item.name}
-                      </a>
-                    );
-                  })
-                }
-              </div>
+              {
+                themeLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    class={`block rounded-xl px-4 py-3 text-sm font-bold transition-colors ${
+                      isActive(link.href)
+                        ? "bg-primary/10 text-primary"
+                        : "text-slate-700 hover:bg-slate-50 hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                ))
+              }
             </div>
           </div>
+        </div>
 
-          <!-- 報名 / 資料上傳 -->
-          <a
-            href={uploadLink.href}
-            class:list={[
-              "text-base font-bold transition-colors relative py-2 group whitespace-nowrap",
+        <div class="relative group" data-upload-root>
+          <button
+            type="button"
+            class={`relative flex items-center gap-1 text-base font-bold transition-colors duration-300 ${
               isUploadActive
                 ? "text-primary"
-                : "text-slate-600 hover:text-primary",
-            ]}
+                : "text-slate-700 hover:text-primary"
+            }`}
+            data-upload-button
           >
-            {uploadLink.name}
+            報名 / 資料上傳
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
 
-            {isUploadActive ? (
-              <span class="absolute bottom-0 left-0 w-full h-[3px] bg-primary rounded-full" />
-            ) : (
-              <span class="absolute bottom-0 left-0 w-0 h-[3px] bg-primary/60 rounded-full transition-all duration-300 group-hover:w-full" />
-            )}
-          </a>
+            <span
+              class={`absolute left-0 -bottom-2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
+                isUploadActive ? "w-full" : "w-0 group-hover:w-full"
+              }`}></span>
+          </button>
+
+          <div
+            class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+            data-upload-menu
+          >
+            <div
+              class="w-56 bg-white border border-slate-200 rounded-2xl shadow-xl p-3"
+            >
+              {
+                uploadLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    class={`block rounded-xl px-4 py-3 text-sm font-bold transition-colors ${
+                      isActive(link.href)
+                        ? "bg-primary/10 text-primary"
+                        : "text-slate-700 hover:bg-slate-50 hover:text-primary"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                ))
+              }
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Mobile button -->
-      <div class="md:hidden flex items-center">
-        <button
-          id="mobile-menu-btn"
-          type="button"
-          class="text-slate-600 hover:text-primary p-2 focus:outline-none transition-colors"
+      <button
+        id="mobile-menu-button"
+        type="button"
+        class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-slate-200 text-slate-700 hover:text-primary hover:border-primary/30 transition-colors"
+        aria-label="開啟選單"
+        aria-expanded="false"
+      >
+        <svg
+          id="mobile-menu-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <span class="sr-only">開啟選單</span>
-          <svg
-            class="h-7 w-7"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-      </div>
+          <path d="M4 6h16"></path>
+          <path d="M4 12h16"></path>
+          <path d="M4 18h16"></path>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full left-0 shadow-lg"
+    class="hidden lg:hidden bg-white border-t border-slate-200 shadow-lg"
   >
-    <div class="px-4 pt-2 pb-6 space-y-1">
+    <div class="px-4 py-4 space-y-2">
       {
-        navLinks.map((link) => {
-          const isActive =
-            link.href === "/"
-              ? isExactActive(link.href)
-              : isSectionActive(link.href);
-
-          return (
-            <a
-              href={link.href}
-              class:list={[
-                "block px-3 py-3 rounded-lg text-base font-medium transition-colors",
-                isActive
-                  ? "bg-bg-light text-primary"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-primary",
-              ]}
-            >
-              {link.name}
-            </a>
-          );
-        })
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`block rounded-xl px-4 py-3 text-base font-bold transition-colors ${
+              isActive(link.href)
+                ? "bg-primary/10 text-primary"
+                : "text-slate-700 hover:bg-slate-50 hover:text-primary"
+            }`}
+          >
+            {link.label}
+          </a>
+        ))
       }
 
-      <div class="pt-2 pb-1 px-3 text-sm font-bold text-slate-400 tracking-wide">
-        競賽主題資訊
+      <div class="pt-2">
+        <button
+          type="button"
+          class={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold transition-colors ${
+            isThemeActive
+              ? "bg-primary/10 text-primary"
+              : "text-slate-700 hover:bg-slate-50 hover:text-primary"
+          }`}
+          data-mobile-theme-toggle
+        >
+          競賽主題資訊
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 transition-transform duration-300"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            data-mobile-theme-icon
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        <div class="hidden pl-4 mt-2 space-y-2" data-mobile-theme-panel>
+          {
+            themeLinks.map((link) => (
+              <a
+                href={link.href}
+                class={`block rounded-xl px-4 py-3 text-sm font-bold transition-colors ${
+                  isActive(link.href)
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-primary"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
       </div>
 
-      {
-        themeLinks.map((item) => {
-          const isActive = isSectionActive(item.href);
+      <div class="pt-2">
+        <button
+          type="button"
+          class={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold transition-colors ${
+            isUploadActive
+              ? "bg-primary/10 text-primary"
+              : "text-slate-700 hover:bg-slate-50 hover:text-primary"
+          }`}
+          data-mobile-upload-toggle
+        >
+          報名 / 資料上傳
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 transition-transform duration-300"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            data-mobile-upload-icon
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
 
-          return (
-            <a
-              href={item.href}
-              class:list={[
-                "block px-3 py-3 rounded-lg text-base font-medium transition-colors",
-                isActive
-                  ? "bg-bg-light text-primary"
-                  : "text-slate-600 hover:bg-slate-50 hover:text-primary",
-              ]}
-            >
-              {item.name}
-            </a>
-          );
-        })
-      }
-
-      <a
-        href={uploadLink.href}
-        class:list={[
-          "block px-3 py-3 rounded-lg text-base font-medium transition-colors",
-          isUploadActive
-            ? "bg-bg-light text-primary"
-            : "text-slate-600 hover:bg-slate-50 hover:text-primary",
-        ]}
-      >
-        {uploadLink.name}
-      </a>
+        <div class="hidden pl-4 mt-2 space-y-2" data-mobile-upload-panel>
+          {
+            uploadLinks.map((link) => (
+              <a
+                href={link.href}
+                class={`block rounded-xl px-4 py-3 text-sm font-bold transition-colors ${
+                  isActive(link.href)
+                    ? "bg-primary/10 text-primary"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-primary"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
     </div>
   </div>
 </nav>
 
 <script>
-  const btn = document.getElementById("mobile-menu-btn");
-  const menu = document.getElementById("mobile-menu");
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileMenuIcon = document.getElementById("mobile-menu-icon");
 
-  if (btn && menu) {
-    btn.addEventListener("click", () => {
-      menu.classList.toggle("hidden");
-    });
-  }
+  mobileMenuButton?.addEventListener("click", () => {
+    const isOpen = !mobileMenu?.classList.contains("hidden");
+
+    mobileMenu?.classList.toggle("hidden");
+    mobileMenuButton.setAttribute("aria-expanded", String(!isOpen));
+
+    if (mobileMenuIcon) {
+      mobileMenuIcon.innerHTML = isOpen
+        ? '<path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path>'
+        : '<path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>';
+    }
+  });
+
+  const mobileThemeToggle = document.querySelector(
+    "[data-mobile-theme-toggle]",
+  );
+  const mobileThemePanel = document.querySelector("[data-mobile-theme-panel]");
+  const mobileThemeIcon = document.querySelector("[data-mobile-theme-icon]");
+
+  mobileThemeToggle?.addEventListener("click", () => {
+    mobileThemePanel?.classList.toggle("hidden");
+    mobileThemeIcon?.classList.toggle("rotate-180");
+  });
+
+  const mobileUploadToggle = document.querySelector(
+    "[data-mobile-upload-toggle]",
+  );
+  const mobileUploadPanel = document.querySelector(
+    "[data-mobile-upload-panel]",
+  );
+  const mobileUploadIcon = document.querySelector("[data-mobile-upload-icon]");
+
+  mobileUploadToggle?.addEventListener("click", () => {
+    mobileUploadPanel?.classList.toggle("hidden");
+    mobileUploadIcon?.classList.toggle("rotate-180");
+  });
 </script>

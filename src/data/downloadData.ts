@@ -21,14 +21,4 @@ export const downloadItems: DownloadItem[] = [
     previewSrc: "/downloads/poster_r3.png",
     isAvailable: true,
   },
-  {
-    title: "競賽海報",
-    fileName: "poster_r3.png",
-    desc: "可下載對外宣傳使用。",
-    fileType: "PNG",
-    updatedAt: "",
-    href: "/downloads/poster_r3.png",
-    previewSrc: "/downloads/poster_r3.png",
-    isAvailable: true,
-  },
 ];
