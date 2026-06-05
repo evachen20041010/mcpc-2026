@@ -13,12 +13,12 @@ export interface DownloadItem {
 export const downloadItems: DownloadItem[] = [
   {
     title: "競賽海報",
-    fileName: "poster_r3.png",
+    fileName: "poster_r4.pdf",
     desc: "可下載對外宣傳使用。",
-    fileType: "PNG",
+    fileType: "PDF",
     updatedAt: "",
-    href: "/downloads/poster_r3.png",
-    previewSrc: "/downloads/poster_r3.png",
+    href: "/downloads/poster_r4.pdf",
+    previewSrc: "/downloads/poster_r4.png",
     isAvailable: true,
   },
 ];
