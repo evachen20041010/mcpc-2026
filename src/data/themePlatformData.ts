@@ -16,6 +16,10 @@ export interface ContactInfo {
 
 export interface PlatformInfo {
   name: string;
+  axis?: {
+    label: string;
+    title: string;
+  };
   intro?: string;
   features?: string[];
   rentalMethod?: string;
@@ -38,6 +42,10 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
     platforms: [
       {
         name: "高效率節能人工智慧模型服務平台",
+        axis: {
+          label: "主軸一",
+          title: "AI 模型服務平台於智慧節能或設備管理的應用",
+        },
         intro:
           "旨在透過雲端技術與跨層次系統整合，打造一個數據驅動、智慧應用的實作環境。學生可通過本平台利用人工智慧及統計等方法模型來進行數據分類分析或預測數據走向，並根據分析 / 預測結果實作出具有智慧節能目的的應用，如能耗分析、智慧控制等，以實現對能源的精確節約和控制。",
         rentalMethod: `本平台鼓勵參賽團隊使用自己手邊的物聯網感測器進行應用，惟部分設備可提供外借，但感測器種類跟數量有限(會收押金)，故僅限晉級「題目主軸一. 智慧節能或低軌衛星物聯網的應用」的決賽團隊以"參賽團隊"為單位申請設備外借，不便之處，敬請見諒。`,
@@ -58,13 +66,13 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
           },
           {
             region: "北部場",
-            datetime: "115 年 8 月 7 日（五）09:00 - 17:00（預計）",
+            datetime: "115 年 8 月 7 日（五）10:00 - 17:00（預計）",
             location: "新竹清華大學",
             registrationLink: "https://forms.gle/vS9KMzfsaBH6PJBK8",
           },
           {
             region: "南部場",
-            datetime: "115 年 8 月 11 日（二）09:00 - 17:00（預計）",
+            datetime: "115 年 8 月 11 日（二）10:00 - 17:00（預計）",
             location: "南臺科技大學",
             registrationLink: "https://forms.gle/vS9KMzfsaBH6PJBK8",
           },
@@ -72,6 +80,10 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
       },
       {
         name: "B5G AIoT 智慧農業平台",
+        axis: {
+          label: "主軸二",
+          title: "智慧物聯網技術開發",
+        },
         intro:
           "「5G AIoT 智慧農業平台」結合 5G 通訊與 AIoT 技術，推動農業邁向自動化與智慧化，提升農作物的種植、管理與收成效率。透過感測器蒐集土壤濕度、氣候條件等關鍵數據，系統能夠精準調控灌溉，確保作物獲得適量水分，降低用水成本。此外，根據即時監測數據與 AI 分析結果，平台可提供最佳施肥方案，避免土壤酸化與病蟲害，提高農產品的健康與品質。依靠 5G 與 AIoT 技術，該平台能建立農田監測系統，全天候掌握環境變化與作物生長狀況。透過數據分析與機器學習演算法，預測作物生長趨勢及可能面臨的病蟲害風險，協助農民提前採取應對措施，減少損失並提升產量。這不僅讓農業管理更精確，也能有效運用資源，實現更高效的農業生產模式。此外，5G AIoT 智慧農業平台還能推動臺灣農產品的生產追溯制度，透過感測器記錄作物生長的各個環節，建立完整的農產品追溯體系。",
         rentalMethod:
@@ -102,6 +114,10 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
     platforms: [
       {
         name: "低軌衛星通訊網路與資訊安全平台",
+        axis: {
+          label: "主軸一",
+          title: "低軌衛星通訊網路與資訊安全",
+        },
         intro:
           "本次活動將介紹低軌衛星通訊網路與資訊安全平台，針對通訊網路與資訊安全進行課程教學說明，學生可進行衛星網路通訊模擬與安全機制驗證之整合應用，該平台可實現下列多項功能：",
         features: [
@@ -138,6 +154,10 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
       },
       {
         name: "雙毫米波天線陣列平台",
+        axis: {
+          label: "主軸二",
+          title: "雙天線陣列智慧指向性傳輸與應用",
+        },
         intro:
           "該雙毫米波天線陣列平台將可被雙電腦控制波束智慧指向及通訊傳輸應用，該平台可實現下列多項功能：",
         features: [
@@ -183,6 +203,10 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
     platforms: [
       {
         name: "5G-V2X 平台",
+        axis: {
+          label: "主軸一",
+          title: "智慧交通安全新生活",
+        },
         intro:
           "本競賽平台建構於一套整合 ETSI MEC Platform、開源 5G 核心網 free5GC 與開源無線接取模擬環境 UERANSIM 的開源測試平台（testbed）之上，提供完整且彈性的 5G 邊緣運算實驗環境。參賽者可於此平台上開發與部署 V2X（Vehicle-to-Everything）應用服務，並以 MEC APP 形式實現低延遲、高即時性的車聯網應用情境。透過此開源架構，不僅能加速創新服務的驗證與實作，也讓參賽團隊能深入掌握 5G 核網與邊緣運算整合之關鍵技術，打造具實務價值與未來擴展性的智慧交通解決方案。",
         rentalMethod:
@@ -214,6 +238,10 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
       },
       {
         name: "B5G 近海醫療衛星通訊整合平台",
+        axis: {
+          label: "主軸二",
+          title: "即時智慧感知結合通訊應用",
+        },
         intro:
           "本平台結合衛星通訊與近海醫療技術，聚焦於 B5G/6G 技術之高速、穩定與低延遲特性，可垂直整合應用於海上遠距醫療監測。透過結合 B5G 與低軌衛星，提升醫療服務可及性與即時性。平台具實作導向學習，培育具備通訊與智慧醫療整合能力之下世代專業人才。",
         rentalMethod:

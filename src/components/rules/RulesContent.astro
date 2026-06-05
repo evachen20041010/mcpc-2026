@@ -372,7 +372,7 @@ const showOverviewCTA = isOverview;
                 決賽晉級隊伍須於決賽文件截止收件日前完成以下資料上傳至競賽網頁：
               </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div
                 class="flex items-center gap-3 bg-slate-50/50 p-4 rounded-xl border border-slate-100"
@@ -403,9 +403,7 @@ const showOverviewCTA = isOverview;
               <p>
                 決賽繳交文件需包含參賽隊伍之完整程式碼與相關補充資料，主辦單位將提交給評審委員，以利辨識參賽者之原創性。
               </p>
-              <p>
-                備註：參賽團隊必須上繳影片，未繳交者視同棄賽。
-              </p>
+              <p>備註：參賽團隊必須上繳影片，未繳交者視同棄賽。</p>
             </div>
           </div>
         </div>
@@ -807,12 +805,12 @@ const showOverviewCTA = isOverview;
 
             <div class="space-y-6">
               {rulesList.map((rule, idx) => (
-                <div class="flex items-start gap-4 text-left">
-                  <span class="text-primary font-black text-lg shrink-0 mt-0.5 w-16 text-right">
+                <div class="grid grid-cols-[4.5rem_1fr] gap-4 text-left">
+                  <span class="text-primary font-black text-lg mt-0.5 text-right whitespace-nowrap">
                     {toChineseNum(idx + 1)}、
                   </span>
 
-                  <div class="flex-grow">
+                  <div class="min-w-0">
                     <p class="text-lg text-slate-700 leading-relaxed text-justify">
                       {rule.text}
                     </p>

@@ -51,7 +51,6 @@ const themes = [
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {themes.map((theme) => (
-        // 卡片容器：保留 relative + overflow-hidden (修正圓圈超出問題)
         <div class={`relative bg-white rounded-[2rem] p-8 border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-xl transition-all duration-300 group overflow-hidden`}>
           
           <div class={`absolute -bottom-12 -right-12 w-48 h-48 rounded-full ${theme.decorationBg} opacity-50 pointer-events-none`}></div>
