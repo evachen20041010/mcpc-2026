@@ -59,20 +59,14 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
         ],
         campSessions: [
           {
-            region: "短期課程",
-            datetime: "115 年 9 月（預計）",
-            location: "台中科技大學",
-            note: "受邀到學校課堂推廣，故不開放對外報名。",
-          },
-          {
             region: "北部場",
-            datetime: "115 年 8 月 7 日（五）10:00 - 17:00（預計）",
+            datetime: "115 年 8 月 7 日（五）10:00 - 18:00（預計）",
             location: "新竹清華大學",
             registrationLink: "https://forms.gle/vS9KMzfsaBH6PJBK8",
           },
           {
             region: "南部場",
-            datetime: "115 年 8 月 11 日（二）10:00 - 17:00（預計）",
+            datetime: "115 年 8 月 11 日（二）10:00 - 18:00（預計）",
             location: "南臺科技大學",
             registrationLink: "https://forms.gle/vS9KMzfsaBH6PJBK8",
           },
