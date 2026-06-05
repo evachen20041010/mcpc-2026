@@ -2,41 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import PageHero from "../components/common/PageHero.astro";
 ---
 
 <Layout title="最新消息 - 2026 MCPC 行動通訊實務競賽">
   <Navbar />
 
   <main class="pt-20">
-    <!-- 頁首：比照競賽辦法頁 -->
-    <section
-      class="relative overflow-hidden bg-white border-b border-slate-200"
-    >
-      <div
-        class="absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-slate-50"
-      >
-      </div>
-
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 lg:py-24"
-      >
-        <div class="max-w-3xl">
-          <p class="text-sm font-bold tracking-[0.25em] text-primary/80 mb-4">
-            NEWS & UPDATES
-          </p>
-
-          <h1
-            class="text-4xl lg:text-5xl font-black text-slate-800 tracking-tight mb-6"
-          >
-            最新消息
-          </h1>
-
-          <!-- <p class="text-lg text-slate-600 leading-relaxed">
-            競賽公告、活動資訊與重要時程更新，皆於此頁整理發布。
-          </p> -->
-        </div>
-      </div>
-    </section>
+    <PageHero eyebrow="NEWS & UPDATES" title="最新消息" />
 
     <section class="py-16 bg-slate-50 relative overflow-hidden min-h-[50vh]">
       <div

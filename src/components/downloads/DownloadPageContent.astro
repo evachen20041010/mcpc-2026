@@ -1,30 +1,12 @@
 ---
 import { downloadItems } from "../../data/downloadData";
+import PageHero from "../common/PageHero.astro";
+
+const isSingleItem = downloadItems.length === 1;
 ---
 
 <section class="pt-20">
-  <section class="relative overflow-hidden bg-white border-b border-slate-200">
-    <div
-      class="absolute inset-0 bg-gradient-to-br from-sky-50 via-white to-slate-50"
-    >
-    </div>
-
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 lg:py-24"
-    >
-      <div class="max-w-4xl">
-        <p class="text-sm font-bold tracking-[0.25em] text-primary/80 mb-4">
-          DOWNLOADS
-        </p>
-
-        <h1
-          class="text-4xl lg:text-5xl font-black text-slate-800 tracking-tight"
-        >
-          檔案下載
-        </h1>
-      </div>
-    </div>
-  </section>
+  <PageHero eyebrow="DOWNLOADS" title="檔案下載" />
 
   <section class="py-16 bg-slate-50 relative overflow-hidden min-h-[50vh]">
     <div
@@ -32,13 +14,23 @@ import { downloadItems } from "../../data/downloadData";
     >
     </div>
 
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div
+      class:list={[
+        "mx-auto px-4 sm:px-6 lg:px-8 relative z-10",
+        isSingleItem ? "max-w-4xl" : "max-w-6xl",
+      ]}
+    >
+      <div
+        class:list={[
+          "grid gap-6",
+          isSingleItem ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-2",
+        ]}
+      >
         {
           downloadItems.map((item) => (
-            <article class="bg-white rounded-[2rem] border border-slate-200 p-5 sm:p-6 shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-300 h-full">
+            <article class="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-7 shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-300 h-full">
               <div class="flex flex-col sm:flex-row gap-5 sm:gap-6 h-full">
-                <div class="w-full sm:w-36 md:w-40 shrink-0">
+                <div class="w-full sm:w-40 md:w-44 shrink-0">
                   {item.previewSrc ? (
                     <div class="overflow-hidden rounded-[1.25rem] border border-slate-200 bg-slate-50">
                       <img
@@ -81,10 +73,10 @@ import { downloadItems } from "../../data/downloadData";
 
                   <div class="flex justify-end pt-2 mt-auto">
                     {item.isAvailable === false ? (
-                      <span class="inline-flex items-center justify-center text-slate-300 cursor-not-allowed">
+                      <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-slate-200 text-slate-400 cursor-not-allowed">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="w-7 h-7"
+                          class="w-6 h-6"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -106,11 +98,11 @@ import { downloadItems } from "../../data/downloadData";
                           item.isExternal ? "noopener noreferrer" : undefined
                         }
                         aria-label={`下載 ${item.title}`}
-                        class="inline-flex items-center justify-center text-slate-300 hover:text-primary transition-colors duration-300 transform hover:translate-y-1"
+                        class="inline-flex items-center justify-center w-11 h-11 rounded-xl border border-slate-200 text-slate-300 hover:text-primary hover:border-primary/20 hover:bg-slate-50 transition-all duration-300 transform hover:translate-y-1"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="w-7 h-7"
+                          class="w-6 h-6"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
