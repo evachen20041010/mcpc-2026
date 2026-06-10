@@ -181,7 +181,7 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
         campSessions: [
           {
             region: "北部場",
-            datetime: "115 年 08 月 03 日（一）",
+            datetime: "115 年 08 月 03 日（一）09:30 - 17:00",
             location: "元智大學 7 館 307 教室",
             registrationLink:
               "https://docs.google.com/forms/d/e/1FAIpQLSdeWY-BBfNM8iilp3lbwl1p8Cfg8f1CcOvofjM-BGBjyd__rg/viewform",
@@ -263,6 +263,7 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
 
 export const trainingCampIntro = [
   "培訓營課程將教導如何操作各平台與感測器元件。",
-  "各平台培訓營之辦理時間、地點及相關內容，主辦單位保留調整及變更之權利，最新資訊請以各平台官方網站公告為準，本競賽作業須知所列之培訓營場次與時間僅供參考，實際辦理情形依各平台公告內容為準。",
-  "為體恤參賽團隊交通便利性，各平台培訓有規劃北部、中部及南部場次，參賽團隊可依所在區域選擇場次參與。",
+  "各平台培訓營之辦理時間、地點及相關內容，主辦單位保留調整及變更之權利。",
+  "本競賽作業須知所列之培訓營場次與時間僅供參考，實際辦理情形依各平台公告內容為準，可至競賽網頁查詢。",
+  "培訓營場次與時間(115 年 7 月至 8 月間)",
 ];
