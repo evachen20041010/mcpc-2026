@@ -60,13 +60,13 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
         campSessions: [
           {
             region: "北部場",
-            datetime: "115 年 8 月 7 日（五）10:00 - 18:00（預計）",
+            datetime: "115 年 8 月 7 日（五）10:00 - 18:00",
             location: "新竹清華大學",
             registrationLink: "https://forms.gle/vS9KMzfsaBH6PJBK8",
           },
           {
             region: "南部場",
-            datetime: "115 年 8 月 11 日（二）10:00 - 18:00（預計）",
+            datetime: "115 年 8 月 11 日（二）10:00 - 18:00",
             location: "南臺科技大學",
             registrationLink: "https://forms.gle/vS9KMzfsaBH6PJBK8",
           },
@@ -93,7 +93,7 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
         campSessions: [
           {
             region: "北部場",
-            datetime: "115 年 8 月 27 日（四）13:00 - 17:00（暫定）",
+            datetime: "115 年 8 月 27 日（四）13:00 - 17:00",
             location: "陽明交通大學（校區暫定）",
             registrationLink: "https://forms.gle/3MgNvhz2q6EAEjzL8",
           },
