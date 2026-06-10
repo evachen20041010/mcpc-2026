@@ -21,3 +21,21 @@ export const registrationForms: RegistrationFormItem[] = [
     href: "https://docs.google.com/forms/d/1W8M18mNNorp8Bz5fymgLn6e2ZctgnB84AIhUtjjJ_zM/viewform?ts=6a22899a",
   },
 ];
+
+export const preliminaryUploadForms: RegistrationFormItem[] = [
+  {
+    title: "智慧節能與物聯網應用組",
+    desc: "適用於智慧節能、低軌衛星物聯網及相關應用主題之參賽隊伍繳交初賽文件資料。",
+    href: "https://docs.google.com/forms/d/e/1FAIpQLScWVkuup_VgXQ2OYSqdZmLSrJ28lOyfMh8N4HOZaBwa7VNwrQ/viewform?usp=header",
+  },
+  {
+    title: "智慧指向性傳輸暨通訊網路與資訊安全組",
+    desc: "適用於低軌衛星通訊網路與資訊安全、雙天線陣列智慧指向性傳輸與應用主題之參賽隊伍繳交初賽文件資料。",
+    href: "https://docs.google.com/forms/d/e/1FAIpQLScI0U435m1fy6d6_ew_r3DSAkUFIfJSW27eOecJxgXOdoCkUQ/viewform?usp=header",
+  },
+  {
+    title: "智慧數位應用組",
+    desc: "適用於智慧交通安全新生活、即時智慧感知結合通訊應用主題之參賽隊伍繳交初賽文件資料。",
+    href: "https://docs.google.com/forms/d/e/1FAIpQLSdPAs59b0VISr-TRCxpaPugtNBbFgMxF0HgD5ZP9VN4C9LU7A/viewform?usp=header",
+  },
+];

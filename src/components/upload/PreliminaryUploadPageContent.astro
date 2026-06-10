@@ -1,0 +1,59 @@
+---
+import PageHero from "../common/PageHero.astro";
+import { preliminaryUploadForms } from "../../data/uploadData";
+---
+
+<section class="pt-20">
+  <PageHero eyebrow="PRELIMINARY UPLOAD" title="初賽文件上傳" />
+
+  <section class="py-16 bg-slate-50 relative overflow-hidden min-h-[50vh]">
+    <div
+      class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent opacity-50"
+    >
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="mb-10">
+        <h2 class="text-2xl font-black text-slate-800 mb-3">請選擇參賽組別</h2>
+
+        <p class="text-slate-600 leading-relaxed">
+          請依參賽組別選擇對應表單繳交初賽文件資料。
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {
+          preliminaryUploadForms.map((form, index) => (
+            <article class="group bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm hover:border-primary/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
+              <div class="mb-8">
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black text-xl mb-6">
+                  {index + 1}
+                </div>
+
+                <h3 class="text-2xl font-black text-slate-800 leading-snug mb-4 group-hover:text-primary transition-colors">
+                  {form.title}
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">{form.desc}</p>
+              </div>
+
+              <div class="mt-auto pt-6">
+                <a
+                  href={form.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex w-full items-center justify-center px-6 py-4 rounded-2xl bg-primary text-white font-bold tracking-[0.08em] transition-all duration-300 shadow-[0_12px_24px_rgba(26,79,110,0.18)] hover:shadow-[0_18px_30px_rgba(26,79,110,0.28)] hover:-translate-y-0.5"
+                >
+                  前往繳交表單
+                  <span class="ml-2 transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</section>
