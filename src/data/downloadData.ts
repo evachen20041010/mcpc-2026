@@ -23,12 +23,12 @@ export const downloadItems: DownloadItem[] = [
   },
   {
     title: "競賽作業須知",
-    fileName: "2026行動通訊實務競賽-競賽作業須知V4.pdf",
+    fileName: "2026行動通訊實務競賽-競賽作業須知V5.pdf",
     desc: "",
     fileType: "PDF",
     updatedAt: "",
-    href: "/downloads/2026行動通訊實務競賽-競賽作業須知V4.pdf",
-    previewSrc: "/downloads/2026行動通訊實務競賽-競賽作業須知V4.png",
+    href: "/downloads/2026行動通訊實務競賽-競賽作業須知V5.pdf",
+    previewSrc: "/downloads/2026行動通訊實務競賽-競賽作業須知V5.png",
     isAvailable: true,
   },
   {
