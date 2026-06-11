@@ -15,17 +15,17 @@ export const uploadPages: Record<UploadPageKey, UploadPageData> = {
     statusText: "尚未開放",
   },
   preliminary: {
-    title: "初賽資料上傳",
+    title: "初賽文件上傳",
     eyebrow: "PRELIMINARY SUBMISSION",
     description:
       "初賽資料上傳規範尚在確認中，後續將於本頁公告上傳方式與繳交內容。",
     statusText: "尚未開放",
   },
   final: {
-    title: "決賽資料上傳",
+    title: "決賽文件上傳",
     eyebrow: "FINAL SUBMISSION",
     description:
-      "決賽資料上傳規範尚在確認中，後續將於本頁公告上傳方式與繳交內容。",
+      "決賽文件上傳功能將於決賽入圍名單公布後開放，請入圍隊伍依後續公告之規定，於指定期限內完成相關資料繳交。",
     statusText: "尚未開放",
   },
 };
