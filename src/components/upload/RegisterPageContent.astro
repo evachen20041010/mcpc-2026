@@ -1,6 +1,11 @@
 ---
 import PageHero from "../common/PageHero.astro";
 import { registrationForms } from "../../data/uploadData";
+import { downloadItems } from "../../data/downloadData";
+
+const proposalTemplate = downloadItems.find(
+  (item) => item.title === "活動切結書",
+);
 ---
 
 <section class="pt-20">
@@ -20,6 +25,43 @@ import { registrationForms } from "../../data/uploadData";
           請依參賽主題選擇對應組別表單進行報名。
         </p>
       </div>
+
+      {
+        proposalTemplate && (
+          <div class="mb-10">
+            <div class="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-7 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+              <div>
+                <p class="text-sm font-bold tracking-[0.18em] text-primary/80 mb-2">
+                  DOWNLOAD
+                </p>
+
+                <h3 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">
+                  活動切結書
+                </h3>
+
+                <p class="text-slate-500 leading-relaxed">
+                  請下載活動切結書格式，填寫完成後再至下方表單上傳。
+                </p>
+              </div>
+
+              <a
+                href={proposalTemplate.href}
+                download={!proposalTemplate.isExternal}
+                target={proposalTemplate.isExternal ? "_blank" : undefined}
+                rel={
+                  proposalTemplate.isExternal
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                class="inline-flex items-center justify-center px-6 py-3 rounded-2xl bg-white border border-primary/30 text-primary font-bold transition-all duration-300 hover:bg-primary hover:text-white hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(26,79,110,0.18)] shrink-0"
+              >
+                下載活動切結書
+                <span class="ml-2">↓</span>
+              </a>
+            </div>
+          </div>
+        )
+      }
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {

@@ -1,6 +1,11 @@
 ---
 import PageHero from "../common/PageHero.astro";
 import { preliminaryUploadForms } from "../../data/uploadData";
+import { downloadItems } from "../../data/downloadData";
+
+const proposalTemplate = downloadItems.find(
+  (item) => item.title === "提案企劃書",
+);
 ---
 
 <section class="pt-20">
@@ -17,9 +22,46 @@ import { preliminaryUploadForms } from "../../data/uploadData";
         <h2 class="text-2xl font-black text-slate-800 mb-3">請選擇參賽組別</h2>
 
         <p class="text-slate-600 leading-relaxed">
-          請依參賽組別選擇對應表單繳交初賽文件資料。
+          請先下載提案企劃書格式，完成後依參賽組別選擇對應表單繳交初賽文件資料。
         </p>
       </div>
+
+      {
+        proposalTemplate && (
+          <div class="mb-10">
+            <div class="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-7 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+              <div>
+                <p class="text-sm font-bold tracking-[0.18em] text-primary/80 mb-2">
+                  DOWNLOAD
+                </p>
+
+                <h3 class="text-xl sm:text-2xl font-black text-slate-800 mb-2">
+                  提案企劃書
+                </h3>
+
+                <p class="text-slate-500 leading-relaxed">
+                  請下載提案企劃書格式，填寫完成後再至下方表單上傳。
+                </p>
+              </div>
+
+              <a
+                href={proposalTemplate.href}
+                download={!proposalTemplate.isExternal}
+                target={proposalTemplate.isExternal ? "_blank" : undefined}
+                rel={
+                  proposalTemplate.isExternal
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                class="inline-flex items-center justify-center px-6 py-3 rounded-2xl bg-white border border-primary/30 text-primary font-bold transition-all duration-300 hover:bg-primary hover:text-white hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(26,79,110,0.18)] shrink-0"
+              >
+                下載提案企劃書
+                <span class="ml-2">↓</span>
+              </a>
+            </div>
+          </div>
+        )
+      }
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {
