@@ -55,7 +55,10 @@ const isSingleItem = downloadItems.length === 1;
                         </span>
                       )}
 
-                      <span class="text-sm text-slate-400 font-medium break-all">
+                      <span
+                        class="min-w-0 max-w-[200px] truncate text-slate-400 text-sm"
+                        title={item.fileName}
+                      >
                         {item.fileName}
                       </span>
                     </div>
@@ -92,7 +95,7 @@ const isSingleItem = downloadItems.length === 1;
                     ) : (
                       <a
                         href={item.href}
-                        download={!item.isExternal}
+                        download={item.isExternal ? undefined : item.fileName}
                         target={item.isExternal ? "_blank" : undefined}
                         rel={
                           item.isExternal ? "noopener noreferrer" : undefined

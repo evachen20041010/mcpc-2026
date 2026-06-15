@@ -293,6 +293,15 @@
   import { db } from "../firebase/client.js";
   import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
+  const escapeHtml = (value: unknown = "") => {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  };
+
   document.addEventListener("DOMContentLoaded", () => {
     // ================= 1. 抓取 Firebase 日程並動態渲染 =================
     const initHeroTimeline = async () => {
@@ -354,6 +363,8 @@
           stateClass = "active-state";
         }
 
+        const safeName = escapeHtml(item.name);
+        const safeDateStr = escapeHtml(item.dateStr);
         const isLast = index === displayItems.length - 1;
         const cardPaddingClass = isLast ? "pb-0" : "pb-2";
         const segmentHtml = isLast
@@ -367,8 +378,8 @@
                     ${segmentHtml}
                 </div>
                 <div class="v-time-info flex justify-between items-center w-full transition-transform duration-300">
-                    <span class="text-white/80 text-base sm:text-lg font-bold transition-colors">${item.name}</span>
-                    <strong class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors">${item.dateStr}</strong>
+                    <span class="text-white/80 text-base sm:text-lg font-bold transition-colors">${safeName}</span>
+                    <strong class="tech-font text-xl sm:text-2xl text-white/90 tracking-wide transition-colors">${safeDateStr}</strong>
                 </div>
             </div>
         `;

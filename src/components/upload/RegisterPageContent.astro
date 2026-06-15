@@ -3,7 +3,7 @@ import PageHero from "../common/PageHero.astro";
 import { registrationForms } from "../../data/uploadData";
 import { downloadItems } from "../../data/downloadData";
 
-const proposalTemplate = downloadItems.find(
+const activityCommitment = downloadItems.find(
   (item) => item.title === "活動切結書",
 );
 ---
@@ -27,7 +27,7 @@ const proposalTemplate = downloadItems.find(
       </div>
 
       {
-        proposalTemplate && (
+        activityCommitment && (
           <div class="mb-10">
             <div class="bg-white rounded-[2rem] border border-slate-200 p-6 sm:p-7 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
               <div>
@@ -45,11 +45,11 @@ const proposalTemplate = downloadItems.find(
               </div>
 
               <a
-                href={proposalTemplate.href}
-                download={!proposalTemplate.isExternal}
-                target={proposalTemplate.isExternal ? "_blank" : undefined}
+                href={activityCommitment .href}
+                download={activityCommitment .isExternal ? undefined : activityCommitment .fileName}
+                target={activityCommitment .isExternal ? "_blank" : undefined}
                 rel={
-                  proposalTemplate.isExternal
+                  activityCommitment .isExternal
                     ? "noopener noreferrer"
                     : undefined
                 }

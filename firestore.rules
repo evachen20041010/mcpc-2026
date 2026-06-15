@@ -2,6 +2,7 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // 只允許特定 email 寫入
     function isAdmin() {
       return request.auth != null &&
         request.auth.token.email in [
@@ -10,6 +11,7 @@ service cloud.firestore {
         ];
     }
 
+    // 檢查最新消息 news 的資料格式
     function validNews() {
       let d = request.resource.data;
 
@@ -23,15 +25,19 @@ service cloud.firestore {
         ]) &&
         d.date is string &&
         d.date.matches("^\\d{4}\\.\\d{2}\\.\\d{2}$") &&
+        d.category is string &&
         d.category in ["重要", "公告", "活動"] &&
         d.title is string &&
         d.title.size() > 0 &&
         d.title.size() <= 100 &&
         d.desc is string &&
         d.desc.size() > 0 &&
-        d.desc.size() <= 8000;
+        d.desc.size() <= 8000 &&
+        (!("timestamp" in d) || d.timestamp is timestamp) &&
+        (!("updatedAt" in d) || d.updatedAt is timestamp);
     }
 
+    // 檢查重要日程 timeline 的資料格式
     function validTimeline() {
       let d = request.resource.data;
 
@@ -47,7 +53,9 @@ service cloud.firestore {
         d.title is string &&
         d.title.size() > 0 &&
         d.title.size() <= 100 &&
-        (!("desc" in d) || d.desc is string && d.desc.size() <= 500);
+        (!("desc" in d) || d.desc is string && d.desc.size() <= 500) &&
+        (!("timestamp" in d) || d.timestamp is timestamp) &&
+        (!("updatedAt" in d) || d.updatedAt is timestamp);
     }
 
     match /news/{docId} {

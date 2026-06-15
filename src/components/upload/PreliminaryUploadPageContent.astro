@@ -46,7 +46,7 @@ const proposalTemplate = downloadItems.find(
 
               <a
                 href={proposalTemplate.href}
-                download={!proposalTemplate.isExternal}
+                download={proposalTemplate.isExternal ? undefined : proposalTemplate.fileName}
                 target={proposalTemplate.isExternal ? "_blank" : undefined}
                 rel={
                   proposalTemplate.isExternal

@@ -13,7 +13,7 @@ export interface DownloadItem {
 export const downloadItems: DownloadItem[] = [
   {
     title: "競賽海報",
-    fileName: "poster_r5.png",
+    fileName: "2026行動通訊實務競賽海報.png",
     desc: "可下載對外宣傳使用。",
     fileType: "PNG",
     updatedAt: "",
@@ -27,8 +27,8 @@ export const downloadItems: DownloadItem[] = [
     desc: "",
     fileType: "PDF",
     updatedAt: "",
-    href: "/downloads/2026行動通訊實務競賽-競賽作業須知V5.pdf",
-    previewSrc: "/downloads/2026行動通訊實務競賽-競賽作業須知V5.png",
+    href: "/downloads/rules_v5.pdf",
+    previewSrc: "/downloads/rules_v5.png",
     isAvailable: true,
   },
   {
@@ -37,8 +37,8 @@ export const downloadItems: DownloadItem[] = [
     desc: "",
     fileType: "DOCX",
     updatedAt: "",
-    href: "/downloads/2026行動通訊實務競賽-活動切結書(空).docx",
-    previewSrc: "/downloads/2026行動通訊實務競賽-活動切結書(空).png",
+    href: "/downloads/activity_commitment.docx",
+    previewSrc: "/downloads/activity_commitment.png",
     isAvailable: true,
   },
   {
@@ -47,8 +47,8 @@ export const downloadItems: DownloadItem[] = [
     desc: "",
     fileType: "DOCX",
     updatedAt: "",
-    href: "/downloads/2026行動通訊實務競賽-提案企劃書(空).docx",
-    previewSrc: "/downloads/2026行動通訊實務競賽-提案企劃書(空).png",
+    href: "/downloads/proposal_template.docx",
+    previewSrc: "/downloads/proposal_template.png",
     isAvailable: true,
   },
   {
@@ -57,8 +57,8 @@ export const downloadItems: DownloadItem[] = [
     desc: "",
     fileType: "DOCX",
     updatedAt: "",
-    href: "/downloads/2026行動通訊實務競賽-工讀生參賽切結書(空).docx",
-    previewSrc: "/downloads/2026行動通訊實務競賽-工讀生參賽切結書(空).png",
+    href: "/downloads/workstudy_commitment.docx",
+    previewSrc: "/downloads/workstudy_commitment.png",
     isAvailable: true,
   },
   {
@@ -67,8 +67,8 @@ export const downloadItems: DownloadItem[] = [
     desc: "",
     fileType: "DOCX",
     updatedAt: "",
-    href: "/downloads/2026行動通訊實務競賽-更換隊員同意書(空)_r1.docx",
-    previewSrc: "/downloads/2026行動通訊實務競賽-更換隊員同意書(空)_r1.png",
+    href: "/downloads/member_change_agreement_r1.docx",
+    previewSrc: "/downloads/member_change_agreement_r1.png",
     isAvailable: true,
   },
   // {
