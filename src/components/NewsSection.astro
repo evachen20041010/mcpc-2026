@@ -45,7 +45,7 @@
       <div
         class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50"
       >
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 flex-wrap">
           <span
             id="modal-date"
             class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm"
@@ -55,6 +55,7 @@
             class="text-xs font-bold px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full"
           ></span>
         </div>
+
         <button
           class="close-modal-btn text-slate-400 hover:text-red-500 transition-colors p-2 -mr-2 outline-none"
         >
@@ -98,12 +99,28 @@
     getDocs,
   } from "firebase/firestore";
   import { marked } from "marked";
+  import DOMPurify from "dompurify";
+
+  const escapeHtml = (value: unknown = "") => {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  };
+
+  const parseSafeMarkdown = async (value: unknown = "") => {
+    const html = await marked.parse(String(value ?? ""));
+    return DOMPurify.sanitize(html, {
+      USE_PROFILES: { html: true },
+    });
+  };
 
   document.addEventListener("DOMContentLoaded", async () => {
     marked.setOptions({ breaks: true });
 
     const container = document.getElementById("news-container");
-    // 讓 marked 支援單次 Enter 自動換行
     if (!container) return;
 
     const modal = document.getElementById("news-modal");
@@ -137,43 +154,55 @@
       container.innerHTML = "";
 
       if (querySnapshot.empty) {
-        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 bg-slate-50 rounded-2xl border border-slate-100">目前尚無最新消息發布。</div>`;
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 text-slate-500 bg-slate-50 rounded-2xl border border-slate-100">
+            目前尚無最新消息發布。
+          </div>
+        `;
         return;
       }
 
-      // 替換前：querySnapshot.forEach((doc) => { ... })
-      // 替換為以下的寫法：
       let index = 0;
+
       for (const doc of querySnapshot.docs) {
         const data = doc.data();
         const docId = doc.id;
         newsDataMap[docId] = data;
+
         const delay = (index + 1) * 150;
 
-        // 1. 先將 Markdown 解析成完整 HTML
-        const parsedDesc = await marked.parse(data.desc);
-
-        // 2. 建立一個隱藏元素，把 HTML 裡的「純文字」萃取出來
-        // 這樣外層的預覽卡片就不會被大標題或清單撐破版面了
+        const parsedDesc = await parseSafeMarkdown(data.desc);
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = parsedDesc;
         const plainText = tempDiv.textContent || tempDiv.innerText || "";
 
         const cardHTML = `
-          <div class="group bg-white border-2 border-slate-100 rounded-[1.5rem] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary flex flex-col h-full animate-fade-up" style="animation-delay: ${delay}ms;">
-            <div class="flex items-center justify-between mb-6">
-              <span class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm">${data.date}</span>
-              <span class="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-500 rounded-full">${data.category}</span>
+          <div
+            class="group bg-white border-2 border-slate-100 rounded-[1.5rem] p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary flex flex-col h-full animate-fade-up"
+            style="animation-delay: ${delay}ms;"
+          >
+            <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
+              <span class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm">
+                ${escapeHtml(data.date)}
+              </span>
+              <span class="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-500 rounded-full">
+                ${escapeHtml(data.category)}
+              </span>
             </div>
             
-            <h3 class="text-xl font-bold text-slate-800 mb-4 group-hover:text-primary transition-colors">${data.title}</h3>
+            <h3 class="text-xl font-bold text-slate-800 mb-4 group-hover:text-primary transition-colors">
+              ${escapeHtml(data.title)}
+            </h3>
             
             <p class="news-content text-slate-500 mb-6 line-clamp-2 leading-relaxed text-sm transition-all duration-300">
-              ${plainText}
+              ${escapeHtml(plainText)}
             </p>
             
             <div class="mt-auto text-right z-10">
-              <button data-id="${docId}" class="expand-btn inline-flex items-center text-sm font-bold text-primary hover:text-blue-700 transition-colors cursor-pointer outline-none">
+              <button
+                data-id="${escapeHtml(docId)}"
+                class="expand-btn inline-flex items-center text-sm font-bold text-primary hover:text-blue-700 transition-colors cursor-pointer outline-none"
+              >
                 <span class="btn-text">顯示全文</span>
                 <span class="btn-icon ml-1 transition-transform group-hover:translate-x-1">→</span>
               </button>
@@ -185,11 +214,7 @@
         index++;
       }
 
-      // 替換前：btn.addEventListener('click', (e) => {
-      // 替換為以下的寫法：
-
       document.querySelectorAll(".expand-btn").forEach((btn) => {
-        // 在 (e) 前面加上 async！
         btn.addEventListener("click", async (e) => {
           const docId = (e.currentTarget as HTMLElement).getAttribute(
             "data-id",
@@ -207,9 +232,7 @@
             modalDate.textContent = data.date;
             modalCategory.textContent = data.category;
             modalTitle.textContent = data.title;
-
-            // 這裡就能正常使用 await 了
-            modalContent.innerHTML = await marked.parse(data.desc);
+            modalContent.innerHTML = await parseSafeMarkdown(data.desc);
 
             modal.classList.remove("hidden");
             modal.classList.add("flex");
@@ -219,7 +242,11 @@
       });
     } catch (error) {
       console.error("讀取失敗:", error);
-      container.innerHTML = `<div class="col-span-full text-center py-12 text-red-500 bg-red-50 rounded-2xl border border-red-100">無法載入，請確認網路連線。</div>`;
+      container.innerHTML = `
+        <div class="col-span-full text-center py-12 text-red-500 bg-red-50 rounded-2xl border border-red-100">
+          無法載入，請確認網路連線。
+        </div>
+      `;
     }
   });
 </script>
@@ -232,6 +259,7 @@
     margin-top: 1rem;
     margin-bottom: 0.5rem;
   }
+
   .markdown-body h2 {
     font-size: 1.25rem;
     font-weight: 700;
@@ -239,6 +267,7 @@
     margin-top: 1rem;
     margin-bottom: 0.5rem;
   }
+
   .markdown-body h3 {
     font-size: 1.125rem;
     font-weight: 700;
@@ -246,36 +275,44 @@
     margin-top: 0.75rem;
     margin-bottom: 0.5rem;
   }
+
   .markdown-body p {
     margin-bottom: 1rem;
   }
+
   .markdown-body ul {
     list-style-type: disc;
     padding-left: 1.5rem;
     margin-bottom: 1rem;
     color: #475569;
   }
+
   .markdown-body ol {
     list-style-type: decimal;
     padding-left: 1.5rem;
     margin-bottom: 1rem;
     color: #475569;
   }
+
   .markdown-body li {
     margin-bottom: 0.25rem;
   }
+
   .markdown-body a {
     color: #2563eb;
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+
   .markdown-body a:hover {
     color: #1d4ed8;
   }
+
   .markdown-body strong {
     font-weight: 700;
     color: #0f172a;
   }
+
   .markdown-body blockquote {
     border-left: 4px solid #cbd5e1;
     padding-left: 1rem;
@@ -283,6 +320,7 @@
     font-style: italic;
     margin-bottom: 1rem;
   }
+
   .markdown-body code {
     background-color: #f1f5f9;
     padding: 0.2rem 0.4rem;

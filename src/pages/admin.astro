@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="管理後台 - 2026 MCPC">
+<Layout title="管理後台 - 2026 MCPC" noindex={true}>
   <div class="min-h-screen bg-slate-50 pt-24 pb-12 px-4 sm:px-6">
     <div
       id="login-section"
@@ -305,6 +305,11 @@ import Layout from "../layouts/Layout.astro";
   const timelineSubmitBtn = document.getElementById("timeline-submit-btn");
   const timelineCancelBtn = document.getElementById("timeline-cancel-btn");
 
+  const ADMIN_EMAILS = [
+    "a0937510149@gmail.com",
+    "nextgeneration1140331@gmail.com",
+  ];
+
   if (
     !loginSection ||
     !adminSection ||
@@ -319,15 +324,19 @@ import Layout from "../layouts/Layout.astro";
   }
 
   // ================= 1. 監聽登入狀態 =================
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
+  onAuthStateChanged(auth, async (user) => {
+    if (user && ADMIN_EMAILS.includes(user.email ?? "")) {
       loginSection.classList.add("hidden");
       adminSection.classList.remove("hidden");
       loadNews();
-      loadTimeline(); // 登入後載入日程
+      loadTimeline();
     } else {
       loginSection.classList.remove("hidden");
       adminSection.classList.add("hidden");
+
+      if (user) {
+        await signOut(auth);
+      }
     }
   });
 
