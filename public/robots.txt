@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+
+Sitemap: https://mcpc-2026-nchu.web.app/sitemap.xml

@@ -9,24 +9,40 @@ const { title, noindex = false } = Astro.props;
 
 <!doctype html>
 <html lang="zh-TW">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="2026 行動通訊實務競賽 - 激發創新思維，培育行動通訊人才" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href="/images/logo_2026MCPC.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="2026 行動通訊實務競賽，邀請全國大專校院學生組隊參與，展現行動通訊、物聯網、資安、智慧應用與整合實作能力。"
+    />
+    <meta property="og:title" content="2026 MCPC 行動通訊實務競賽" />
+    <meta
+      property="og:description"
+      content="2026 行動通訊實務競賽，聚焦下世代行動通訊技術應用，邀請全國大專校院學生組隊參與。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mcpc-2026-nchu.web.app/" />
+    <meta
+      property="og:image"
+      content="https://mcpc-2026-nchu.web.app/images/og-image.png"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/images/logo_2026MCPC.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
 
-		{noindex && <meta name="robots" content="noindex, nofollow" />}
-	</head>
-	<body class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden">
-		<slot />
-	</body>
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+  </head>
+  <body
+    class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden"
+  >
+    <slot />
+  </body>
 </html>
 
 <style is:global>
-	/* 如果需要全域 CSS 可寫在這 */
-	html {
-		scroll-behavior: smooth;
-	}
+  /* 如果需要全域 CSS 可寫在這 */
+  html {
+    scroll-behavior: smooth;
+  }
 </style>
