@@ -226,7 +226,7 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
             region: "中部場",
             datetime: "115 年 08 月 04 日（五）10:00 - 17:00",
             location: "國立中興大學電機系 4 樓 402 電腦教室",
-            registrationLink: "https://reurl.cc/rEqO5E",
+            registrationLink: "https://docs.google.com/forms/d/e/1FAIpQLSeajj6BJeVNQzcqjC6Y6a75_yySJH6AL5H8NTUDJkpo8TOcKQ/viewform?usp=header",
           },
         ],
       },
