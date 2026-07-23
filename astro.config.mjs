@@ -1,8 +1,8 @@
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import { defineConfig } from "astro/config";
+import tailwind from "@astrojs/tailwind";
 
-// https://astro.build/config
 export default defineConfig({
+  site: "https://mcpc-2026-nchu.web.app",
   integrations: [tailwind()],
-  output: 'static',
+  output: "static",
 });

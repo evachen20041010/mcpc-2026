@@ -12,7 +12,6 @@
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource/noto-sans-tc": "^5.2.9",
     "@fontsource/orbitron": "^5.2.8",
-    "@tailwindcss/vite": "^4.1.18",
     "astro": "^6.4.5",
     "dompurify": "^3.4.10",
     "firebase": "^12.8.0",

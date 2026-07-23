@@ -1,28 +1,34 @@
 ---
+import "../styles/global.css";
+
 interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  image?: string;
 }
 
 const {
   title,
-  description = "2026 行動通訊實務競賽，邀請全國大專校院學生組隊參與，展現行動通訊、物聯網、資訊安全與智慧應用的跨域整合及實作創新能力。",
+  description = "2026 MCPC 行動通訊實務競賽官方網站。聚焦下世代行動通訊技術應用，邀請全國大專校院學生組隊參與，展現行動通訊跨域整合與實作創新力。",
   noindex = false,
+  image = "/downloads/poster_r6.png",
 } = Astro.props;
 
-const siteUrl = "https://mcpc-2026-nchu.web.app";
-const siteName = "2026 MCPC 行動通訊實務競賽";
+const siteUrl = Astro.site ?? new URL("https://mcpc-2026-nchu.web.app");
+
+const siteName = "2026 MCPC";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const ogImageUrl = `${siteUrl}/downloads/poster_r5.png`;
+
+const ogImageUrl = new URL(image, siteUrl).toString();
 const isHomePage = Astro.url.pathname === "/";
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: siteName,
-  alternateName: "2026 MCPC",
-  url: `${siteUrl}/`,
+  alternateName: "2026 行動通訊實務競賽",
+  url: new URL("/", siteUrl).toString(),
 };
 ---
 
@@ -34,7 +40,6 @@ const websiteSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>{title}</title>
-
     <meta name="description" content={description} />
 
     <link rel="canonical" href={canonicalUrl} />
@@ -51,6 +56,7 @@ const websiteSchema = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content="2026 MCPC 行動通訊實務競賽" />
 
     <!-- 社群分享 -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -63,13 +69,12 @@ const websiteSchema = {
     {
       isHomePage && (
         <script
+          is:inline
           type="application/ld+json"
           set:html={JSON.stringify(websiteSchema)}
         />
       )
     }
-
-    <meta name="generator" content={Astro.generator} />
   </head>
 
   <body class="bg-slate-50 text-slate-900 font-sans">
