@@ -1,48 +1,97 @@
 ---
 interface Props {
   title: string;
+  description?: string;
   noindex?: boolean;
 }
 
-const { title, noindex = false } = Astro.props;
+const {
+  title,
+  description = "2026 行動通訊實務競賽，邀請全國大專校院學生組隊參與，展現行動通訊、物聯網、資訊安全與智慧應用的跨域整合及實作創新能力。",
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = "https://mcpc-2026-nchu.web.app";
+const siteName = "2026 MCPC 行動通訊實務競賽";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = `${siteUrl}/downloads/poster_r5.png`;
+const isHomePage = Astro.url.pathname === "/";
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  alternateName: "2026 MCPC",
+  url: `${siteUrl}/`,
+};
 ---
 
 <!doctype html>
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="2026 行動通訊實務競賽，邀請全國大專校院學生組隊參與，展現行動通訊、物聯網、資安、智慧應用與整合實作能力。"
-    />
-    <meta property="og:title" content="2026 MCPC 行動通訊實務競賽" />
-    <meta
-      property="og:description"
-      content="2026 行動通訊實務競賽，聚焦下世代行動通訊技術應用，邀請全國大專校院學生組隊參與。"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://mcpc-2026-nchu.web.app/" />
-    <meta
-      property="og:image"
-      content="https://mcpc-2026-nchu.web.app/images/og-image.png"
-    />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/png" href="/images/logo_2026MCPC.png" />
-    <meta name="generator" content={Astro.generator} />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>{title}</title>
 
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonicalUrl} />
+
+    <link rel="icon" type="image/png" href="/images/logo_2026MCPC.png" />
+
+    <!-- 提供 Google 判斷網站名稱 -->
+    <meta property="og:site_name" content={siteName} />
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- 社群分享 -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow, noarchive" />}
+
+    {
+      isHomePage && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(websiteSchema)}
+        />
+      )
+    }
+
+    <meta name="generator" content={Astro.generator} />
   </head>
-  <body
-    class="bg-slate-50 text-slate-900 font-sans antialiased overflow-x-hidden"
-  >
+
+  <body class="bg-slate-50 text-slate-900 font-sans">
     <slot />
   </body>
 </html>
 
 <style is:global>
-  /* 如果需要全域 CSS 可寫在這 */
   html {
     scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 </style>
