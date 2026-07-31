@@ -65,26 +65,27 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
 
 <nav
   id="main-navbar"
-  class="fixed top-0 left-0 right-0 z-[999] w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm overflow-visible"
+  class="fixed inset-x-0 top-0 z-[999] w-full overflow-visible border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md"
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
-      <div class="flex-shrink-0">
+      <div class="min-w-0 flex-shrink-0">
         <a
           href="/"
-          class="flex items-baseline text-xl lg:text-2xl font-bold text-primary cursor-pointer"
+          class="flex min-w-0 cursor-pointer items-baseline font-bold text-primary"
         >
-          2026 MCPC
+          <span class="whitespace-nowrap text-xl lg:text-2xl">2026 MCPC</span>
           <span
-            class="font-bold text-slate-500 text-[1rem] ml-2.5 tracking-wide"
+            class="ml-2.5 hidden whitespace-nowrap text-[1rem] font-bold tracking-wide text-slate-500 sm:inline"
           >
             | 行動通訊實務競賽
           </span>
         </a>
       </div>
 
-      <div class="hidden lg:flex items-center gap-8">
+      <!-- Desktop navigation -->
+      <div class="hidden items-center gap-8 lg:flex">
         {
           navLinks.map((link) => (
             <a
@@ -97,15 +98,15 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
             >
               {link.label}
               <span
-                class={`absolute left-0 -bottom-2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
-                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                class={`absolute -bottom-2 left-0 h-0.5 rounded-full bg-primary transition-all duration-300 ${
+                  isActive(link.href) ? "w-full" : "w-0"
                 }`}
               />
             </a>
           ))
         }
 
-        <div class="relative group" data-theme-root>
+        <div class="group relative" data-theme-root>
           <button
             type="button"
             class={`relative flex items-center gap-1 text-base font-bold transition-colors duration-300 ${
@@ -118,29 +119,30 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
             競賽主題資訊
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+              class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="m6 9 6 6 6-6"></path>
             </svg>
 
             <span
-              class={`absolute left-0 -bottom-2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
+              class={`absolute -bottom-2 left-0 h-0.5 rounded-full bg-primary transition-all duration-300 ${
                 isThemeActive ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
           </button>
 
           <div
-            class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+            class="invisible absolute right-0 top-full z-[1000] pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
             data-theme-menu
           >
             <div
-              class="w-80 bg-white border border-slate-200 rounded-2xl shadow-xl p-3"
+              class="w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl"
             >
               {
                 themeLinks.map((link) => (
@@ -160,7 +162,7 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
           </div>
         </div>
 
-        <div class="relative group" data-upload-root>
+        <div class="group relative" data-upload-root>
           <button
             type="button"
             class={`relative flex items-center gap-1 text-base font-bold transition-colors duration-300 ${
@@ -173,29 +175,30 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
             報名 / 資料上傳
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
+              class="h-4 w-4 transition-transform duration-300 group-hover:rotate-180"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
+              aria-hidden="true"
             >
               <path d="m6 9 6 6 6-6"></path>
             </svg>
 
             <span
-              class={`absolute left-0 -bottom-2 h-[3px] rounded-full bg-primary transition-all duration-300 ${
+              class={`absolute -bottom-2 left-0 h-0.5 rounded-full bg-primary transition-all duration-300 ${
                 isUploadActive ? "w-full" : "w-0 group-hover:w-full"
               }`}></span>
           </button>
 
           <div
-            class="absolute right-0 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+            class="invisible absolute right-0 top-full z-[1000] pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
             data-upload-menu
           >
             <div
-              class="w-56 bg-white border border-slate-200 rounded-2xl shadow-xl p-3"
+              class="w-56 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl"
             >
               {
                 uploadLinks.map((link) => (
@@ -216,23 +219,26 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
         </div>
       </div>
 
+      <!-- Mobile menu button -->
       <button
         id="mobile-menu-button"
         type="button"
-        class="lg:hidden inline-flex items-center justify-center w-11 h-11 rounded-xl border border-slate-200 text-slate-700 hover:text-primary hover:border-primary/30 transition-colors"
+        class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 text-slate-700 transition-colors hover:border-primary/30 hover:text-primary lg:hidden"
         aria-label="開啟選單"
+        aria-controls="mobile-menu"
         aria-expanded="false"
       >
         <svg
           id="mobile-menu-icon"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
+          class="h-6 w-6"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
         >
           <path d="M4 6h16"></path>
           <path d="M4 12h16"></path>
@@ -242,11 +248,15 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
     </div>
   </div>
 
+  <!-- Mobile menu: fills the viewport below the 80px navbar and scrolls independently -->
   <div
     id="mobile-menu"
-    class="hidden lg:hidden bg-white border-t border-slate-200 shadow-lg"
+    class="absolute inset-x-0 top-full z-[1000] hidden h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-slate-200 bg-white shadow-lg lg:hidden"
+    aria-hidden="true"
   >
-    <div class="px-4 py-4 space-y-2">
+    <div
+      class="min-h-full space-y-2 px-4 pt-4 pb-[calc(2rem+env(safe-area-inset-bottom))]"
+    >
       {
         navLinks.map((link) => (
           <a
@@ -265,17 +275,18 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
       <div class="pt-2">
         <button
           type="button"
-          class={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold transition-colors ${
+          class={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-base font-bold transition-colors ${
             isThemeActive
               ? "bg-primary/10 text-primary"
               : "text-slate-700 hover:bg-slate-50 hover:text-primary"
           }`}
+          aria-expanded="false"
           data-mobile-theme-toggle
         >
           競賽主題資訊
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4 transition-transform duration-300"
+            class="h-4 w-4 transition-transform duration-300"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -283,17 +294,18 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
             stroke-linecap="round"
             stroke-linejoin="round"
             data-mobile-theme-icon
+            aria-hidden="true"
           >
             <path d="m6 9 6 6 6-6"></path>
           </svg>
         </button>
 
-        <div class="hidden pl-4 mt-2 space-y-2" data-mobile-theme-panel>
+        <div class="mt-2 hidden space-y-2 pl-4" data-mobile-theme-panel>
           {
             themeLinks.map((link) => (
               <a
                 href={link.href}
-                class={`block rounded-xl px-4 py-3 text-sm font-bold transition-colors ${
+                class={`block rounded-xl px-4 py-3 text-sm font-bold leading-relaxed transition-colors ${
                   isActive(link.href)
                     ? "bg-primary/10 text-primary"
                     : "text-slate-600 hover:bg-slate-50 hover:text-primary"
@@ -309,17 +321,18 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
       <div class="pt-2">
         <button
           type="button"
-          class={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-base font-bold transition-colors ${
+          class={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-base font-bold transition-colors ${
             isUploadActive
               ? "bg-primary/10 text-primary"
               : "text-slate-700 hover:bg-slate-50 hover:text-primary"
           }`}
+          aria-expanded="false"
           data-mobile-upload-toggle
         >
           報名 / 資料上傳
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4 transition-transform duration-300"
+            class="h-4 w-4 transition-transform duration-300"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -327,12 +340,13 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
             stroke-linecap="round"
             stroke-linejoin="round"
             data-mobile-upload-icon
+            aria-hidden="true"
           >
             <path d="m6 9 6 6 6-6"></path>
           </svg>
         </button>
 
-        <div class="hidden pl-4 mt-2 space-y-2" data-mobile-upload-panel>
+        <div class="mt-2 hidden space-y-2 pl-4" data-mobile-upload-panel>
           {
             uploadLinks.map((link) => (
               <a
@@ -358,40 +372,129 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileMenuIcon = document.getElementById("mobile-menu-icon");
 
-  mobileMenuButton?.addEventListener("click", () => {
-    const isOpen = !mobileMenu?.classList.contains("hidden");
+  const mobileThemeToggle = document.querySelector<HTMLElement>(
+    "[data-mobile-theme-toggle]",
+  );
+  const mobileThemePanel = document.querySelector<HTMLElement>(
+    "[data-mobile-theme-panel]",
+  );
+  const mobileThemeIcon = document.querySelector<HTMLElement>(
+    "[data-mobile-theme-icon]",
+  );
 
-    mobileMenu?.classList.toggle("hidden");
-    mobileMenuButton.setAttribute("aria-expanded", String(!isOpen));
+  const mobileUploadToggle = document.querySelector<HTMLElement>(
+    "[data-mobile-upload-toggle]",
+  );
+  const mobileUploadPanel = document.querySelector<HTMLElement>(
+    "[data-mobile-upload-panel]",
+  );
+  const mobileUploadIcon = document.querySelector<HTMLElement>(
+    "[data-mobile-upload-icon]",
+  );
+
+  const menuIcon =
+    '<path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path>';
+  const closeIcon = '<path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>';
+
+  const setSubmenuState = (
+    toggle: HTMLElement | null,
+    panel: HTMLElement | null,
+    icon: HTMLElement | null,
+    isOpen: boolean,
+  ) => {
+    panel?.classList.toggle("hidden", !isOpen);
+    icon?.classList.toggle("rotate-180", isOpen);
+    toggle?.setAttribute("aria-expanded", String(isOpen));
+  };
+
+  const setMobileMenuState = (isOpen: boolean) => {
+    if (!mobileMenuButton || !mobileMenu) return;
+
+    mobileMenu.classList.toggle("hidden", !isOpen);
+    mobileMenu.setAttribute("aria-hidden", String(!isOpen));
+    mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+    mobileMenuButton.setAttribute(
+      "aria-label",
+      isOpen ? "關閉選單" : "開啟選單",
+    );
 
     if (mobileMenuIcon) {
-      mobileMenuIcon.innerHTML = isOpen
-        ? '<path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path>'
-        : '<path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>';
+      mobileMenuIcon.innerHTML = isOpen ? closeIcon : menuIcon;
+    }
+
+    document.documentElement.classList.toggle("mobile-menu-open", isOpen);
+    document.body.classList.toggle("mobile-menu-open", isOpen);
+
+    if (isOpen) {
+      mobileMenu.scrollTop = 0;
+    } else {
+      setSubmenuState(
+        mobileThemeToggle,
+        mobileThemePanel,
+        mobileThemeIcon,
+        false,
+      );
+      setSubmenuState(
+        mobileUploadToggle,
+        mobileUploadPanel,
+        mobileUploadIcon,
+        false,
+      );
+    }
+  };
+
+  mobileMenuButton?.addEventListener("click", () => {
+    const isOpen = mobileMenuButton.getAttribute("aria-expanded") === "true";
+    setMobileMenuState(!isOpen);
+  });
+
+  mobileThemeToggle?.addEventListener("click", () => {
+    const isOpen = mobileThemeToggle.getAttribute("aria-expanded") === "true";
+    setSubmenuState(
+      mobileThemeToggle,
+      mobileThemePanel,
+      mobileThemeIcon,
+      !isOpen,
+    );
+  });
+
+  mobileUploadToggle?.addEventListener("click", () => {
+    const isOpen = mobileUploadToggle.getAttribute("aria-expanded") === "true";
+    setSubmenuState(
+      mobileUploadToggle,
+      mobileUploadPanel,
+      mobileUploadIcon,
+      !isOpen,
+    );
+  });
+
+  mobileMenu?.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+    link.addEventListener("click", () => {
+      setMobileMenuState(false);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setMobileMenuState(false);
     }
   });
 
-  const mobileThemeToggle = document.querySelector(
-    "[data-mobile-theme-toggle]",
-  );
-  const mobileThemePanel = document.querySelector("[data-mobile-theme-panel]");
-  const mobileThemeIcon = document.querySelector("[data-mobile-theme-icon]");
-
-  mobileThemeToggle?.addEventListener("click", () => {
-    mobileThemePanel?.classList.toggle("hidden");
-    mobileThemeIcon?.classList.toggle("rotate-180");
-  });
-
-  const mobileUploadToggle = document.querySelector(
-    "[data-mobile-upload-toggle]",
-  );
-  const mobileUploadPanel = document.querySelector(
-    "[data-mobile-upload-panel]",
-  );
-  const mobileUploadIcon = document.querySelector("[data-mobile-upload-icon]");
-
-  mobileUploadToggle?.addEventListener("click", () => {
-    mobileUploadPanel?.classList.toggle("hidden");
-    mobileUploadIcon?.classList.toggle("rotate-180");
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1024) {
+      setMobileMenuState(false);
+    }
   });
 </script>
+
+<style is:global>
+  #mobile-menu {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  html.mobile-menu-open,
+  body.mobile-menu-open {
+    overflow: hidden;
+  }
+</style>
