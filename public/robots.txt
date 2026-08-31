@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mcpc-2026-nchu.web.app/sitemap.xml
+Sitemap: https://mcpc-2026-nchu.web.app/sitemap-v2.xml

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/news</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/rules</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/downloads</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/venue</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/themes/energy-iot</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/themes/directional-security</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/themes/digital-app</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/upload/register</loc>
+  </url>
+
+  <url>
+    <loc>https://mcpc-2026-nchu.web.app/upload/preliminary</loc>
+  </url>
+</urlset>
