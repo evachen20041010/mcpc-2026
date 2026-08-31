@@ -20,10 +20,12 @@ import PageHero from "../components/common/PageHero.astro";
       >
       </div>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div
+        class="relative z-10 mx-auto w-full max-w-7xl min-w-0 px-4 sm:px-6 lg:px-8"
+      >
         <div
           id="all-news-container"
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+          class="grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3"
         >
           <div
             class="col-span-full text-center py-12 text-slate-500 animate-pulse"
@@ -36,7 +38,7 @@ import PageHero from "../components/common/PageHero.astro";
       <!-- Modal -->
       <div
         id="news-modal"
-        class="fixed inset-0 z-[100] hidden items-center justify-center"
+        class="fixed inset-x-0 bottom-0 top-20 z-[1000] hidden items-center justify-center p-3 sm:p-6"
       >
         <div
           id="modal-backdrop"
@@ -45,12 +47,12 @@ import PageHero from "../components/common/PageHero.astro";
         </div>
 
         <div
-          class="relative bg-white rounded-2xl shadow-2xl w-[90%] max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-fade-up m-4"
+          class="relative flex w-full min-w-0 max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl animate-fade-up max-h-[calc(100dvh-6.5rem)] sm:max-h-[calc(100dvh-8rem)]"
         >
           <div
-            class="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50"
+            class="flex shrink-0 items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/50 p-4 sm:p-6"
           >
-            <div class="flex items-center gap-3 flex-wrap">
+            <div class="flex min-w-0 flex-wrap items-center gap-3">
               <span
                 id="modal-date"
                 class="text-sm font-bold text-white bg-[#F2994A] px-3 py-1 rounded shadow-sm"
@@ -79,15 +81,17 @@ import PageHero from "../components/common/PageHero.astro";
             </button>
           </div>
 
-          <div class="p-6 md:p-8 overflow-y-auto">
+          <div
+            class="min-w-0 flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 md:p-8"
+          >
             <h3
               id="modal-title"
-              class="text-2xl font-bold text-slate-800 mb-6 leading-snug"
+              class="mb-6 min-w-0 break-words text-xl font-bold leading-snug text-slate-800 sm:text-2xl"
             >
             </h3>
             <div
               id="modal-content"
-              class="text-slate-600 leading-relaxed text-base md:text-lg markdown-body"
+              class="markdown-body min-w-0 max-w-full text-base leading-relaxed text-slate-600 md:text-lg"
             >
             </div>
           </div>
@@ -141,11 +145,18 @@ import PageHero from "../components/common/PageHero.astro";
       if (!modal) return;
       modal.classList.add("hidden");
       modal.classList.remove("flex");
-      document.body.style.overflow = "";
+      document.documentElement.classList.remove("news-modal-open");
+      document.body.classList.remove("news-modal-open");
     };
 
     closeBtns.forEach((btn) => btn.addEventListener("click", closeModal));
     if (modalBackdrop) modalBackdrop.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal?.classList.contains("flex")) {
+        closeModal();
+      }
+    });
 
     try {
       const q = query(collection(db, "news"), orderBy("date", "desc"));
@@ -178,7 +189,7 @@ import PageHero from "../components/common/PageHero.astro";
 
         const cardHTML = `
           <article
-            class="group bg-white rounded-[2rem] p-7 border border-slate-200 hover:border-primary/50 hover:shadow-xl transition-all duration-500 flex flex-col h-full animate-fade-up"
+            class="group flex h-full min-w-0 max-w-full flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-6 transition-all duration-500 hover:border-primary/50 hover:shadow-xl sm:p-7 animate-fade-up"
             style="animation-delay: ${delay}ms;"
           >
             <div class="flex items-center justify-between gap-3 mb-6 flex-wrap">
@@ -190,11 +201,11 @@ import PageHero from "../components/common/PageHero.astro";
               </span>
             </div>
 
-            <h3 class="text-xl font-bold text-slate-800 mb-4 leading-snug group-hover:text-primary transition-colors">
+            <h3 class="mb-4 min-w-0 break-words text-xl font-bold leading-snug text-slate-800 transition-colors group-hover:text-primary">
               ${escapeHtml(data.title)}
             </h3>
 
-            <p class="text-slate-500 mb-6 line-clamp-3 leading-relaxed text-sm">
+            <p class="news-card-excerpt mb-6 min-w-0 line-clamp-3 text-sm leading-relaxed text-slate-500">
               ${escapeHtml(plainText)}
             </p>
 
@@ -236,7 +247,8 @@ import PageHero from "../components/common/PageHero.astro";
 
             modal.classList.remove("hidden");
             modal.classList.add("flex");
-            document.body.style.overflow = "hidden";
+            document.documentElement.classList.add("news-modal-open");
+            document.body.classList.add("news-modal-open");
           }
         });
       });
@@ -252,6 +264,38 @@ import PageHero from "../components/common/PageHero.astro";
 </script>
 
 <style is:global>
+  html.news-modal-open,
+  body.news-modal-open {
+    overflow: hidden;
+  }
+
+  .news-card-excerpt {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .markdown-body {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .markdown-body * {
+    max-width: 100%;
+  }
+
+  .markdown-body img,
+  .markdown-body video,
+  .markdown-body iframe {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .markdown-body pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   .markdown-body h1 {
     font-size: 1.5rem;
     font-weight: 800;
@@ -300,6 +344,8 @@ import PageHero from "../components/common/PageHero.astro";
 
   .markdown-body a {
     color: #2563eb;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     text-decoration: underline;
     text-underline-offset: 2px;
   }

@@ -65,7 +65,7 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
 
 <nav
   id="main-navbar"
-  class="fixed inset-x-0 top-0 z-[999] w-full overflow-visible border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md"
+  class="fixed inset-x-0 top-0 z-[999] w-full translate-y-0 overflow-visible border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-md transition-transform duration-300 ease-out will-change-transform"
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-20 items-center justify-between">
@@ -368,6 +368,7 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
 </nav>
 
 <script>
+  const navbar = document.getElementById("main-navbar");
   const mobileMenuButton = document.getElementById("mobile-menu-button");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileMenuIcon = document.getElementById("mobile-menu-icon");
@@ -426,6 +427,7 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
     document.body.classList.toggle("mobile-menu-open", isOpen);
 
     if (isOpen) {
+      navbar?.classList.remove("-translate-y-full");
       mobileMenu.scrollTop = 0;
     } else {
       setSubmenuState(
@@ -480,10 +482,55 @@ const isUploadActive = uploadLinks.some((link) => isActive(link.href));
     }
   });
 
+  let lastScrollY = window.scrollY;
+  let scrollTicking = false;
+
+  const updateNavbarVisibility = () => {
+    if (!navbar) return;
+
+    const currentScrollY = window.scrollY;
+    const isDesktop = window.innerWidth >= 1024;
+    const isMenuOpen =
+      mobileMenuButton?.getAttribute("aria-expanded") === "true";
+
+    if (isDesktop || isMenuOpen || currentScrollY <= 16) {
+      navbar.classList.remove("-translate-y-full");
+      lastScrollY = currentScrollY;
+      return;
+    }
+
+    const delta = currentScrollY - lastScrollY;
+
+    // 手機向下滑動時收起導覽列；往上滑時重新顯示。
+    if (delta > 6 && currentScrollY > 96) {
+      navbar.classList.add("-translate-y-full");
+    } else if (delta < -6) {
+      navbar.classList.remove("-translate-y-full");
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (scrollTicking) return;
+
+      scrollTicking = true;
+      window.requestAnimationFrame(() => {
+        updateNavbarVisibility();
+        scrollTicking = false;
+      });
+    },
+    { passive: true },
+  );
+
   window.addEventListener("resize", () => {
     if (window.innerWidth >= 1024) {
       setMobileMenuState(false);
+      navbar?.classList.remove("-translate-y-full");
     }
+    lastScrollY = window.scrollY;
   });
 </script>
 
