@@ -211,14 +211,9 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
           "https://drive.google.com/drive/folders/1Ahr8ZSu7FG9ZYLY0MlUriMlbwHr2NKO8?usp=sharing",
         trainingContacts: [
           {
-            name: "杜俊育",
-            phone: "06-2533131 分機 3239",
-            email: "duketu@stust.edu.tw",
-          },
-          {
-            name: "鄭昀賾",
-            phone: "0968-880356",
-            email: "4bog0928@stust.edu.tw",
+            name: "曾柏諺",
+            phone: "",
+            email: "bytseng@smail.nchu.edu.tw",
           },
         ],
         campSessions: [
