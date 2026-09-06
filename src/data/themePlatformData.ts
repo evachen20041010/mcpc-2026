@@ -205,8 +205,6 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
           "本競賽平台建構於一套整合 ETSI MEC Platform、開源 5G 核心網 free5GC 與開源無線接取模擬環境 UERANSIM 的開源測試平台（testbed）之上，提供完整且彈性的 5G 邊緣運算實驗環境。參賽者可於此平台上開發與部署 V2X（Vehicle-to-Everything）應用服務，並以 MEC APP 形式實現低延遲、高即時性的車聯網應用情境。透過此開源架構，不僅能加速創新服務的驗證與實作，也讓參賽團隊能深入掌握 5G 核網與邊緣運算整合之關鍵技術，打造具實務價值與未來擴展性的智慧交通解決方案。",
         rentalMethod:
           "本平台主要以開源系統軟體與模擬器建構，參賽團隊在虛擬機上即可建置，無需租借設備。",
-        equipmentReservationLink:
-          "本平台僅採用模擬器進行實作，因此無需使用任何硬體設備，亦不提供設備租借服務。",
         materialLink:
           "https://drive.google.com/drive/folders/1Ahr8ZSu7FG9ZYLY0MlUriMlbwHr2NKO8?usp=sharing",
         trainingContacts: [
