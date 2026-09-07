@@ -1,0 +1,103 @@
+---
+import PageHero from "../common/PageHero.astro";
+import { registrationSteps } from "../../data/registrationProcessData";
+---
+
+<section class="pt-20">
+  <PageHero
+    eyebrow="REGISTRATION PROCESS"
+    title="報名流程"
+  />
+
+  <section class="relative min-h-[50vh] overflow-hidden bg-slate-50 py-16">
+    <div
+      class="absolute left-0 top-0 h-24 w-full bg-gradient-to-b from-white to-transparent opacity-50"
+    >
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- 區塊說明 -->
+      <div class="mb-10">
+        <h2 class="mb-3 text-2xl font-black text-slate-800">參賽報名步驟</h2>
+
+        <p class="leading-relaxed text-slate-600">
+          請依序完成以下步驟，並留意各階段公告及文件繳交期限。
+        </p>
+      </div>
+
+      <!-- 流程卡片 -->
+      <div class="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          registrationSteps.map((item) => (
+            <article class="group flex h-full flex-col rounded-[2rem] border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
+              <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-xl font-black text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+                {item.step}
+              </div>
+
+              <h3 class="mb-3 text-xl font-black text-slate-800 transition-colors group-hover:text-primary">
+                {item.title}
+              </h3>
+
+              <p class="leading-relaxed text-slate-600">{item.desc}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <!-- 下一步 -->
+      <div
+        class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+      >
+        <div
+          class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div>
+            <p class="mb-2 text-sm font-bold tracking-[0.18em] text-primary/80">
+              REGISTRATION
+            </p>
+
+            <h3 class="mb-2 text-xl font-black text-slate-800 sm:text-2xl">
+              準備好開始報名了嗎？
+            </h3>
+
+            <p class="leading-relaxed text-slate-500">
+              請前往線上報名頁面，依參賽主題選擇對應組別表單。
+            </p>
+          </div>
+
+          <a
+            href="/upload/register"
+            class="inline-flex shrink-0 items-center justify-center rounded-2xl bg-primary px-6 py-3 font-bold text-white shadow-[0_12px_24px_rgba(26,79,110,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_30px_rgba(26,79,110,0.28)]"
+          >
+            前往線上報名
+            <span class="ml-2">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 提醒 -->
+      <div class="mt-8 rounded-2xl border border-primary/10 bg-white p-6">
+        <div class="flex items-start gap-4">
+          <div
+            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-300"
+          >
+            <img
+              src="/images/lightbulb.png"
+              alt=""
+              class="h-5 w-5 object-contain"
+              style="filter: brightness(0) invert(1);"
+            />
+          </div>
+
+          <div>
+            <h4 class="mb-2 font-bold text-slate-800">報名狀態查詢說明</h4>
+
+            <p class="leading-relaxed text-slate-600">
+              完成報名後，系統將自動寄發確認信。如需查詢報名進度或修改資料，請於來信中註明「隊伍名稱」與「隊長姓名」，以利協助查詢。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
