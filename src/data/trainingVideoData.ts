@@ -43,7 +43,8 @@ export const trainingVideoGroups: TrainingVideoGroup[] = [
         axis: "主軸一",
         title: "低軌衛星通訊網路與資訊安全",
         platform: "低軌衛星通訊網路與資訊安全平台",
-        type: "pending",
+        type: "youtube",
+        youtubeId: "n_uodv6oo04",
       },
       {
         axis: "主軸二",
