@@ -79,6 +79,76 @@ const websiteSchema = {
 
   <body class="bg-slate-50 text-slate-900 font-sans">
     <slot />
+
+    <!-- 回到頂部 -->
+    <button
+      id="back-to-top"
+      type="button"
+      aria-label="回到頁面頂部"
+      title="回到頂部"
+      class="fixed bottom-5 right-4 z-[900]
+        flex h-12 w-12
+        translate-y-3 items-center justify-center
+        rounded-full
+        border border-slate-200
+        bg-white/95
+        text-primary
+        opacity-0
+        shadow-[0_8px_24px_rgba(15,23,42,0.12)]
+        pointer-events-none
+        backdrop-blur
+        transition-all duration-300
+        hover:-translate-y-1
+        hover:border-primary/30
+        hover:bg-primary
+        hover:text-white
+        sm:bottom-6 sm:right-6"
+    >
+      <svg
+        class="h-5 w-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.2"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="m6 15 6-6 6 6"
+        ></path>
+      </svg>
+    </button>
+
+    <script>
+      const backToTopButton = document.getElementById("back-to-top");
+
+      const updateBackToTopButton = () => {
+        if (!backToTopButton) return;
+
+        const shouldShow = window.scrollY > 500;
+
+        backToTopButton.classList.toggle("opacity-0", !shouldShow);
+
+        backToTopButton.classList.toggle("pointer-events-none", !shouldShow);
+
+        backToTopButton.classList.toggle("translate-y-3", !shouldShow);
+
+        backToTopButton.classList.toggle("opacity-100", shouldShow);
+
+        backToTopButton.classList.toggle("translate-y-0", shouldShow);
+      };
+
+      window.addEventListener("scroll", updateBackToTopButton, {
+        passive: true,
+      });
+
+      updateBackToTopButton();
+
+      backToTopButton?.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
   </body>
 </html>
 

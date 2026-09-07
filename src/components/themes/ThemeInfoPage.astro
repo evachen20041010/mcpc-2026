@@ -287,76 +287,160 @@ const hasRelatedLinks = (platform: {
                 </section>
 
                 <section class="py-7">
-                  <h4 class="text-lg font-bold text-slate-800 mb-4">
+                  <h4 class="mb-5 text-lg font-bold text-slate-800">
                     培訓營聯絡窗口
                   </h4>
 
-                  {hasTrainingContacts(platform.trainingContacts) ? (
-                    <div class="space-y-1">
-                      {platform.trainingContacts?.map((contact, index) => (
-                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                          <div>
-                            {index === 0 && (
-                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
-                                姓名
-                              </p>
-                            )}
-                            <p class="text-slate-700 leading-relaxed">
-                              {contact.name || "—"}
-                            </p>
-                          </div>
-
-                          <div>
-                            {index === 0 && (
-                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
-                                電話
-                              </p>
-                            )}
-                            <p class="text-slate-700 leading-relaxed">
-                              {contact.phone || "—"}
-                            </p>
-                          </div>
-
-                          <div>
-                            {index === 0 && (
-                              <p class="text-sm font-bold text-slate-400 tracking-wide mb-1">
-                                Email
-                              </p>
-                            )}
-
-                            {contact.email ? (
-                              canUseMailto(contact.email) ? (
-                                <a
-                                  href={`mailto:${contact.email}`}
-                                  class="text-primary underline underline-offset-2 break-words inline-block leading-relaxed"
+                  {
+                    hasTrainingContacts(platform.trainingContacts) ? (
+                      <div
+                        class:list={[
+                          "grid gap-5",
+                          (platform.trainingContacts?.filter((contact) =>
+                            hasContactInfo(contact)
+                          ).length ?? 0) > 1
+                            ? "md:grid-cols-2"
+                            : "grid-cols-1",
+                        ]}
+                      >
+                        {platform.trainingContacts
+                          ?.filter((contact) => hasContactInfo(contact))
+                          .map((contact) => (
+                            <div
+                              class="
+                                min-w-0
+                                rounded-2xl
+                                border border-slate-200
+                                bg-slate-50/70
+                                p-5
+                                sm:p-6
+                              "
+                            >
+                              <!-- 姓名 -->
+                              <div class="mb-5">
+                                <p
+                                  class="
+                                    mb-1
+                                    text-sm
+                                    font-bold
+                                    tracking-wide
+                                    text-slate-400
+                                  "
                                 >
-                                  {contact.email}
-                                </a>
-                              ) : (
-                                <div class="space-y-1">
-                                  {splitEmails(contact.email).length > 0 ? (
-                                    splitEmails(contact.email).map((email) => (
-                                      <p class="text-slate-700 break-words leading-relaxed">
-                                        {email}
-                                      </p>
-                                    ))
+                                  姓名
+                                </p>
+
+                                <p
+                                  class="
+                                    text-base
+                                    font-medium
+                                    leading-relaxed
+                                    text-slate-700
+                                  "
+                                >
+                                  {contact.name || "—"}
+                                </p>
+                              </div>
+
+                              <!-- 電話 -->
+                              <div class="mb-5">
+                                <p
+                                  class="
+                                    mb-1
+                                    text-sm
+                                    font-bold
+                                    tracking-wide
+                                    text-slate-400
+                                  "
+                                >
+                                  電話
+                                </p>
+
+                                <p
+                                  class="
+                                    break-words
+                                    text-base
+                                    leading-relaxed
+                                    text-slate-700
+                                  "
+                                >
+                                  {contact.phone || "—"}
+                                </p>
+                              </div>
+
+                              <!-- Email -->
+                              <div>
+                                <p
+                                  class="
+                                    mb-1
+                                    text-sm
+                                    font-bold
+                                    tracking-wide
+                                    text-slate-400
+                                  "
+                                >
+                                  Email
+                                </p>
+
+                                {
+                                  contact.email ? (
+                                    canUseMailto(contact.email) ? (
+                                      <a
+                                        href={`mailto:${contact.email}`}
+                                        class="
+                                          inline-block
+                                          max-w-full
+                                          break-all
+                                          leading-relaxed
+                                          text-primary
+                                          underline
+                                          underline-offset-2
+                                        "
+                                      >
+                                        {contact.email}
+                                      </a>
+                                    ) : (
+                                      <div class="space-y-1">
+                                        {splitEmails(contact.email).length >
+                                        0 ? (
+                                          splitEmails(contact.email).map(
+                                            (email) => (
+                                              <p
+                                                class="
+                                                  break-all
+                                                  leading-relaxed
+                                                  text-slate-700
+                                                "
+                                              >
+                                                {email}
+                                              </p>
+                                            ),
+                                          )
+                                        ) : (
+                                          <p
+                                            class="
+                                              break-all
+                                              leading-relaxed
+                                              text-slate-700
+                                            "
+                                          >
+                                            {contact.email}
+                                          </p>
+                                        )}
+                                      </div>
+                                    )
                                   ) : (
-                                    <p class="text-slate-700 break-words leading-relaxed">
-                                      {contact.email}
-                                    </p>
-                                  )}
-                                </div>
-                              )
-                            ) : (
-                              <p class="text-slate-700">—</p>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p class="text-slate-500">—</p>
-                  )}
+                                    <p class="text-slate-700">—</p>
+                                  )
+                                }
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    ) : (
+                      <p class="text-slate-500">—</p>
+                    )
+                  }
                 </section>
               </div>
             </section>
