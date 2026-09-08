@@ -318,7 +318,24 @@
 
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          const targetTime = new Date(`${data.dateStr}T23:59:59`).getTime();
+
+          // 舊資料若尚未設定時間，維持原本 23:59 的行為
+          const timeStr =
+            typeof data.timeStr === "string" &&
+            /^\d{2}:\d{2}$/.test(data.timeStr)
+              ? data.timeStr
+              : "23:59";
+
+          /*
+           * 競賽時間統一以台灣時間 UTC+8 計算。
+           * 例如：
+           * 2026-09-11 + 12:00
+           * → 2026-09-11T12:00:00+08:00
+           */
+          const targetTime = new Date(
+            `${data.dateStr}T${timeStr}:00+08:00`,
+          ).getTime();
+
           milestones.push({
             id: doc.id,
             name: data.title,
@@ -393,22 +410,24 @@
       if (targetMs) {
         targetNameEl.innerText = targetMs.name;
 
-        const updateCountdown = setInterval(function () {
+        const renderCountdown = () => {
           const distance = targetMs.timestamp - new Date().getTime();
 
           if (distance <= 0) {
-            clearInterval(updateCountdown);
             window.location.reload();
-            return;
+            return false;
           }
 
           const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
           const hours = Math.floor(
             (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
           );
+
           const minutes = Math.floor(
             (distance % (1000 * 60 * 60)) / (1000 * 60),
           );
+
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
           const cdDays = document.getElementById("cd-days");
@@ -416,16 +435,34 @@
           const cdMins = document.getElementById("cd-mins");
           const cdSecs = document.getElementById("cd-secs");
 
-          if (cdDays)
-            cdDays.innerText = days < 10 ? "0" + days : days.toString();
-          if (cdHours)
-            cdHours.innerText = hours < 10 ? "0" + hours : hours.toString();
-          if (cdMins)
-            cdMins.innerText =
-              minutes < 10 ? "0" + minutes : minutes.toString();
-          if (cdSecs)
-            cdSecs.innerText =
-              seconds < 10 ? "0" + seconds : seconds.toString();
+          if (cdDays) {
+            cdDays.innerText = days < 10 ? `0${days}` : String(days);
+          }
+
+          if (cdHours) {
+            cdHours.innerText = hours < 10 ? `0${hours}` : String(hours);
+          }
+
+          if (cdMins) {
+            cdMins.innerText = minutes < 10 ? `0${minutes}` : String(minutes);
+          }
+
+          if (cdSecs) {
+            cdSecs.innerText = seconds < 10 ? `0${seconds}` : String(seconds);
+          }
+
+          return true;
+        };
+
+        // 網頁載入後立刻顯示
+        renderCountdown();
+
+        const updateCountdown = window.setInterval(() => {
+          const shouldContinue = renderCountdown();
+
+          if (!shouldContinue) {
+            window.clearInterval(updateCountdown);
+          }
         }, 1000);
       } else {
         const cdDays = document.getElementById("cd-days");
