@@ -206,7 +206,7 @@ export const themePlatformData: Record<ThemeKey, ThemeInfo> = {
         rentalMethod:
           "本平台主要以開源系統軟體與模擬器建構，參賽團隊在虛擬機上即可建置，無需租借設備。",
         materialLink:
-          "https://drive.google.com/drive/folders/1Ahr8ZSu7FG9ZYLY0MlUriMlbwHr2NKO8?usp=sharing",
+          "https://drive.google.com/drive/u/0/folders/1s2RhBq_lAeDdIvpFTXrPYLdl-gGuD0iH",
         trainingContacts: [
           {
             name: "曾柏諺",
