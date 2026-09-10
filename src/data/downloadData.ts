@@ -17,8 +17,8 @@ export const downloadItems: DownloadItem[] = [
     desc: "可下載對外宣傳使用。",
     fileType: "PNG",
     updatedAt: "",
-    href: "/downloads/poster_r6.png",
-    previewSrc: "/downloads/poster_r6.png",
+    href: "/downloads/poster_r7.png",
+    previewSrc: "/downloads/poster_r7.png",
     isAvailable: true,
   },
   {
