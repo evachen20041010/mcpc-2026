@@ -1,4 +1,4 @@
-export type TrainingResourceType = "youtube" | "drive" | "pending";
+export type TrainingResourceType = "youtube" | "playlist" | "drive" | "pending";
 
 export interface TrainingVideoItem {
   axis: string;
@@ -71,7 +71,8 @@ export const trainingVideoGroups: TrainingVideoGroup[] = [
         axis: "主軸二",
         title: "即時智慧感知結合通訊應用",
         platform: "B5G 近海醫療衛星通訊整合平台",
-        type: "pending",
+        type: "playlist",
+        href: "https://www.youtube.com/playlist?list=PLa4q4HhqYI-U",
       },
     ],
   },

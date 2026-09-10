@@ -83,6 +83,38 @@ const defaultGroup = "directional-security";
                   </div>
                 )}
 
+                <!-- YouTube 播放清單 -->
+                {video.type === "playlist" && video.href && (
+                  <a
+                    href={video.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group flex aspect-video w-full flex-col items-center justify-center bg-slate-50 transition-colors hover:bg-red-50/40"
+                    aria-label={`開啟 ${video.title} YouTube 播放清單`}
+                  >
+                    <div
+                      class="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-slate-200 bg-white text-red-500 shadow-sm transition-transform group-hover:scale-105"
+                    >
+                      <svg
+                        class="ml-0.5 h-6 w-6"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+
+                    <p class="font-bold text-slate-700">
+                      YouTube 播放清單
+                    </p>
+
+                    <p class="mt-1 text-sm text-slate-400">
+                      點擊查看培訓營影片
+                    </p>
+                  </a>
+                )}
+
                 <!-- Google Drive -->
                 {video.type === "drive" && video.href && (
                   <a
@@ -159,6 +191,12 @@ const defaultGroup = "directional-security";
                     {video.type === "youtube" && (
                       <span class="text-xs font-bold text-red-500">
                         YouTube
+                      </span>
+                    )}
+
+                    {video.type === "playlist" && (
+                      <span class="text-xs font-bold text-red-500">
+                        YouTube 播放清單
                       </span>
                     )}
 
