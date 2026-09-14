@@ -24,7 +24,8 @@ export const trainingVideoGroups: TrainingVideoGroup[] = [
         axis: "主軸一",
         title: "智慧節能或低軌衛星物聯網的應用",
         platform: "高效率節能人工智慧模型服務平台",
-        type: "pending",
+        type: "drive",
+        href: "https://drive.google.com/drive/folders/14rW-4xs76Z9e89VfCzM51wxxpntc2pCr",
       },
       {
         axis: "主軸二",
