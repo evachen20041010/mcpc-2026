@@ -41,7 +41,7 @@ export const downloadItems: DownloadItem[] = [
     previewSrc: "/downloads/activity_commitment.png",
     isAvailable: true,
   },
-  {
+  /*{
     title: "提案企劃書",
     fileName: "2026行動通訊實務競賽-提案企劃書(空).docx",
     desc: "",
@@ -50,7 +50,7 @@ export const downloadItems: DownloadItem[] = [
     href: "/downloads/proposal_template.docx",
     previewSrc: "/downloads/proposal_template.png",
     isAvailable: true,
-  },
+  },*/
   {
     title: "工讀生參賽切結書",
     fileName: "2026行動通訊實務競賽-工讀生參賽切結書(空).docx",
@@ -71,14 +71,14 @@ export const downloadItems: DownloadItem[] = [
     previewSrc: "/downloads/member_change_agreement_r1.png",
     isAvailable: true,
   },
-  // {
-  //   title: "作品設計與測試文件",
-  //   fileName: "2026行動通訊實務競賽-作品設計與測試文件(空)_r1.docx",
-  //   desc: "",
-  //   fileType: "DOCX",
-  //   updatedAt: "",
-  //   href: "/downloads/2026行動通訊實務競賽-作品設計與測試文件(空)_r1.docx",
-  //   previewSrc: "/downloads/2026行動通訊實務競賽-作品設計與測試文件(空)_r1.png",
-  //   isAvailable: true,
-  // },
+  {
+    title: "作品設計與測試文件",
+    fileName: "2026行動通訊實務競賽-作品設計與測試文件(空).docx",
+    desc: "",
+    fileType: "DOCX",
+    updatedAt: "",
+    href: "/downloads/project_design_and_testing.docx",
+    previewSrc: "/downloads/project_design_and_testing.png",
+    isAvailable: true,
+  },
 ];
