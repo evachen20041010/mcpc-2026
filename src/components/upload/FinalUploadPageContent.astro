@@ -1,0 +1,336 @@
+---
+import PageHero from "../common/PageHero.astro";
+import { downloadItems } from "../../data/downloadData";
+
+const finalUploadForms = [
+  {
+    title: "智慧節能與物聯網應用組",
+    href: "https://forms.gle/ZENJvYN2BDeM4tsu9",
+  },
+  {
+    title: "智慧指向性傳輸暨通訊網路與資訊安全組",
+    href: "https://forms.gle/47dyfm8DiTh5VdVQ6",
+  },
+  {
+    title: "智慧數位應用組",
+    href: "https://forms.gle/pVueofwNK8UfmXX48",
+  },
+];
+
+const presentationOutline = [
+  "背景與動機",
+  "問題分析（說明服務的對象與市場需求）",
+  "解決方案設計與構想（強調題目與競賽平台的適切性）",
+  "作品成果設計（完整系統架構、系統架構圖及作品照片）",
+  "作品的創新性、可行性與商機",
+  "團隊介紹（勿出現學校／指導教授資料）",
+  "使用競賽平台之心得（請務必填寫）",
+  "參考資料",
+  "附件（如需補充作品說明資料或證明等）",
+];
+
+const designRequirements = [
+  {
+    title: "程式簡介",
+    details: ["約 200～500 字。"],
+  },
+  {
+    title: "安裝說明與流程",
+    details: [
+      "說明執行程式需要的系統環境、執行環境、版本及安裝方法。",
+      "例如 Python、Node.js > 16、.NET、Go、Docker 等。",
+    ],
+  },
+  {
+    title: "相關套件與版本",
+    details: [
+      "列出所需套件、指定版本及安裝方法。",
+      "可提供 requirements.txt、package.json 或其他相關專案檔案。",
+    ],
+  },
+  {
+    title: "執行方法說明",
+    details: [
+      "說明如何執行程式，以及相關操作方式。",
+      "提供程式設定說明，例如 .env 檔案變數。",
+    ],
+  },
+  {
+    title: "預期執行成果與範例",
+    details: [
+      "提供數個範例，包含執行說明與預期成果。",
+      "範例必須能清楚展示程式特點。",
+    ],
+  },
+];
+
+const projectDesignTemplate = downloadItems.find(
+  (item) => item.title === "作品設計與測試文件" && item.isAvailable !== false,
+);
+---
+
+<section class="pt-20">
+  <PageHero
+    eyebrow="FINAL UPLOAD"
+    title="決賽文件上傳"
+  />
+
+  <section class="relative bg-slate-50 py-16 min-h-[50vh]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 上傳截止提醒 -->
+      <div
+        class="mb-10 rounded-[2rem] border border-primary/20 bg-white p-6 sm:p-8 shadow-sm"
+      >
+        <p class="text-sm font-bold tracking-[0.18em] text-primary/80 mb-3">
+          SUBMISSION DEADLINE
+        </p>
+
+        <h2 class="text-2xl font-black text-slate-800 mb-3">
+          決賽文件上傳截止時間
+        </h2>
+
+        <p class="text-2xl sm:text-3xl font-black text-primary mb-3">
+          115 年 12 月 02 日(三)下午 5 點前
+        </p>
+
+        <p class="text-slate-600 leading-relaxed">
+          請於截止期限前上傳決賽簡報、作品設計與測試文件，以及作品介紹與成果展示影片。
+        </p>
+      </div>
+
+      <!-- 一、決賽資訊 -->
+      <section
+        class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-black text-slate-800 mb-5">
+          一、決賽文件上傳
+        </h2>
+
+        <p class="text-slate-600 leading-8 mb-6">
+          決賽採實地測試，由評審委員實地評分，並於決賽現場展示系統及進行問題詢答。
+          入圍隊伍須於 115 年 12 月 2 日下午 5
+          點前，完成下列三項文件及資料上傳。
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {
+            [
+              "決賽簡報",
+              "作品設計與測試文件",
+              "3～5 分鐘作品介紹與成果展示影片",
+            ].map((item, index) => (
+              <div class="rounded-2xl bg-slate-50 border border-slate-100 p-5">
+                <span class="text-sm font-bold text-primary">
+                  繳交資料 {index + 1}
+                </span>
+                <p class="mt-2 font-bold text-slate-800 leading-relaxed">
+                  {item}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="rounded-2xl border border-slate-200 p-5">
+            <p class="text-sm font-bold text-primary mb-2">決賽日期</p>
+            <p class="font-black text-lg text-slate-800">
+              2026 年 12 月 12 日（六）
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 p-5">
+            <p class="text-sm font-bold text-primary mb-2">決賽地點</p>
+            <p class="font-black text-lg text-slate-800">
+              國立中興大學電機系館
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 二、決賽簡報 -->
+      <section
+        class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-black text-slate-800 mb-5">
+          二、決賽簡報－格式與內容
+        </h2>
+
+        <div class="space-y-5 text-slate-700 leading-relaxed">
+          <p><strong>1. 作品名稱</strong></p>
+          <p><strong>2. 作品簡介</strong></p>
+
+          <div>
+            <p class="font-bold mb-4">3. 作品大綱（實際完成的內容）</p>
+
+            <ul class="space-y-3 pl-5">
+              {
+                presentationOutline.map((item) => (
+                  <li class="list-disc pl-1 break-words">{item}</li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 三、作品設計與測試文件 -->
+      <section
+        class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-black text-slate-800 mb-6">
+          三、作品設計與測試文件－格式與內容
+        </h2>
+
+        <div class="space-y-4">
+          {
+            designRequirements.map((item, index) => (
+              <div class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+                <h3 class="font-bold text-slate-800 mb-3">
+                  {index + 1}. {item.title}
+                </h3>
+
+                <ul class="space-y-2 pl-5 text-slate-600 leading-relaxed text-sm">
+                  {item.details.map((detail) => (
+                    <li class="list-disc break-words">{detail}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+
+        {
+          projectDesignTemplate && (
+            <div class="mt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 rounded-2xl border border-primary/20 bg-primary/5 p-5">
+              <div>
+                <h3 class="font-bold text-slate-800 mb-2">
+                  作品設計與測試文件
+                </h3>
+                <p class="text-sm text-slate-600">
+                  可下載網站提供的文件格式，完成後至下方表單繳交。
+                </p>
+              </div>
+
+              <a
+                href={projectDesignTemplate.href}
+                download={
+                  projectDesignTemplate.isExternal
+                    ? undefined
+                    : projectDesignTemplate.fileName
+                }
+                target={projectDesignTemplate.isExternal ? "_blank" : undefined}
+                rel={
+                  projectDesignTemplate.isExternal
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                class="inline-flex shrink-0 items-center justify-center rounded-xl border border-primary/30 bg-white px-5 py-3 font-bold text-primary hover:bg-primary hover:text-white transition-colors"
+              >
+                下載文件格式 ↓
+              </a>
+            </div>
+          )
+        }
+      </section>
+
+      <!-- 四、作品介紹影片 -->
+      <section
+        class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-black text-slate-800 mb-5">
+          四、3～5 分鐘作品介紹與成果展示影片
+        </h2>
+
+        <ul class="space-y-4 pl-5 text-slate-600 leading-8">
+          <li class="list-disc">
+            作品名稱與團隊資訊（勿出現學校／指導教授資料）。
+          </li>
+          <li class="list-disc">
+            作品簡介，包含問題分析、解決方案設計與構想。
+          </li>
+          <li class="list-disc">作品成果展示畫面。</li>
+          <li class="list-disc">影片須有聲音介紹及字幕。</li>
+          <li class="list-disc">影片時長以 5 分鐘為限。</li>
+          <li class="list-disc">
+            畫質 HD（1280 × 720），提供 MP4 或 MOV 檔案。
+          </li>
+        </ul>
+      </section>
+
+      <!-- 五、各組上傳表單 -->
+      <section class="mb-10">
+        <h2 class="text-2xl font-black text-slate-800 mb-6">
+          五、決賽文件上傳表單
+        </h2>
+
+        <div class="rounded-2xl border border-sky-100 bg-sky-50/70 p-6 mb-8">
+          <p class="text-slate-700 leading-8">
+            請各參賽團隊先填寫
+            <strong>決賽當日出席人員名單、搭車需求及用餐習慣</strong>
+            後，再進行決賽文件上傳。
+          </p>
+
+          <p class="text-slate-700 leading-8 mt-3">
+            另請隊長務必填寫可正常接聽電話之手機號碼，並保持通訊暢通，以利主辦單位後續聯繫。
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {
+            finalUploadForms.map((form, index) => (
+              <article class="group flex flex-col h-full rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:-translate-y-1">
+                <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 font-black text-xl text-primary">
+                  {index + 1}
+                </div>
+
+                <h3 class="text-xl font-black leading-snug text-slate-800 mb-5">
+                  {form.title}
+                </h3>
+
+                <p class="text-slate-500 leading-relaxed mb-8">
+                  請依參賽組別前往對應表單填寫資料並完成文件上傳。
+                </p>
+
+                <a
+                  href={form.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-auto inline-flex w-full items-center justify-center rounded-2xl bg-primary px-5 py-4 text-white font-bold transition-all duration-300 hover:opacity-90"
+                >
+                  前往決賽文件上傳表單
+                  <span class="ml-2">→</span>
+                </a>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 六、注意事項 -->
+      <section
+        class="rounded-[2rem] border border-amber-200 bg-amber-50/70 p-6 sm:p-8"
+      >
+        <h2 class="text-2xl font-black text-slate-800 mb-5">六、注意事項</h2>
+
+        <p class="text-slate-700 leading-8">
+          入圍晉級決賽名單公布後，如因實際狀況需要更換隊員， 最晚須於
+          <strong class="text-amber-900">
+            2026 年 11 月 6 日（五）下午 5 點前
+          </strong>
+          填妥「隊員更換申請表」，向主辦單位提出申請核備。 逾期提出申請者，概不受理。
+        </p>
+
+        <p class="mt-4 text-slate-700 leading-8 break-words">
+          主辦單位窗口：李小姐
+          <a
+            href="mailto:chaopei1234567@dragon.nchu.edu.tw"
+            class="break-all text-primary font-bold underline underline-offset-2"
+          >
+            chaopei1234567@dragon.nchu.edu.tw
+          </a>
+        </p>
+      </section>
+    </div>
+  </section>
+</section>
