@@ -23,7 +23,7 @@ const presentationOutline = [
   "解決方案設計與構想（強調題目與競賽平台的適切性）",
   "作品成果設計（完整系統架構、系統架構圖及作品照片）",
   "作品的創新性、可行性與商機",
-  "團隊介紹（勿出現學校／指導教授資料）",
+  "團隊介紹（勿出現學校 / 指導教授資料）",
   "使用競賽平台之心得（請務必填寫）",
   "參考資料",
   "附件（如需補充作品說明資料或證明等）",
@@ -32,34 +32,34 @@ const presentationOutline = [
 const designRequirements = [
   {
     title: "程式簡介",
-    details: ["約 200～500 字。"],
+    details: ["約 200～500 字"],
   },
   {
     title: "安裝說明與流程",
     details: [
-      "說明執行程式需要的系統環境、執行環境、版本及安裝方法。",
-      "例如 Python、Node.js > 16、.NET、Go、Docker 等。",
+      "說明執行程式需要的系統環境、執行環境、版本及安裝方法",
+      "例如 Python、Node.js > 16、.NET、Go、Docker 等",
     ],
   },
   {
     title: "相關套件與版本",
     details: [
-      "列出所需套件、指定版本及安裝方法。",
-      "可提供 requirements.txt、package.json 或其他相關專案檔案。",
+      "列出所需套件、指定版本及安裝方法",
+      "可提供 requirements.txt、package.json 或其他相關專案檔案",
     ],
   },
   {
     title: "執行方法說明",
     details: [
-      "說明如何執行程式，以及相關操作方式。",
-      "提供程式設定說明，例如 .env 檔案變數。",
+      "說明如何執行程式，以及相關操作方式",
+      "提供程式設定說明，例如 .env 檔案變數",
     ],
   },
   {
     title: "預期執行成果與範例",
     details: [
-      "提供數個範例，包含執行說明與預期成果。",
-      "範例必須能清楚展示程式特點。",
+      "提供數個範例，包含執行說明與預期成果",
+      "範例必須能清楚展示程式特點",
     ],
   },
 ];
@@ -70,10 +70,7 @@ const projectDesignTemplate = downloadItems.find(
 ---
 
 <section class="pt-20">
-  <PageHero
-    eyebrow="FINAL UPLOAD"
-    title="決賽文件上傳"
-  />
+  <PageHero eyebrow="FINAL UPLOAD" title="決賽文件上傳" />
 
   <section class="relative bg-slate-50 py-16 min-h-[50vh]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,7 +91,18 @@ const projectDesignTemplate = downloadItems.find(
         </p>
 
         <p class="text-slate-600 leading-relaxed">
-          請於截止期限前上傳決賽簡報、作品設計與測試文件，以及作品介紹與成果展示影片。
+          請於截止期限前上傳決賽簡報、作品設計與測試文件，以及作品介紹與成果展示影片。<br
+          />
+        </p>
+        <p class="text-slate-600 leading-relaxed mt-3">
+          若於上傳時發生系統異常或上傳失敗情形，請立即截圖保留相關畫面，並將檔案寄送至：
+          <a
+            href="mailto:bytseng@smail.nchu.edu.tw"
+            class="break-all text-primary font-bold underline underline-offset-2"
+          >
+            bytseng@smail.nchu.edu.tw
+          </a>
+          ，主辦單位將以系統中截止時間前＂最後一次＂上傳之版本作為決賽評分依據，其餘先前上傳版本均不列入評分。
         </p>
       </div>
 
@@ -107,9 +115,8 @@ const projectDesignTemplate = downloadItems.find(
         </h2>
 
         <p class="text-slate-600 leading-8 mb-6">
-          決賽採實地測試，由評審委員實地評分，並於決賽現場展示系統及進行問題詢答。
-          入圍隊伍須於 115 年 12 月 2 日下午 5
-          點前，完成下列三項文件及資料上傳。
+          決賽採實地測試，由評審委員實地評分，並於決賽現場展示系統及進行問題詢答。入圍隊伍須於
+          115 年 12 月 2 日下午 5 點前，完成下列三項文件及資料上傳。
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -152,16 +159,32 @@ const projectDesignTemplate = downloadItems.find(
       <section
         class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
       >
-        <h2 class="text-2xl font-black text-slate-800 mb-5">
-          二、決賽簡報－格式與內容
-        </h2>
+        <div class="mb-4 space-y-3">
+          <h2
+            class="break-words text-2xl font-black leading-snug text-slate-800"
+          >
+            二、決賽簡報格式與內容
+          </h2>
+
+          <p
+            class="max-w-full break-words text-sm font-medium leading-relaxed text-red-600"
+          >
+            ※ 本項為決賽必繳資料，請依規定完成簡報製作及上傳。
+          </p>
+        </div>
 
         <div class="space-y-5 text-slate-700 leading-relaxed">
-          <p><strong>1. 作品名稱</strong></p>
-          <p><strong>2. 作品簡介</strong></p>
+          <p>
+            <strong
+              >1. 投影片大小寬螢幕（16：9），編列頁碼，簡報模板不限，請提供 PPT
+              檔與 PDF 檔案上傳</strong
+            >
+          </p>
+          <p><strong>2. 作品名稱</strong></p>
+          <p><strong>3. 作品簡介</strong></p>
 
           <div>
-            <p class="font-bold mb-4">3. 作品大綱（實際完成的內容）</p>
+            <p class="font-bold mb-4">4. 作品大綱（實際完成的內容）</p>
 
             <ul class="space-y-3 pl-5">
               {
@@ -178,9 +201,19 @@ const projectDesignTemplate = downloadItems.find(
       <section
         class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
       >
-        <h2 class="text-2xl font-black text-slate-800 mb-6">
-          三、作品設計與測試文件－格式與內容
-        </h2>
+        <div class="mb-4 space-y-3">
+          <h2
+            class="break-words text-2xl font-black leading-snug text-slate-800"
+          >
+            三、作品設計與測試文件格式與內容
+          </h2>
+
+          <p
+            class="max-w-full break-words text-sm font-medium leading-relaxed text-red-600"
+          >
+            ※ 本項為決賽必繳資料，請依規定完成文件製作及上傳。
+          </p>
+        </div>
 
         <div class="space-y-4">
           {
@@ -208,7 +241,8 @@ const projectDesignTemplate = downloadItems.find(
                   作品設計與測試文件
                 </h3>
                 <p class="text-sm text-slate-600">
-                  可下載網站提供的文件格式，完成後至下方表單繳交。
+                  版面為 A4 直式，並請另存為 PDF 檔案上傳，附件程式碼打包 ZIP /
+                  RAR 上傳。可於下載網站提供的文件格式，完成後至下方表單繳交。
                 </p>
               </div>
 
@@ -238,23 +272,29 @@ const projectDesignTemplate = downloadItems.find(
       <section
         class="mb-10 rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8 shadow-sm"
       >
-        <h2 class="text-2xl font-black text-slate-800 mb-5">
-          四、3～5 分鐘作品介紹與成果展示影片
-        </h2>
+        <div class="mb-4 space-y-3">
+          <h2
+            class="break-words text-2xl font-black leading-snug text-slate-800"
+          >
+            四、3～5 分鐘作品介紹與成果展示影片
+          </h2>
+
+          <p
+            class="max-w-full break-words text-sm font-medium leading-relaxed text-red-600"
+          >
+            ※ 本項為決賽必繳資料，請依規定完成影片製作及上傳。
+          </p>
+        </div>
 
         <ul class="space-y-4 pl-5 text-slate-600 leading-8">
           <li class="list-disc">
-            作品名稱與團隊資訊（勿出現學校／指導教授資料）。
+            作品名稱與團隊資訊（勿出現學校 / 指導教授資料）
           </li>
-          <li class="list-disc">
-            作品簡介，包含問題分析、解決方案設計與構想。
-          </li>
-          <li class="list-disc">作品成果展示畫面。</li>
-          <li class="list-disc">影片須有聲音介紹及字幕。</li>
-          <li class="list-disc">影片時長以 5 分鐘為限。</li>
-          <li class="list-disc">
-            畫質 HD（1280 × 720），提供 MP4 或 MOV 檔案。
-          </li>
+          <li class="list-disc">作品簡介，包含問題分析、解決方案設計與構想</li>
+          <li class="list-disc">作品成果展示畫面</li>
+          <li class="list-disc">影片須有聲音介紹及字幕</li>
+          <li class="list-disc">影片時長以 5 分鐘為限</li>
+          <li class="list-disc">畫質 HD（1280 × 720），提供 MP4 或 MOV 檔案</li>
         </ul>
       </section>
 
