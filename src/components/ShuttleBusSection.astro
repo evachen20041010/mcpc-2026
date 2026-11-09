@@ -1,0 +1,87 @@
+---
+/** 決賽交通資訊：大會接駁車（時間暫定） */
+const shuttleRoutes = [
+  {
+    direction: "往程",
+    route: "高鐵臺中站 → 國立中興大學",
+    departures: [
+      { label: "第 1 班", time: "08:50" },
+      { label: "第 2 班", time: "09:10" },
+    ],
+  },
+  {
+    direction: "返程",
+    route: "國立中興大學 → 高鐵臺中站",
+    departures: [{ label: "第 1 班", time: "16:30" }],
+  },
+];
+---
+
+<section
+  aria-labelledby="shuttle-bus-heading"
+  class="relative overflow-hidden bg-slate-50 pb-20"
+>
+  <div class="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      class="min-w-0 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10"
+    >
+      <div class="mb-8 flex flex-wrap items-center gap-3">
+        <div class="min-w-0">
+          <h2
+            id="shuttle-bus-heading"
+            class="break-words text-2xl font-black leading-snug text-slate-800 sm:text-3xl"
+          >
+            大會接駁車
+          </h2>
+        </div>
+        <span
+          class="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800"
+        >
+          時間暫定
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {
+          shuttleRoutes.map((item) => (
+            <article class="min-w-0 rounded-2xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6">
+              <div class="mb-3 flex flex-wrap items-center gap-3">
+                <span class="rounded-lg bg-primary/10 px-3 py-1 text-sm font-black text-primary">
+                  {item.direction}
+                </span>
+                <p class="text-xs font-medium text-slate-500">
+                  車程約 30～40 分鐘
+                </p>
+              </div>
+
+              <h3 class="mb-5 break-words text-base font-bold leading-relaxed text-slate-800 sm:text-lg">
+                {item.route}
+              </h3>
+
+              <div class="space-y-3 border-t border-slate-200 pt-4">
+                {item.departures.map((departure) => (
+                  <div class="flex min-w-0 items-center justify-between gap-3 rounded-xl bg-white px-4 py-3">
+                    <div class="min-w-0">
+                      <p class="font-bold text-slate-700">{departure.label}</p>
+                      <p class="text-xs text-slate-500">出發時間</p>
+                    </div>
+                    <time
+                      class="shrink-0 font-mono text-xl font-black tabular-nums text-primary sm:text-2xl"
+                      datetime={departure.time}
+                    >
+                      {departure.time}
+                    </time>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <p class="mt-6 break-words text-sm leading-relaxed text-amber-800">
+        ※ 接駁車時間目前為暫定，實際發車時間及搭乘地點請以主辦單位最新公告為準。
+      </p>
+    </div>
+  </div>
+</section>
