@@ -81,4 +81,14 @@ export const downloadItems: DownloadItem[] = [
     previewSrc: "/downloads/project_design_and_testing.png",
     isAvailable: true,
   },
+  {
+    title: "決賽議程",
+    fileName: "2026行動通訊實務競賽-決賽議程.pdf",
+    desc: "",
+    fileType: "PDF",
+    updatedAt: "",
+    href: "/downloads/agenda.pdf",
+    previewSrc: "/downloads/agenda.png",
+    isAvailable: true,
+  },
 ];
